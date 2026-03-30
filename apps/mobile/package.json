@@ -1,0 +1,29 @@
+{
+  "name": "@gem/mobile",
+  "version": "0.0.1",
+  "private": true,
+  "main": "App.tsx",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "type-check": "tsc --noEmit",
+    "clean": "rm -rf .expo"
+  },
+  "dependencies": {
+    "@gem/api-client": "workspace:*",
+    "@gem/validators": "workspace:*",
+    "@gem/utils": "workspace:*",
+    "@reduxjs/toolkit": "^2.2.0",
+    "expo": "~51.0.0",
+    "expo-status-bar": "~1.12.0",
+    "react": "18.2.0",
+    "react-native": "0.74.5",
+    "react-redux": "^9.1.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.24.0",
+    "@types/react": "~18.2.0",
+    "typescript": "^5.5.0"
+  }
+}

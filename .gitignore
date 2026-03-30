@@ -1,0 +1,52 @@
+# ── Node ──────────────────────────────────────────────────
+node_modules/
+dist/
+.turbo/
+*.local
+
+# ── Expo / React Native ───────────────────────────────────
+.expo/
+ios/
+android/
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+web-build/
+
+# ── .NET ──────────────────────────────────────────────────
+backend/src/*/bin/
+backend/src/*/obj/
+backend/tests/*/bin/
+backend/tests/*/obj/
+backend/**/*.user
+backend/.vs/
+backend/**/*.suo
+*.DotSettings.user
+
+# ── Environment ───────────────────────────────────────────
+.env
+.env.*
+!.env.example
+
+# ── OS ────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── IDE ───────────────────────────────────────────────────
+.vscode/settings.json
+.idea/
+*.swp
+*.swo
+
+# ── Logs ──────────────────────────────────────────────────
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# ── Test coverage ─────────────────────────────────────────
+coverage/
+TestResults/

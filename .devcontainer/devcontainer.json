@@ -1,0 +1,44 @@
+{
+  "name": "Group Event Management",
+  "image": "mcr.microsoft.com/devcontainers/dotnet:1-8.0-bookworm",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "20",
+      "nodeGypDependencies": true
+    },
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
+  "postCreateCommand": "npm install -g pnpm && pnpm install && bash scripts/setup-dotnet.sh",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "[csharp]": {
+          "editor.defaultFormatter": "ms-dotnettools.csharp"
+        },
+        "typescript.tsdk": "node_modules/typescript/lib"
+      },
+      "extensions": [
+        "ms-dotnettools.csharp",
+        "ms-dotnettools.vscode-dotnet-runtime",
+        "ms-dotnettools.csdevkit",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "ms-azuretools.vscode-docker",
+        "bradlc.vscode-tailwindcss",
+        "ms-vscode.vscode-typescript-next"
+      ]
+    }
+  },
+  "forwardPorts": [5000, 5001, 5173, 5432, 8080, 19000],
+  "portsAttributes": {
+    "5173": { "label": "Web (Vite)" },
+    "5000": { "label": "API HTTP" },
+    "5001": { "label": "API HTTPS" },
+    "5432": { "label": "PostgreSQL" },
+    "8080": { "label": "pgAdmin" },
+    "19000": { "label": "Expo" }
+  },
+  "remoteUser": "vscode"
+}

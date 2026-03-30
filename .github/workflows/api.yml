@@ -1,0 +1,36 @@
+name: API CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'backend/**'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'backend/**'
+
+jobs:
+  build-and-test:
+    name: Build & Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore
+        run: dotnet restore backend/GroupEventManagement.sln
+
+      - name: Build
+        run: dotnet build backend/GroupEventManagement.sln --no-restore --configuration Release
+
+      - name: Unit tests
+        run: >
+          dotnet test
+          backend/tests/GroupEvents.Tests.Unit/GroupEvents.Tests.Unit.csproj
+          --no-build
+          --configuration Release
+          --verbosity normal
