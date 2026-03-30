@@ -3,6 +3,7 @@ node_modules/
 dist/
 .turbo/
 *.local
+.pnpm-store/
 
 # ── Expo / React Native ───────────────────────────────────
 .expo/
@@ -41,6 +42,9 @@ desktop.ini
 .idea/
 *.swp
 *.swo
+
+# ── Claude Code ───────────────────────────────────────────
+.claude/settings.local.json
 
 # ── Logs ──────────────────────────────────────────────────
 *.log
