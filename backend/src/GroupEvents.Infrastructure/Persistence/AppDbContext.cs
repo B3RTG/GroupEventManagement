@@ -1,10 +1,11 @@
+using GroupEvents.Application.Common.Interfaces;
 using GroupEvents.Domain.Common;
 using GroupEvents.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace GroupEvents.Infrastructure.Persistence;
 
-public class AppDbContext : DbContext
+public class AppDbContext : DbContext, IAppDbContext
 {
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
@@ -18,6 +19,7 @@ public class AppDbContext : DbContext
     public DbSet<Guest> Guests => Set<Guest>();
     public DbSet<Notification> Notifications => Set<Notification>();
     public DbSet<AuditLog> AuditLogs => Set<AuditLog>();
+    public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
