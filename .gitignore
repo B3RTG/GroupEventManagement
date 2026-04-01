@@ -32,6 +32,11 @@ backend/**/*.suo
 .env.*
 !.env.example
 
+# .NET environment-specific settings (contain secrets)
+appsettings.Development.json
+appsettings.Production.json
+appsettings.Staging.json
+
 # ── OS ────────────────────────────────────────────────────
 .DS_Store
 Thumbs.db
