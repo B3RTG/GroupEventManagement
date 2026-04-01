@@ -1,0 +1,11 @@
+services:
+  devcontainer:
+    image: mcr.microsoft.com/devcontainers/dotnet:1-8.0-bookworm
+    volumes:
+      - ../:/workspaces/GroupEventManagement:cached
+    command: sleep infinity
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      postgres:
+        condition: service_healthy

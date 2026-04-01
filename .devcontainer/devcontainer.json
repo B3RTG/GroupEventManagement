@@ -1,6 +1,8 @@
 {
   "name": "Group Event Management",
-  "image": "mcr.microsoft.com/devcontainers/dotnet:1-8.0-bookworm",
+  "dockerComposeFile": ["../docker-compose.yml", "docker-compose.devcontainer.yml"],
+  "service": "devcontainer",
+  "workspaceFolder": "/workspaces/GroupEventManagement",
   "features": {
     "ghcr.io/devcontainers/features/node:1": {
       "version": "20",

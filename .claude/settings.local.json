@@ -5,7 +5,10 @@
       "Bash(cmd.exe /c \"pnpm --version\")",
       "Bash(cmd.exe /c \"dotnet --version\")",
       "Bash(cmd.exe /c \"node --version && pnpm --version && dotnet --version\")",
-      "Bash(powershell.exe -Command \"node --version; pnpm --version; dotnet --version; Write-Host ''Done''\")"
+      "Bash(powershell.exe -Command \"node --version; pnpm --version; dotnet --version; Write-Host ''Done''\")",
+      "Bash(dotnet --version)",
+      "Bash(pnpm --version)",
+      "Bash(dotnet build:*)"
     ]
   }
 }
