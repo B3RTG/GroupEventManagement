@@ -15,45 +15,45 @@
 
 ---
 
-## Fase 1 — Dominio y persistencia ✅ (en curso)
+## Fase 1 — Dominio y persistencia ✅
 
 **Objetivo**: modelo de dominio completo y acceso a datos funcional.
 
-- [x] Entidades del dominio: `Group`, `Event`, `User`, `GroupMember`, `EventRegistration`
-- [x] Enums: `GroupMemberRole`, `EventRegistrationStatus`, `EventStatus`
-- [x] Value objects: `InviteCode`
-- [x] `AppDbContext` con EF Core + configuraciones Fluent API
-- [x] Migraciones iniciales
-- [ ] Repositorios base (interfaz + implementación)
-- [ ] Seed data para desarrollo local
+- [x] Entidades del dominio: `User`, `Group`, `Event`, `GroupMembership`, `EventRegistration`, `Track`, `WaitlistEntry`, `Guest`, `Notification`, `AuditLog`, `RefreshToken`
+- [x] Enums: `EventStatus`, `MemberRole`, `AuthProvider`, `RegistrationStatus`, `WaitlistStatus`, `NotificationChannel`, `NotificationStatus`
+- [x] `AppDbContext` con EF Core + 11 configuraciones Fluent API
+- [x] Migraciones: `InitialSchema` + `AddRefreshTokens`
+- [x] Seed data para desarrollo local (`DevDataSeeder` — 2 usuarios, 1 grupo, 2 eventos)
+- ~~Repositorios base~~ — *Decisión técnica: los handlers usan `IAppDbContext` directamente (patrón CQRS estándar). `IAppDbContext` ya es la abstracción sobre EF Core.*
 
 ---
 
-## Fase 2 — MVP: Sprint 1 — Auth
+## Fase 2 — MVP: Sprint 1 — Auth ✅
 
 **Objetivo**: autenticación funcional end-to-end, JWT, registro de push token.
 
-- [ ] `POST /api/v1/auth/google` — callback + emitir JWT propio
-- [ ] `POST /api/v1/auth/apple` — callback + emitir JWT (usar `sub`, no email)
-- [ ] `POST /api/v1/auth/refresh` — renovar JWT
-- [ ] `DELETE /api/v1/auth/session` — logout (invalidar refresh token)
-- [ ] `GET /api/v1/auth/me` — perfil del usuario autenticado
-- [ ] `PUT /api/v1/auth/me` — actualizar push token del dispositivo
-- [ ] Middleware JWT en ASP.NET Core
+- [x] `POST /api/v1/auth/google` — callback + emitir JWT propio
+- [x] `POST /api/v1/auth/apple` — callback + emitir JWT (usar `sub`, no email)
+- [x] `POST /api/v1/auth/refresh` — renovar JWT
+- [x] `DELETE /api/v1/auth/session` — logout (invalidar refresh token)
+- [x] `GET /api/v1/auth/me` — perfil del usuario autenticado
+- [x] `PUT /api/v1/auth/me` — actualizar push token del dispositivo
+- [x] Middleware JWT en ASP.NET Core
 
 ---
 
-## Fase 3 — MVP: Sprint 2 — Grupos
+## Fase 3 — MVP: Sprint 2 — Grupos ✅
 
 **Objetivo**: CRUD de grupos, membresía y código de invitación.
 
-- [ ] `POST /api/v1/groups` — crear grupo (quien crea es el owner)
-- [ ] `GET /api/v1/groups/{id}` — detalle del grupo
-- [ ] `POST /api/v1/groups/join` — unirse con código de invitación (rate limit 10/IP/min)
-- [ ] `GET /api/v1/groups/{id}/members` — listar miembros
-- [ ] `PATCH /api/v1/groups/{id}/members/{userId}/role` — cambiar rol (solo owner)
-- [ ] `DELETE /api/v1/groups/{id}/members/{userId}` — expulsar miembro
-- [ ] `POST /api/v1/groups/{id}/invite-code/regenerate` — regenerar código
+- [x] `POST /api/v1/groups` — crear grupo (quien crea es el owner)
+- [x] `GET /api/v1/groups/{id}` — detalle del grupo
+- [x] `POST /api/v1/groups/join` — unirse con código de invitación
+- [x] `GET /api/v1/groups/{id}/members` — listar miembros
+- [x] `PATCH /api/v1/groups/{id}/members/{userId}/role` — cambiar rol (solo owner)
+- [x] `DELETE /api/v1/groups/{id}/members/{userId}` — expulsar miembro
+- [x] `POST /api/v1/groups/{id}/invite-code/regenerate` — regenerar código
+- [ ] Rate limit `POST /groups/join` — 10/IP/min (pendiente Fase 9, no bloquea MVP)
 
 ---
 

@@ -21,14 +21,14 @@ Repositorio central de decisiones, arquitectura y planificación del proyecto.
 
 ## Estado actual
 
-> Última actualización: 2026-03-31
+> Última actualización: 2026-04-02
 
 | Fase | Estado |
 |---|---|
 | Fase 0 — Scaffolding y devcontainer | ✅ Completo |
-| Fase 1 — Dominio y persistencia | 🔄 En progreso |
-| Fase 2 — Sprint 1: Auth | ⏳ Pendiente |
-| Fase 3 — Sprint 2: Grupos | ⏳ Pendiente |
+| Fase 1 — Dominio y persistencia | ✅ Completo |
+| Fase 2 — Sprint 1: Auth | ✅ Completo |
+| Fase 3 — Sprint 2: Grupos | ✅ Completo |
 | Fase 4 — Sprint 3: Eventos y pistas | ⏳ Pendiente |
 | Fase 5 — Sprint 4: Registros y Waitlist | ⏳ Pendiente |
 | Fase 6 — Notificaciones y jobs | ⏳ Pendiente |
