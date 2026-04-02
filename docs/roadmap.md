@@ -57,18 +57,18 @@
 
 ---
 
-## Fase 4 — MVP: Sprint 3 — Eventos y pistas
+## Fase 4 — MVP: Sprint 3 — Eventos y pistas ✅
 
 **Objetivo**: CRUD de eventos con pistas (tracks), publicación y vista de capacidad.
 
-- [ ] `POST /api/v1/groups/{groupId}/events` — crear evento (draft)
-- [ ] `GET /api/v1/groups/{groupId}/events` — listar eventos del grupo
-- [ ] `GET /api/v1/groups/{groupId}/events/{id}` — detalle con capacidad en tiempo real
-- [ ] `PATCH /api/v1/groups/{groupId}/events/{id}` — editar evento
-- [ ] `POST /api/v1/groups/{groupId}/events/{id}/publish` — publicar evento
-- [ ] `POST /api/v1/groups/{groupId}/events/{id}/cancel` — cancelar evento
-- [ ] CRUD `/api/v1/groups/{groupId}/events/{id}/tracks` — gestionar pistas
-- [ ] Bloquear reducción de capacidad si hay más inscritos que la nueva capacidad
+- [x] `POST /api/v1/groups/{groupId}/events` — crear evento (draft), owner/co-admin
+- [x] `GET /api/v1/groups/{groupId}/events` — listar eventos del grupo
+- [x] `GET /api/v1/groups/{groupId}/events/{id}` — detalle con capacidad en tiempo real
+- [x] `PATCH /api/v1/groups/{groupId}/events/{id}` — editar evento (solo draft)
+- [x] `POST /api/v1/groups/{groupId}/events/{id}/publish` — publicar evento
+- [x] `POST /api/v1/groups/{groupId}/events/{id}/cancel` — cancelar evento
+- [x] CRUD `/api/v1/groups/{groupId}/events/{id}/tracks` — gestionar pistas
+- [x] Bloquear reducción de capacidad si hay más inscritos que la nueva capacidad
 
 ---
 

@@ -29,7 +29,7 @@ Repositorio central de decisiones, arquitectura y planificación del proyecto.
 | Fase 1 — Dominio y persistencia | ✅ Completo |
 | Fase 2 — Sprint 1: Auth | ✅ Completo |
 | Fase 3 — Sprint 2: Grupos | ✅ Completo |
-| Fase 4 — Sprint 3: Eventos y pistas | ⏳ Pendiente |
+| Fase 4 — Sprint 3: Eventos y pistas | ✅ Completo |
 | Fase 5 — Sprint 4: Registros y Waitlist | ⏳ Pendiente |
 | Fase 6 — Notificaciones y jobs | ⏳ Pendiente |
 | Fase 7 — Frontend Web | ⏳ Pendiente |
