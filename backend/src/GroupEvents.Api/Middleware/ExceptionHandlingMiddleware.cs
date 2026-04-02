@@ -31,10 +31,12 @@ public class ExceptionHandlingMiddleware
     {
         var (statusCode, title) = exception switch
         {
-            UnauthorizedException => (StatusCodes.Status401Unauthorized, "Unauthorized"),
-            NotFoundException     => (StatusCodes.Status404NotFound,     "Not Found"),
+            UnauthorizedException     => (StatusCodes.Status401Unauthorized,        "Unauthorized"),
+            ForbiddenException        => (StatusCodes.Status403Forbidden,           "Forbidden"),
+            NotFoundException         => (StatusCodes.Status404NotFound,            "Not Found"),
+            ConflictException         => (StatusCodes.Status409Conflict,            "Conflict"),
             InvalidOperationException => (StatusCodes.Status422UnprocessableEntity, "Business Rule Violation"),
-            _                    => (StatusCodes.Status500InternalServerError, "Internal Server Error")
+            _                         => (StatusCodes.Status500InternalServerError,  "Internal Server Error")
         };
 
         var problem = new ProblemDetails
