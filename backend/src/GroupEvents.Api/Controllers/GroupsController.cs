@@ -7,6 +7,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
+
 namespace GroupEvents.Api.Controllers;
 
 [ApiController]
@@ -20,6 +21,14 @@ public class GroupsController : ControllerBase
 
     private Guid CurrentUserId =>
         Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+
+    /// <summary>List all groups the authenticated user belongs to.</summary>
+    [HttpGet("me")]
+    public async Task<ActionResult<IReadOnlyList<GroupResponse>>> GetMyGroups(CancellationToken ct)
+    {
+        var result = await _mediator.Send(new GetMyGroupsQuery(CurrentUserId), ct);
+        return Ok(result);
+    }
 
     /// <summary>Create a new group. The authenticated user becomes the owner.</summary>
     [HttpPost]
