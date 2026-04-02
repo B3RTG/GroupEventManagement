@@ -1,0 +1,469 @@
+<!doctype html>
+
+<html class="light" lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@700;800&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary-fixed": "#d0e5fa",
+              "on-secondary-container": "#fefcff",
+              "on-primary-fixed-variant": "#36495a",
+              "secondary-container": "#2170e4",
+              "on-secondary-fixed-variant": "#004395",
+              "on-error": "#ffffff",
+              "primary-container": "#122636",
+              "on-primary": "#ffffff",
+              "error-container": "#ffdad6",
+              "outline-variant": "#c3c7cc",
+              tertiary: "#160e00",
+              "surface-tint": "#4d6073",
+              "on-tertiary-fixed": "#251a00",
+              "secondary-fixed-dim": "#adc6ff",
+              "on-tertiary-fixed-variant": "#5a4300",
+              "on-surface": "#171c1f",
+              "tertiary-fixed-dim": "#f7be1d",
+              "surface-container-high": "#e4e9ed",
+              "on-tertiary": "#ffffff",
+              "tertiary-container": "#302200",
+              "surface-container-lowest": "#ffffff",
+              primary: "#00101e",
+              "on-secondary-fixed": "#001a42",
+              "secondary-fixed": "#d8e2ff",
+              "on-tertiary-container": "#af8500",
+              "inverse-surface": "#2c3134",
+              "on-surface-variant": "#43474c",
+              "on-primary-fixed": "#081d2d",
+              "on-secondary": "#ffffff",
+              outline: "#74777d",
+              "surface-bright": "#f6fafe",
+              error: "#ba1a1a",
+              "on-primary-container": "#7a8ea1",
+              "tertiary-fixed": "#ffdf9a",
+              "surface-container-highest": "#dfe3e7",
+              "surface-dim": "#d6dade",
+              "surface-container": "#eaeef2",
+              "on-error-container": "#93000a",
+              "inverse-primary": "#b5c9de",
+              "inverse-on-surface": "#edf1f5",
+              "primary-fixed-dim": "#b5c9de",
+              "surface-container-low": "#f0f4f8",
+              background: "#f6fafe",
+              surface: "#f6fafe",
+              secondary: "#0058be",
+              "on-background": "#171c1f",
+              "surface-variant": "#dfe3e7",
+            },
+            fontFamily: {
+              headline: ["Manrope"],
+              body: ["Inter"],
+              label: ["Inter"],
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #f6fafe;
+      }
+      .headline-font {
+        font-family: "Manrope", sans-serif;
+      }
+    </style>
+    <style>
+      body {
+        min-height: max(884px, 100dvh);
+      }
+    </style>
+  </head>
+  <body class="bg-background text-on-background min-h-screen pb-32">
+    <!-- TopAppBar -->
+    <header
+      class="w-full sticky top-0 z-50 bg-[#f6fafe] dark:bg-[#00101e] flex items-center justify-between px-6 py-4"
+    >
+      <div class="flex items-center gap-4">
+        <button
+          class="material-symbols-outlined text-[#00101e] dark:text-[#f6fafe] transition-colors scale-95 active:opacity-80 duration-150"
+          data-icon="arrow_back"
+        >
+          arrow_back
+        </button>
+        <h1
+          class="text-xl font-extrabold tracking-tighter text-[#00101e] dark:text-[#f6fafe] headline-font"
+        >
+          The Athletic
+        </h1>
+      </div>
+      <div class="flex items-center gap-3">
+        <span
+          class="material-symbols-outlined text-[#00101e] dark:text-[#f6fafe]"
+          >search</span
+        >
+        <div
+          class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant/15"
+        >
+          <img
+            class="w-full h-full object-cover"
+            data-alt="close-up portrait of a professional woman athlete with a focused expression in soft natural lighting"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCA3e-Y2sy9XOlw5Weac8VRg4RvCg-lGNoeR-cA7cMmgQ8F7UVe9ZDzExI_VEZcD2RpvszOVnNUiajjVinuZLpTnRRFpRxAHGThCmoPf4HtkFd4-H3uiNOYzdiLBpmqVavoV4CwGDtEGYJzMWmz_Bgq_mfnajPG-GT_AAjLsTvmFH3wVbskT63flAg-1BrfWw4FkPTOOUrVsnEhfG-sCLsSvQ1GJOI0ogPlOMXaMZGoTExFgQblJzz8HF72DEWHi2rb1A0qgGHP9q7"
+          />
+        </div>
+      </div>
+    </header>
+    <main class="px-6 pt-8 max-w-md mx-auto">
+      <!-- Hero Search / Join Group -->
+      <section class="mb-10">
+        <h2 class="text-3xl font-extrabold headline-font tracking-tight mb-6">
+          Explorar Comunidades
+        </h2>
+        <div
+          class="bg-surface-container-low p-1 rounded-xl flex items-center shadow-sm"
+        >
+          <input
+            class="flex-grow bg-transparent border-none focus:ring-0 text-body-md px-4 py-3 placeholder:text-on-surface-variant/50"
+            placeholder="Código de grupo o nombre..."
+            type="text"
+          />
+          <button
+            class="bg-primary text-on-primary font-bold px-6 py-3 rounded-lg hover:bg-primary-container transition-colors active:scale-95 duration-150"
+          >
+            Join
+          </button>
+        </div>
+      </section>
+      <!-- Stats Overview (Asymmetric Element) -->
+      <section class="mb-10 relative">
+        <div
+          class="bg-gradient-to-br from-primary to-primary-container p-6 rounded-xl text-on-primary shadow-lg overflow-hidden relative"
+        >
+          <div class="relative z-10">
+            <p
+              class="text-on-primary-container text-xs font-bold uppercase tracking-widest mb-1"
+            >
+              Rendimiento Semanal
+            </p>
+            <h3 class="text-4xl font-extrabold headline-font mb-4">84%</h3>
+            <div class="flex items-center gap-2">
+              <span
+                class="material-symbols-outlined text-tertiary-fixed-dim"
+                style="font-variation-settings: &quot;FILL&quot; 1"
+                >stars</span
+              >
+              <span class="text-sm font-medium"
+                >Top 5% de la comunidad local</span
+              >
+            </div>
+          </div>
+          <!-- Abstract visual element bleeding off edge -->
+          <div
+            class="absolute -right-10 -bottom-10 w-40 h-40 bg-secondary/20 rounded-full blur-3xl"
+          ></div>
+        </div>
+      </section>
+      <!-- Mis Grupos Section -->
+      <section class="mb-8">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-2xl font-extrabold headline-font tracking-tight">
+            Mis Grupos
+          </h2>
+          <button
+            class="text-secondary font-bold text-sm tracking-wide uppercase"
+          >
+            Ver todos
+          </button>
+        </div>
+        <div class="space-y-6">
+          <!-- Group Card 1 -->
+          <div
+            class="bg-surface-container-lowest rounded-xl p-5 shadow-[0_12px_40px_rgba(23,28,31,0.06)] group transition-all"
+          >
+            <div class="flex justify-between items-start mb-4">
+              <div class="flex flex-col gap-1">
+                <h4
+                  class="text-lg font-bold headline-font group-hover:text-secondary transition-colors leading-tight"
+                >
+                  Elite Runners Club
+                </h4>
+                <div class="flex items-center gap-2">
+                  <span
+                    class="bg-secondary-container/10 text-on-secondary-fixed-variant text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider"
+                    >Performance</span
+                  >
+                </div>
+              </div>
+              <span class="material-symbols-outlined text-outline"
+                >more_vert</span
+              >
+            </div>
+            <div class="flex items-center mb-6">
+              <div class="flex -space-x-3">
+                <img
+                  class="w-8 h-8 rounded-full ring-2 ring-surface-container-lowest"
+                  data-alt="professional headshot of a male runner with athletic gear"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuBIHRak-Ot6zihdVwMUBmdm3E67GV379tteCDB_QeiA6KeLuuw4syJao2SccYaAULbIS-ASQO1dXxOzIydPQcm_QOCKVFdt36zjri4HvuqyOJhMivHouDxqPT7MCs0J3qxql-KmIWwqWOzONjqzexrkHmYTqDhxTMckDfadqgpHixDbDS22Aylceo2cD418oRnIwUYsnn9fPmGSeZz1qF8Ek9vsekzYxS8NuQ4zGgJc3IYTDbGufkkC30-VDyNpfUkXdX0PclI6wy4F"
+                />
+                <img
+                  class="w-8 h-8 rounded-full ring-2 ring-surface-container-lowest"
+                  data-alt="headshot of a smiling female athlete in a gym environment"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTXs2k6YUabVt8kMFIEY3tMzyGx1JRIxTMM8n3beOCWct7-45HuFNPDS52J-bFjbdjTOorMdN9BbedzGOLqUMuY0erm_3BW_69UkZLwbWvYXi0PKFRDp7aVgWxIhY1et2CHTnJzLP7UXPjUUTGQ0i-OAuhF6hjYqQg-CrkgIuJKg-cutG2mz_OGDb5AgNeotF0wJMJvjUI-puhyPTgF5-HupDfgwwkbpPX_z7hfz8mxRQ2-2Wvs1YgQE-NhQzQrJJcO8d0sz5qen_E"
+                />
+                <img
+                  class="w-8 h-8 rounded-full ring-2 ring-surface-container-lowest"
+                  data-alt="portrait of a young male sprinter in training gear"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6_Gjgwo98BQYwr2SSfQdMkinThMsd7tYtPuv2hWpakhv9e0uS9UtoZG3t1EelaUFL2QHyzGWfBHpTAe5t8cwXzgQWJxqRkc3ljcvkqPt6xZxP4MRAULGwaQn2yPKyJt7DmNnVA0GkaO8EyjC2Jc3JMUYOfTOZnIRebs2gnVG0hgjp2ohJ87Cm0vk63l0BlXIOBisfjiTRQapECxBkqBrNjAON2UulhE_u_KHOqyL7sH49m4loYdzK8GTZYubJ1nHBFOBPK0B_3dw5"
+                />
+                <div
+                  class="w-8 h-8 rounded-full bg-surface-container-high ring-2 ring-surface-container-lowest flex items-center justify-center text-[10px] font-bold text-on-surface-variant"
+                >
+                  +12
+                </div>
+              </div>
+              <span class="ml-4 text-xs font-semibold text-on-surface-variant"
+                >Miembros activos</span
+              >
+            </div>
+            <div
+              class="bg-surface-container-low rounded-lg p-3 flex items-center justify-between"
+            >
+              <div class="flex items-center gap-3">
+                <div
+                  class="w-10 h-10 bg-surface-container-lowest rounded-lg flex items-center justify-center"
+                >
+                  <span class="material-symbols-outlined text-secondary"
+                    >event_repeat</span
+                  >
+                </div>
+                <div class="flex flex-col">
+                  <span
+                    class="text-[10px] uppercase font-bold text-on-surface-variant tracking-widest"
+                    >Próxima Sesión</span
+                  >
+                  <span class="text-sm font-bold">Mañana, 07:30 AM</span>
+                </div>
+              </div>
+              <span class="material-symbols-outlined text-secondary"
+                >chevron_right</span
+              >
+            </div>
+          </div>
+          <!-- Group Card 2 -->
+          <div
+            class="bg-surface-container-lowest rounded-xl p-5 shadow-[0_12px_40px_rgba(23,28,31,0.06)] group transition-all"
+          >
+            <div class="flex justify-between items-start mb-4">
+              <div class="flex flex-col gap-1">
+                <h4
+                  class="text-lg font-bold headline-font group-hover:text-secondary transition-colors leading-tight"
+                >
+                  Crossfit Warriors
+                </h4>
+                <div class="flex items-center gap-2">
+                  <span
+                    class="bg-secondary-container/10 text-on-secondary-fixed-variant text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider"
+                    >Intensivo</span
+                  >
+                </div>
+              </div>
+              <span class="material-symbols-outlined text-outline"
+                >more_vert</span
+              >
+            </div>
+            <div class="flex items-center mb-6">
+              <div class="flex -space-x-3">
+                <img
+                  class="w-8 h-8 rounded-full ring-2 ring-surface-container-lowest"
+                  data-alt="portrait of an athletic man in a gritty urban gym setting"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9w285sTYwMXqB-iMyyuxLDESnqCA1v4AqFM3ikjMZyUt6BeyEKZeq3DY6TYeZBhE3GuXnKOmPfLAluq6y-Ub-TsBIdJ8l5W1MLhLflVoYrE88QLn4HPCaSvwvSvKcD4Dvok_1L7jJZKARUJ9RxWCO7Sth8gLsXo-xAFyVagil2-D4XG0LUbw_9rGhdI3Pj-WKoLEPc8FBK-fpaj39kaPY5J8TaFctDAcdq3NN37CrNdEbVG3zhjhfu1tetE9usNFNl-ohCnYr62rn"
+                />
+                <img
+                  class="w-8 h-8 rounded-full ring-2 ring-surface-container-lowest"
+                  data-alt="close up of a strong woman athlete during high intensity training"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTSfctik09oCHZxlTGIIshyZi4kyCqmr4U9iMIA8irYMvgySvb2x_mZdNWaFN3q_W7gH1c3xH_EkLhsj60lZ4Qwb-P-YLcgMGpKwd9vaZperp72GT6KMqdqY40Fip7ZOrkHKOdHTBghPu-X6NJJP7VRyFszwIV-Acgp3Nii1wCYqClpqySqyZSx0eUWsbH8WHBoBo53CIiV2050yXxpOIBKXJRXo0CG6XkBz8u6azFS4Jk_GtU0tKzt84SOH2X-30yxGTQxvZOyUf6"
+                />
+                <div
+                  class="w-8 h-8 rounded-full bg-surface-container-high ring-2 ring-surface-container-lowest flex items-center justify-center text-[10px] font-bold text-on-surface-variant"
+                >
+                  +8
+                </div>
+              </div>
+              <span class="ml-4 text-xs font-semibold text-on-surface-variant"
+                >Miembros activos</span
+              >
+            </div>
+            <div
+              class="bg-surface-container-low rounded-lg p-3 flex items-center justify-between"
+            >
+              <div class="flex items-center gap-3">
+                <div
+                  class="w-10 h-10 bg-surface-container-lowest rounded-lg flex items-center justify-center"
+                >
+                  <span class="material-symbols-outlined text-secondary"
+                    >fitness_center</span
+                  >
+                </div>
+                <div class="flex flex-col">
+                  <span
+                    class="text-[10px] uppercase font-bold text-on-surface-variant tracking-widest"
+                    >Próxima Sesión</span
+                  >
+                  <span class="text-sm font-bold">Jueves, 18:00 PM</span>
+                </div>
+              </div>
+              <span class="material-symbols-outlined text-secondary"
+                >chevron_right</span
+              >
+            </div>
+          </div>
+          <!-- Group Card 3 -->
+          <div
+            class="bg-surface-container-lowest rounded-xl p-5 shadow-[0_12px_40px_rgba(23,28,31,0.06)] group transition-all opacity-80"
+          >
+            <div class="flex justify-between items-start mb-4">
+              <div class="flex flex-col gap-1">
+                <h4
+                  class="text-lg font-bold headline-font group-hover:text-secondary transition-colors leading-tight"
+                >
+                  Yogis del Retiro
+                </h4>
+                <div class="flex items-center gap-2">
+                  <span
+                    class="bg-tertiary-fixed-dim/20 text-on-tertiary-fixed-variant text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider"
+                    >Relajación</span
+                  >
+                </div>
+              </div>
+              <span class="material-symbols-outlined text-outline"
+                >more_vert</span
+              >
+            </div>
+            <div class="flex items-center mb-6">
+              <div class="flex -space-x-3">
+                <img
+                  class="w-8 h-8 rounded-full ring-2 ring-surface-container-lowest"
+                  data-alt="serene portrait of a yoga instructor with calm natural lighting"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuBge6v1c0C_MFo3oSBA3mglr_7U7Qi-wXr6bU61R5l8k46LC3hyM_j_IUAJ3rAKEui40PKX0v7cJxWvInmdtFqihrmEuYWvWeGIfIMbia2cfrOCmMNc5JSP1SkzMvHjyEdX3se_s-0_ZO4UD85bAqVrXkbq1gr16787LkSs_gXqAZXp2OioiWArWT8kwzHsujca5ObsgIvF_8Hwe-MfR2Fqqn6MqxH9hSg_nCsGX-4-GvmIr3BG7Afg5f-cVNTpnkvTyK7e83nFO40J"
+                />
+                <img
+                  class="w-8 h-8 rounded-full ring-2 ring-surface-container-lowest"
+                  data-alt="headshot of a woman practicing mindfulness in an outdoor setting"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZ6_fPupFSCwtvaIuZFfR1NGWFVMnAAaBtZ3dIBLx-Ih2aznreMhKmhjiyD49ZXjIyehQOcah_AY0xOkHcBkNaBH9MsxeLUIxWTeAfVaPmFKsnjW884hKuWrPEbA7o61yTNjspNZ4Rp46pUo4s0Xn58B-rjvBq2DbN-VVXIaYGmW25z9ioFeZVoWvOEZpGq7vS8o-aG4_dYOdYoJVTzlK6YY3lq6jbKMcgBgaEDPVvLAfIwH47ROWlaijKnmJAk9ebPdgc0fETBbqq"
+                />
+                <div
+                  class="w-8 h-8 rounded-full bg-surface-container-high ring-2 ring-surface-container-lowest flex items-center justify-center text-[10px] font-bold text-on-surface-variant"
+                >
+                  +24
+                </div>
+              </div>
+              <span class="ml-4 text-xs font-semibold text-on-surface-variant"
+                >Miembros activos</span
+              >
+            </div>
+            <div
+              class="bg-surface-container-low rounded-lg p-3 flex items-center justify-between"
+            >
+              <div class="flex items-center gap-3">
+                <div
+                  class="w-10 h-10 bg-surface-container-lowest rounded-lg flex items-center justify-center"
+                >
+                  <span class="material-symbols-outlined text-secondary"
+                    >self_improvement</span
+                  >
+                </div>
+                <div class="flex flex-col">
+                  <span
+                    class="text-[10px] uppercase font-bold text-on-surface-variant tracking-widest"
+                    >Próxima Sesión</span
+                  >
+                  <span class="text-sm font-bold">Sábado, 10:00 AM</span>
+                </div>
+              </div>
+              <span class="material-symbols-outlined text-secondary"
+                >chevron_right</span
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-- BottomNavBar -->
+    <nav
+      class="fixed bottom-0 left-0 w-full flex justify-around items-center px-8 pb-8 pt-4 bg-white/80 dark:bg-[#122636]/80 backdrop-blur-xl z-50 border-t border-[#f0f4f8]/15 shadow-[0_-12px_40px_rgba(23,28,31,0.06)]"
+    >
+      <!-- Active Tab: Dashboard -->
+      <a
+        class="flex flex-col items-center gap-1 text-[#00101e] dark:text-[#f6fafe] scale-110 transition-transform duration-200 ease-in-out active:scale-90"
+        href="#"
+      >
+        <span
+          class="material-symbols-outlined"
+          style="font-variation-settings: &quot;FILL&quot; 1"
+          >dashboard</span
+        >
+        <span
+          class="font-['Manrope'] text-[10px] font-bold uppercase tracking-widest"
+          >Dashboard</span
+        >
+      </a>
+      <!-- Inactive Tab: Events -->
+      <a
+        class="flex flex-col items-center gap-1 text-[#122636]/40 dark:text-[#f0f4f8]/40 hover:text-[#00101e] dark:hover:text-[#f6fafe] transition-transform duration-200 ease-in-out active:scale-90"
+        href="#"
+      >
+        <span class="material-symbols-outlined">calendar_today</span>
+        <span
+          class="font-['Manrope'] text-[10px] font-bold uppercase tracking-widest"
+          >Events</span
+        >
+      </a>
+      <!-- Inactive Tab: Profile -->
+      <a
+        class="flex flex-col items-center gap-1 text-[#122636]/40 dark:text-[#f0f4f8]/40 hover:text-[#00101e] dark:hover:text-[#f6fafe] transition-transform duration-200 ease-in-out active:scale-90"
+        href="#"
+      >
+        <span class="material-symbols-outlined">person</span>
+        <span
+          class="font-['Manrope'] text-[10px] font-bold uppercase tracking-widest"
+          >Profile</span
+        >
+      </a>
+    </nav>
+    <!-- Contextual FAB (Only on Dashboard) -->
+    <button
+      class="fixed right-6 bottom-32 w-14 h-14 bg-primary text-on-primary rounded-full shadow-2xl flex items-center justify-center hover:bg-primary-container active:scale-95 duration-150 z-40"
+    >
+      <span class="material-symbols-outlined text-2xl">add</span>
+    </button>
+  </body>
+</html>

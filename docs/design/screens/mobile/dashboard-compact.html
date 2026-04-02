@@ -1,0 +1,411 @@
+<!doctype html>
+
+<html class="light" lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@700;800&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary-fixed": "#d0e5fa",
+              "on-secondary-container": "#fefcff",
+              "on-primary-fixed-variant": "#36495a",
+              "secondary-container": "#2170e4",
+              "on-secondary-fixed-variant": "#004395",
+              "on-error": "#ffffff",
+              "primary-container": "#122636",
+              "on-primary": "#ffffff",
+              "error-container": "#ffdad6",
+              "outline-variant": "#c3c7cc",
+              tertiary: "#160e00",
+              "surface-tint": "#4d6073",
+              "on-tertiary-fixed": "#251a00",
+              "secondary-fixed-dim": "#adc6ff",
+              "on-tertiary-fixed-variant": "#5a4300",
+              "on-surface": "#171c1f",
+              "tertiary-fixed-dim": "#f7be1d",
+              "surface-container-high": "#e4e9ed",
+              "on-tertiary": "#ffffff",
+              "tertiary-container": "#302200",
+              "surface-container-lowest": "#ffffff",
+              primary: "#00101e",
+              "on-secondary-fixed": "#001a42",
+              "secondary-fixed": "#d8e2ff",
+              "on-tertiary-container": "#af8500",
+              "inverse-surface": "#2c3134",
+              "on-surface-variant": "#43474c",
+              "on-primary-fixed": "#081d2d",
+              "on-secondary": "#ffffff",
+              outline: "#74777d",
+              "surface-bright": "#f6fafe",
+              error: "#ba1a1a",
+              "on-primary-container": "#7a8ea1",
+              "tertiary-fixed": "#ffdf9a",
+              "surface-container-highest": "#dfe3e7",
+              "surface-dim": "#d6dade",
+              "surface-container": "#eaeef2",
+              "on-error-container": "#93000a",
+              "inverse-primary": "#b5c9de",
+              "inverse-on-surface": "#edf1f5",
+              "primary-fixed-dim": "#b5c9de",
+              "surface-container-low": "#f0f4f8",
+              background: "#f6fafe",
+              surface: "#f6fafe",
+              secondary: "#0058be",
+              "on-background": "#171c1f",
+              "surface-variant": "#dfe3e7",
+            },
+            fontFamily: {
+              headline: ["Manrope"],
+              body: ["Inter"],
+              label: ["Inter"],
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #f6fafe;
+      }
+      .headline-font {
+        font-family: "Manrope", sans-serif;
+      }
+    </style>
+    <style>
+      body {
+        min-height: max(884px, 100dvh);
+      }
+    </style>
+  </head>
+  <body class="bg-background text-on-background min-h-screen pb-32">
+    <!-- TopAppBar -->
+    <header
+      class="w-full sticky top-0 z-50 bg-[#f6fafe] dark:bg-[#00101e] flex items-center justify-between px-6 py-4"
+    >
+      <div class="flex items-center gap-4">
+        <button
+          class="material-symbols-outlined text-[#00101e] dark:text-[#f6fafe] transition-colors scale-95 active:opacity-80 duration-150"
+          data-icon="arrow_back"
+        >
+          arrow_back
+        </button>
+        <h1
+          class="text-xl font-extrabold tracking-tighter text-[#00101e] dark:text-[#f6fafe] headline-font"
+        >
+          The Athletic
+        </h1>
+      </div>
+      <div class="flex items-center gap-3">
+        <span
+          class="material-symbols-outlined text-[#00101e] dark:text-[#f6fafe]"
+          >search</span
+        >
+        <div
+          class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant/15"
+        >
+          <img
+            class="w-full h-full object-cover"
+            data-alt="close-up portrait of a professional woman athlete with a focused expression in soft natural lighting"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCA3e-Y2sy9XOlw5Weac8VRg4RvCg-lGNoeR-cA7cMmgQ8F7UVe9ZDzExI_VEZcD2RpvszOVnNUiajjVinuZLpTnRRFpRxAHGThCmoPf4HtkFd4-H3uiNOYzdiLBpmqVavoV4CwGDtEGYJzMWmz_Bgq_mfnajPG-GT_AAjLsTvmFH3wVbskT63flAg-1BrfWw4FkPTOOUrVsnEhfG-sCLsSvQ1GJOI0ogPlOMXaMZGoTExFgQblJzz8HF72DEWHi2rb1A0qgGHP9q7"
+          />
+        </div>
+      </div>
+    </header>
+    <main class="px-6 pt-6 max-w-md mx-auto">
+      <!-- Hero Search -->
+      <section class="mb-6">
+        <h2 class="text-2xl font-extrabold headline-font tracking-tight mb-4">
+          Comunidades
+        </h2>
+        <div
+          class="bg-surface-container-low p-1 rounded-xl flex items-center shadow-sm"
+        >
+          <input
+            class="flex-grow bg-transparent border-none focus:ring-0 text-sm px-4 py-2.5 placeholder:text-on-surface-variant/50"
+            placeholder="Código o nombre..."
+            type="text"
+          />
+          <button
+            class="bg-primary text-on-primary text-xs font-bold px-4 py-2.5 rounded-lg hover:bg-primary-container transition-colors active:scale-95 duration-150"
+          >
+            Join
+          </button>
+        </div>
+      </section>
+      <!-- Stats Overview (Integrated & Compact) -->
+      <section class="mb-8">
+        <div
+          class="bg-gradient-to-br from-primary to-primary-container p-4 rounded-xl text-on-primary shadow-lg overflow-hidden relative flex items-center justify-between"
+        >
+          <div class="relative z-10">
+            <p
+              class="text-on-primary-container text-[10px] font-bold uppercase tracking-widest mb-0.5"
+            >
+              Semana
+            </p>
+            <div class="flex items-baseline gap-2">
+              <h3 class="text-3xl font-extrabold headline-font">84%</h3>
+              <div class="flex items-center gap-1">
+                <span
+                  class="material-symbols-outlined text-tertiary-fixed-dim text-sm"
+                  style="font-variation-settings: &quot;FILL&quot; 1"
+                  >stars</span
+                >
+                <span class="text-[10px] font-medium opacity-90"
+                  >Top 5% Local</span
+                >
+              </div>
+            </div>
+          </div>
+          <!-- Abstract visual element bleeding off edge -->
+          <div
+            class="absolute -right-6 -bottom-6 w-24 h-24 bg-secondary/20 rounded-full blur-2xl"
+          ></div>
+        </div>
+      </section>
+      <!-- Mis Grupos Section -->
+      <section class="mb-6">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-xl font-extrabold headline-font tracking-tight">
+            Mis Grupos
+          </h2>
+          <button
+            class="text-secondary font-bold text-xs tracking-wide uppercase"
+          >
+            Ver todos
+          </button>
+        </div>
+        <div class="space-y-4">
+          <!-- Group Card 1 -->
+          <div
+            class="bg-surface-container-lowest rounded-xl p-4 shadow-[0_8px_30px_rgba(23,28,31,0.04)] group transition-all"
+          >
+            <div class="flex justify-between items-start mb-3">
+              <div class="flex flex-col gap-0.5">
+                <h4
+                  class="text-base font-bold headline-font group-hover:text-secondary transition-colors leading-tight"
+                >
+                  Elite Runners Club
+                </h4>
+                <div class="flex items-center gap-2">
+                  <span
+                    class="bg-secondary-container/10 text-on-secondary-fixed-variant text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider"
+                    >Performance</span
+                  >
+                </div>
+              </div>
+              <span class="material-symbols-outlined text-outline text-lg"
+                >more_vert</span
+              >
+            </div>
+            <div class="flex items-center justify-between">
+              <div class="flex items-center">
+                <div class="flex -space-x-2.5">
+                  <img
+                    class="w-6 h-6 rounded-full ring-2 ring-surface-container-lowest"
+                    data-alt="member 1"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBIHRak-Ot6zihdVwMUBmdm3E67GV379tteCDB_QeiA6KeLuuw4syJao2SccYaAULbIS-ASQO1dXxOzIydPQcm_QOCKVFdt36zjri4HvuqyOJhMivHouDxqPT7MCs0J3qxql-KmIWwqWOzONjqzexrkHmYTqDhxTMckDfadqgpHixDbDS22Aylceo2cD418oRnIwUYsnn9fPmGSeZz1qF8Ek9vsekzYxS8NuQ4zGgJc3IYTDbGufkkC30-VDyNpfUkXdX0PclI6wy4F"
+                  />
+                  <img
+                    class="w-6 h-6 rounded-full ring-2 ring-surface-container-lowest"
+                    data-alt="member 2"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTXs2k6YUabVt8kMFIEY3tMzyGx1JRIxTMM8n3beOCWct7-45HuFNPDS52J-bFjbdjTOorMdN9BbedzGOLqUMuY0erm_3BW_69UkZLwbWvYXi0PKFRDp7aVgWxIhY1et2CHTnJzLP7UXPjUUTGQ0i-OAuhF6hjYqQg-CrkgIuJKg-cutG2mz_OGDb5AgNeotF0wJMJvjUI-puhyPTgF5-HupDfgwwkbpPX_z7hfz8mxRQ2-2Wvs1YgQE-NhQzQrJJcO8d0sz5qen_E"
+                  />
+                  <div
+                    class="w-6 h-6 rounded-full bg-surface-container-high ring-2 ring-surface-container-lowest flex items-center justify-center text-[8px] font-bold text-on-surface-variant"
+                  >
+                    +12
+                  </div>
+                </div>
+              </div>
+              <div
+                class="flex items-center gap-2 text-secondary bg-surface-container-low px-2.5 py-1.5 rounded-lg"
+              >
+                <span class="material-symbols-outlined text-sm"
+                  >event_repeat</span
+                >
+                <span class="text-xs font-bold">Mañana, 07:30</span>
+              </div>
+            </div>
+          </div>
+          <!-- Group Card 2 -->
+          <div
+            class="bg-surface-container-lowest rounded-xl p-4 shadow-[0_8px_30px_rgba(23,28,31,0.04)] group transition-all"
+          >
+            <div class="flex justify-between items-start mb-3">
+              <div class="flex flex-col gap-0.5">
+                <h4
+                  class="text-base font-bold headline-font group-hover:text-secondary transition-colors leading-tight"
+                >
+                  Crossfit Warriors
+                </h4>
+                <div class="flex items-center gap-2">
+                  <span
+                    class="bg-secondary-container/10 text-on-secondary-fixed-variant text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider"
+                    >Intensivo</span
+                  >
+                </div>
+              </div>
+              <span class="material-symbols-outlined text-outline text-lg"
+                >more_vert</span
+              >
+            </div>
+            <div class="flex items-center justify-between">
+              <div class="flex items-center">
+                <div class="flex -space-x-2.5">
+                  <img
+                    class="w-6 h-6 rounded-full ring-2 ring-surface-container-lowest"
+                    data-alt="member 1"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9w285sTYwMXqB-iMyyuxLDESnqCA1v4AqFM3ikjMZyUt6BeyEKZeq3DY6TYeZBhE3GuXnKOmPfLAluq6y-Ub-TsBIdJ8l5W1MLhLflVoYrE88QLn4HPCaSvwvSvKcD4Dvok_1L7jJZKARUJ9RxWCO7Sth8gLsXo-xAFyVagil2-D4XG0LUbw_9rGhdI3Pj-WKoLEPc8FBK-fpaj39kaPY5J8TaFctDAcdq3NN37CrNdEbVG3zhjhfu1tetE9usNFNl-ohCnYr62rn"
+                  />
+                  <img
+                    class="w-6 h-6 rounded-full ring-2 ring-surface-container-lowest"
+                    data-alt="member 2"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTSfctik09oCHZxlTGIIshyZi4kyCqmr4U9iMIA8irYMvgySvb2x_mZdNWaFN3q_W7gH1c3xH_EkLhsj60lZ4Qwb-P-YLcgMGpKwd9vaZperp72GT6KMqdqY40Fip7ZOrkHKOdHTBghPu-X6NJJP7VRyFszwIV-Acgp3Nii1wCYqClpqySqyZSx0eUWsbH8WHBoBo53CIiV2050yXxpOIBKXJRXo0CG6XkBz8u6azFS4Jk_GtU0tKzt84SOH2X-30yxGTQxvZOyUf6"
+                  />
+                  <div
+                    class="w-6 h-6 rounded-full bg-surface-container-high ring-2 ring-surface-container-lowest flex items-center justify-center text-[8px] font-bold text-on-surface-variant"
+                  >
+                    +8
+                  </div>
+                </div>
+              </div>
+              <div
+                class="flex items-center gap-2 text-secondary bg-surface-container-low px-2.5 py-1.5 rounded-lg"
+              >
+                <span class="material-symbols-outlined text-sm"
+                  >fitness_center</span
+                >
+                <span class="text-xs font-bold">Jueves, 18:00</span>
+              </div>
+            </div>
+          </div>
+          <!-- Group Card 3 -->
+          <div
+            class="bg-surface-container-lowest rounded-xl p-4 shadow-[0_8px_30px_rgba(23,28,31,0.04)] group transition-all opacity-80"
+          >
+            <div class="flex justify-between items-start mb-3">
+              <div class="flex flex-col gap-0.5">
+                <h4
+                  class="text-base font-bold headline-font group-hover:text-secondary transition-colors leading-tight"
+                >
+                  Yogis del Retiro
+                </h4>
+                <div class="flex items-center gap-2">
+                  <span
+                    class="bg-tertiary-fixed-dim/20 text-on-tertiary-fixed-variant text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider"
+                    >Relajación</span
+                  >
+                </div>
+              </div>
+              <span class="material-symbols-outlined text-outline text-lg"
+                >more_vert</span
+              >
+            </div>
+            <div class="flex items-center justify-between">
+              <div class="flex items-center">
+                <div class="flex -space-x-2.5">
+                  <img
+                    class="w-6 h-6 rounded-full ring-2 ring-surface-container-lowest"
+                    data-alt="member 1"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBge6v1c0C_MFo3oSBA3mglr_7U7Qi-wXr6bU61R5l8k46LC3hyM_j_IUAJ3rAKEui40PKX0v7cJxWvInmdtFqihrmEuYWvWeGIfIMbia2cfrOCmMNc5JSP1SkzMvHjyEdX3se_s-0_ZO4UD85bAqVrXkbq1gr16787LkSs_gXqAZXp2OioiWArWT8kwzHsujca5ObsgIvF_8Hwe-MfR2Fqqn6MqxH9hSg_nCsGX-4-GvmIr3BG7Afg5f-cVNTpnkvTyK7e83nFO40J"
+                  />
+                  <img
+                    class="w-6 h-6 rounded-full ring-2 ring-surface-container-lowest"
+                    data-alt="member 2"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZ6_fPupFSCwtvaIuZFfR1NGWFVMnAAaBtZ3dIBLx-Ih2aznreMhKmhjiyD49ZXjIyehQOcah_AY0xOkHcBkNaBH9MsxeLUIxWTeAfVaPmFKsnjW884hKuWrPEbA7o61yTNjspNZ4Rp46pUo4s0Xn58B-rjvBq2DbN-VVXIaYGmW25z9ioFeZVoWvOEZpGq7vS8o-aG4_dYOdYoJVTzlK6YY3lq6jbKMcgBgaEDPVvLAfIwH47ROWlaijKnmJAk9ebPdgc0fETBbqq"
+                  />
+                  <div
+                    class="w-6 h-6 rounded-full bg-surface-container-high ring-2 ring-surface-container-lowest flex items-center justify-center text-[8px] font-bold text-on-surface-variant"
+                  >
+                    +24
+                  </div>
+                </div>
+              </div>
+              <div
+                class="flex items-center gap-2 text-secondary bg-surface-container-low px-2.5 py-1.5 rounded-lg"
+              >
+                <span class="material-symbols-outlined text-sm"
+                  >self_improvement</span
+                >
+                <span class="text-xs font-bold">Sábado, 10:00</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-- BottomNavBar -->
+    <nav
+      class="fixed bottom-0 left-0 w-full flex justify-around items-center px-8 pb-8 pt-4 bg-white/90 dark:bg-[#122636]/90 backdrop-blur-xl z-50 border-t border-[#f0f4f8]/15 shadow-[0_-12px_40px_rgba(23,28,31,0.06)]"
+    >
+      <a
+        class="flex flex-col items-center gap-1 text-[#00101e] dark:text-[#f6fafe] transition-transform duration-200 ease-in-out active:scale-90"
+        href="#"
+      >
+        <span
+          class="material-symbols-outlined"
+          style="font-variation-settings: &quot;FILL&quot; 1"
+          >dashboard</span
+        >
+        <span
+          class="font-['Manrope'] text-[10px] font-bold uppercase tracking-widest"
+          >Dashboard</span
+        >
+      </a>
+      <a
+        class="flex flex-col items-center gap-1 text-[#122636]/40 dark:text-[#f0f4f8]/40 hover:text-[#00101e] dark:hover:text-[#f6fafe] transition-transform duration-200 ease-in-out active:scale-90"
+        href="#"
+      >
+        <span class="material-symbols-outlined">calendar_today</span>
+        <span
+          class="font-['Manrope'] text-[10px] font-bold uppercase tracking-widest"
+          >Events</span
+        >
+      </a>
+      <a
+        class="flex flex-col items-center gap-1 text-[#122636]/40 dark:text-[#f0f4f8]/40 hover:text-[#00101e] dark:hover:text-[#f6fafe] transition-transform duration-200 ease-in-out active:scale-90"
+        href="#"
+      >
+        <span class="material-symbols-outlined">person</span>
+        <span
+          class="font-['Manrope'] text-[10px] font-bold uppercase tracking-widest"
+          >Profile</span
+        >
+      </a>
+    </nav>
+    <!-- Contextual FAB -->
+    <button
+      class="fixed right-6 bottom-28 w-12 h-12 bg-primary text-on-primary rounded-full shadow-2xl flex items-center justify-center hover:bg-primary-container active:scale-95 duration-150 z-40"
+    >
+      <span class="material-symbols-outlined text-xl">add</span>
+    </button>
+  </body>
+</html>

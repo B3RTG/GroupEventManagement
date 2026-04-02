@@ -1,0 +1,675 @@
+<!doctype html>
+
+<html class="light" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Profile - Athletic Editorial</title>
+    <!-- Fonts: Manrope for headlines, Inter for body -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap"
+      rel="stylesheet"
+    />
+    <!-- Material Symbols -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-error": "#ffffff",
+              "on-surface-variant": "#43474c",
+              "on-primary-container": "#7a8ea1",
+              "surface-container-high": "#e4e9ed",
+              "surface-container-highest": "#dfe3e7",
+              error: "#ba1a1a",
+              "surface-container-lowest": "#ffffff",
+              "inverse-surface": "#2c3134",
+              primary: "#00101e",
+              "outline-variant": "#c3c7cc",
+              "on-secondary-fixed-variant": "#004395",
+              "on-error-container": "#93000a",
+              "tertiary-container": "#302200",
+              "on-tertiary-fixed": "#251a00",
+              surface: "#f6fafe",
+              "on-primary": "#ffffff",
+              "tertiary-fixed": "#ffdf9a",
+              "surface-variant": "#dfe3e7",
+              "inverse-on-surface": "#edf1f5",
+              "primary-container": "#122636",
+              "on-secondary-container": "#fefcff",
+              secondary: "#0058be",
+              "secondary-container": "#2170e4",
+              "on-primary-fixed": "#081d2d",
+              "surface-dim": "#d6dade",
+              "surface-bright": "#f6fafe",
+              "secondary-fixed": "#d8e2ff",
+              "on-secondary-fixed": "#001a42",
+              background: "#f6fafe",
+              "primary-fixed": "#d0e5fa",
+              "inverse-primary": "#b5c9de",
+              tertiary: "#160e00",
+              outline: "#74777d",
+              "on-secondary": "#ffffff",
+              "on-primary-fixed-variant": "#36495a",
+              "error-container": "#ffdad6",
+              "on-tertiary-fixed-variant": "#5a4300",
+              "on-tertiary-container": "#af8500",
+              "secondary-fixed-dim": "#adc6ff",
+              "tertiary-fixed-dim": "#f7be1d",
+              "surface-tint": "#4d6073",
+              "on-background": "#171c1f",
+              "primary-fixed-dim": "#b5c9de",
+              "surface-container-low": "#f0f4f8",
+              "on-surface": "#171c1f",
+              "surface-container": "#eaeef2",
+              "on-tertiary": "#ffffff",
+            },
+            fontFamily: {
+              headline: ["Manrope"],
+              body: ["Inter"],
+              label: ["Inter"],
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #f6fafe;
+      }
+      .font-manrope {
+        font-family: "Manrope", sans-serif;
+      }
+      .glass-nav {
+        backdrop-filter: blur(12px);
+      }
+    </style>
+  </head>
+  <body class="text-on-surface bg-background">
+    <!-- TopNavBar Component -->
+    <nav
+      class="fixed top-0 w-full z-50 bg-slate-50/80 dark:bg-slate-950/80 backdrop-blur-xl shadow-sm dark:shadow-none flex justify-between items-center px-8 h-16 max-w-full"
+    >
+      <div class="flex items-center gap-8">
+        <span
+          class="text-xl font-black tracking-tighter text-slate-900 dark:text-slate-50 font-manrope"
+          >Athletic Editorial</span
+        >
+        <div class="hidden md:flex gap-6 items-center">
+          <a
+            class="text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors font-manrope tracking-tight font-bold"
+            href="#"
+            >Dashboard</a
+          >
+          <a
+            class="text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors font-manrope tracking-tight font-bold"
+            href="#"
+            >Groups</a
+          >
+          <a
+            class="text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors font-manrope tracking-tight font-bold"
+            href="#"
+            >Events</a
+          >
+          <a
+            class="text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors font-manrope tracking-tight font-bold"
+            href="#"
+            >Schedule</a
+          >
+        </div>
+      </div>
+      <div class="flex items-center gap-4">
+        <button
+          class="p-2 rounded-full hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors"
+        >
+          <span
+            class="material-symbols-outlined text-slate-900 dark:text-slate-50"
+            >notifications</span
+          >
+        </button>
+        <button
+          class="p-2 rounded-full hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors"
+        >
+          <span
+            class="material-symbols-outlined text-slate-900 dark:text-slate-50"
+            >settings</span
+          >
+        </button>
+        <div
+          class="w-8 h-8 rounded-full bg-surface-container-high overflow-hidden border border-outline-variant/15"
+        >
+          <img
+            alt="User profile"
+            class="w-full h-full object-cover"
+            data-alt="close-up portrait of a professional female athlete in modern sportswear, soft studio lighting with clean background"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuD-EhhsrH72j41PEkF-I4YIXxasBKkdtKBGu3r-c5bvqozD4mOdHOp0cfS5pGfeq9r0Z-H1xtGGwbhMD1DZfS4iGo7WGXzz5QSi4Nm1j3M-dOe7bNdbh7fymD51QOtkZ5Ic1gNa1PjDXeMvjHKaO84atAlShMRcil8RoHI7C7Dd-MnSn5_RzIeltkGa5V-B3S3aUE6XTR9qQykS2Pl-DZMEODqfNnPTvQS-7rgmr4QhsNH6oEOeqhSIgE20J_IFpbu9dqgYsbwM201n"
+          />
+        </div>
+      </div>
+    </nav>
+    <main class="pt-24 pb-16 px-6 lg:px-12 max-w-7xl mx-auto">
+      <!-- Profile Header: Asymmetric Layout -->
+      <header class="relative mb-12 flex flex-col md:flex-row items-end gap-8">
+        <div class="relative group">
+          <div
+            class="w-32 h-32 md:w-40 md:h-40 rounded-xl overflow-hidden shadow-xl"
+          >
+            <img
+              class="w-full h-full object-cover"
+              data-alt="professional female athlete profile picture with focused expression and athletic attire"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBMK4wj2pD5Dwin8IKDsPR3pMxqB_H-Jt-0Qi6rdM41qx1FaQDMfX0aKCasdB_r7k6w0w6aVUIeceNWTqf5mGEzDhuQevc-gKF6IPi7MiAXztnavYHx4CXi9zH4bd6DGyFOQLncZeMtx3OZpntza7Jza4V3ye0k8Xl0g0DwD735MuDTz9f8fy59ANGAK9k8lyNmt6z4QSMyFSHAqLzbYGqSvFQtcq8NpW2rXWaDiNRu9hjGBQDgaagaJvvetju0towt_jm_QGkR1SqK"
+            />
+          </div>
+          <div
+            class="absolute -bottom-2 -right-2 bg-secondary text-on-secondary px-3 py-1 rounded-lg font-headline text-xs font-bold tracking-widest shadow-lg"
+          >
+            PRO ATHLETE
+          </div>
+        </div>
+        <div class="flex-1 space-y-2">
+          <h1
+            class="text-4xl md:text-5xl font-extrabold font-headline tracking-tighter text-primary"
+          >
+            Alex Sterling
+          </h1>
+          <div
+            class="flex items-center gap-4 text-on-surface-variant font-body text-sm font-medium"
+          >
+            <span class="flex items-center gap-1"
+              ><span class="material-symbols-outlined text-base">badge</span>
+              ID: AE-9920-X</span
+            >
+            <span class="flex items-center gap-1"
+              ><span class="material-symbols-outlined text-base"
+                >location_on</span
+              >
+              Portland, OR</span
+            >
+          </div>
+        </div>
+        <div class="flex gap-3">
+          <button
+            class="px-6 py-2.5 bg-primary text-on-primary rounded-lg font-headline font-bold text-sm hover:bg-primary-container transition-all scale-95 duration-150"
+          >
+            Edit Profile
+          </button>
+          <button
+            class="p-2.5 bg-surface-container-highest rounded-lg hover:bg-surface-container-high transition-all"
+          >
+            <span class="material-symbols-outlined">share</span>
+          </button>
+        </div>
+      </header>
+      <!-- Two Column Layout -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+        <!-- Sidebar: Navigation & Info -->
+        <aside class="lg:col-span-4 space-y-8">
+          <div class="bg-surface-container-lowest rounded-xl p-6 space-y-6">
+            <h3 class="font-headline font-bold text-lg tracking-tight">
+              Athlete Stats
+            </h3>
+            <div class="space-y-4">
+              <div
+                class="p-4 bg-surface-container-low rounded-lg flex items-center justify-between"
+              >
+                <span class="text-on-surface-variant font-medium"
+                  >Events Attended</span
+                >
+                <span class="font-headline font-black text-xl text-primary"
+                  >42</span
+                >
+              </div>
+              <div
+                class="p-4 bg-surface-container-low rounded-lg flex items-center justify-between"
+              >
+                <span class="text-on-surface-variant font-medium"
+                  >Active Groups</span
+                >
+                <span class="font-headline font-black text-xl text-primary"
+                  >08</span
+                >
+              </div>
+              <div
+                class="p-4 bg-surface-container-low rounded-lg flex items-center justify-between"
+              >
+                <span class="text-on-surface-variant font-medium"
+                  >Member Since</span
+                >
+                <span class="font-headline font-black text-xl text-primary"
+                  >2022</span
+                >
+              </div>
+            </div>
+          </div>
+          <div
+            class="bg-primary-container text-on-primary-container rounded-xl p-8 overflow-hidden relative"
+          >
+            <div class="relative z-10">
+              <h4 class="font-headline font-bold text-xl mb-2 text-white">
+                Unlock Precision Data
+              </h4>
+              <p class="text-sm opacity-80 mb-6 font-body leading-relaxed">
+                Upgrade to Curator+ for detailed athletic biomechanics and
+                priority event access.
+              </p>
+              <button
+                class="w-full py-3 bg-tertiary-fixed-dim text-tertiary font-headline font-bold rounded-lg hover:bg-tertiary-fixed transition-colors"
+              >
+                Upgrade Now
+              </button>
+            </div>
+            <div class="absolute -right-4 -bottom-4 opacity-10">
+              <span
+                class="material-symbols-outlined text-9xl"
+                style="font-variation-settings: &quot;FILL&quot; 1"
+                >analytics</span
+              >
+            </div>
+          </div>
+        </aside>
+        <!-- Main Content Area -->
+        <div class="lg:col-span-8 space-y-12">
+          <!-- Account Settings Section -->
+          <section id="settings">
+            <h2
+              class="font-headline font-extrabold text-2xl tracking-tighter mb-6 flex items-center gap-2"
+            >
+              Account Settings
+            </h2>
+            <div class="bg-surface-container-lowest rounded-xl p-8 space-y-8">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="space-y-2">
+                  <label
+                    class="text-xs font-bold uppercase tracking-widest text-on-surface-variant ml-1"
+                    >Email Address</label
+                  >
+                  <input
+                    class="w-full bg-surface-container-low border-none rounded-lg p-3 text-on-surface font-body focus:ring-2 focus:ring-secondary/20"
+                    type="email"
+                    value="a.sterling@athlete-ed.com"
+                  />
+                </div>
+                <div class="space-y-2">
+                  <label
+                    class="text-xs font-bold uppercase tracking-widest text-on-surface-variant ml-1"
+                    >Display Name</label
+                  >
+                  <input
+                    class="w-full bg-surface-container-low border-none rounded-lg p-3 text-on-surface font-body focus:ring-2 focus:ring-secondary/20"
+                    type="text"
+                    value="Alex Sterling"
+                  />
+                </div>
+              </div>
+              <div class="pt-4 space-y-4">
+                <h4
+                  class="font-headline font-bold text-sm text-on-surface-variant border-b border-outline-variant/15 pb-2"
+                >
+                  Notifications
+                </h4>
+                <div class="flex items-center justify-between">
+                  <div>
+                    <p class="font-headline font-bold">Push Notifications</p>
+                    <p class="text-sm text-on-surface-variant">
+                      Real-time alerts for event starts and group messages.
+                    </p>
+                  </div>
+                  <div class="relative inline-flex items-center cursor-pointer">
+                    <input checked="" class="sr-only peer" type="checkbox" />
+                    <div
+                      class="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-secondary"
+                    ></div>
+                  </div>
+                </div>
+                <div class="flex items-center justify-between">
+                  <div>
+                    <p class="font-headline font-bold">Email Digest</p>
+                    <p class="text-sm text-on-surface-variant">
+                      Weekly summary of activity and upcoming events.
+                    </p>
+                  </div>
+                  <div class="relative inline-flex items-center cursor-pointer">
+                    <input class="sr-only peer" type="checkbox" />
+                    <div
+                      class="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-secondary"
+                    ></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <!-- My Groups Section (Bento Inspired) -->
+          <section id="groups">
+            <div class="flex justify-between items-end mb-6">
+              <h2
+                class="font-headline font-extrabold text-2xl tracking-tighter"
+              >
+                My Groups
+              </h2>
+              <a
+                class="text-sm font-headline font-bold text-secondary hover:underline"
+                href="#"
+                >Explore All Groups</a
+              >
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <!-- Group Card 1 -->
+              <div
+                class="bg-surface-container-lowest p-6 rounded-xl space-y-4 hover:shadow-md transition-shadow group"
+              >
+                <div class="flex justify-between items-start">
+                  <div
+                    class="w-12 h-12 bg-primary-container rounded-lg flex items-center justify-center text-white"
+                  >
+                    <span class="material-symbols-outlined">sprint</span>
+                  </div>
+                  <span
+                    class="bg-secondary-container/20 text-on-secondary-fixed-variant px-3 py-1 rounded-full text-[10px] font-black tracking-widest uppercase"
+                    >Owner</span
+                  >
+                </div>
+                <div>
+                  <h3
+                    class="font-headline font-bold text-xl group-hover:text-secondary transition-colors"
+                  >
+                    Portland Trailblazers Run Club
+                  </h3>
+                  <p class="text-sm text-on-surface-variant font-body">
+                    2.4k Members • Active Daily
+                  </p>
+                </div>
+                <div class="flex -space-x-2 pt-2">
+                  <img
+                    alt=""
+                    class="w-8 h-8 rounded-full ring-2 ring-surface-container-lowest"
+                    data-alt="avatar of a male club member"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-pqnB36bT5eWmbDG1FSaYCMf1OrWmSDyXOynOQiipCisOudZnLPpPGwM7cirxYI8N-vM1v8Ig7L-cG82UnlVG_YJRrZCMoepA43AR1IYzSKurJgXaYflqRFivH51WAFX3Rw3bejiwMnIwmigqR_wG58NTM1keehXe2DnQY4bazA8vuiQFGhj0IzS9ppWft1dXncBJDHmlkVKyoH5TmKoTWOEKSWICAWTB9UQahBsD-3JcrEWo1UlttnV1caP1z8nL73-0ilXZzdCB"
+                  />
+                  <img
+                    alt=""
+                    class="w-8 h-8 rounded-full ring-2 ring-surface-container-lowest"
+                    data-alt="avatar of a female club member"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCHHGvGk5dvZFOnDtuLL2wyb3UNqm_oQgOVrc74q-Zwu7NZd3tOqEmlt7PGUcinBwH-9h5dYuFNCWzN2kXqEWZf7aSc0iTdwuQ5TYm2Fjo4cWrohcTvxWcbMH0oGKp6_k8QhyDo0VJYsUEeLbcKwr-X-BUn8uIVqUvkNZN3CyYIJp0tva9SSwy40M1qPOhGu9sVG7uBjJ7xjPiIB-8EBgREbDFCXH1yk09KADFr8UwMAZ8igRVd230KoUsaorAu1aYYe28WMNZvW4Jo"
+                  />
+                  <img
+                    alt=""
+                    class="w-8 h-8 rounded-full ring-2 ring-surface-container-lowest"
+                    data-alt="avatar of a male club member"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBH1cMYJMUla96db9J0L0OTirpuvwtDjAva7j7uRYQkt_ff15adZHWyLWnDhpKSB6UK0kbIZAF7EfNQtdd-JM00rQbMQ1H84Mg0yjCdwnYxrI0dCKkHl2xFmxJau9qyKNRWYHrH4osd1KUbT2k122hgcXSPsqGzB4luRS7HwNU1g7dybSkuSfXpfkYrlB8AD0Oe0P2JsUtDsKhbJBIW1nHCG40vUBorsik9Kp9tJhfvJbEv13p06O2Cxd_UwzSzJ7gZOKL2K7e2FW3P"
+                  />
+                  <div
+                    class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-[10px] font-bold ring-2 ring-surface-container-lowest"
+                  >
+                    +12
+                  </div>
+                </div>
+              </div>
+              <!-- Group Card 2 -->
+              <div
+                class="bg-surface-container-lowest p-6 rounded-xl space-y-4 hover:shadow-md transition-shadow group"
+              >
+                <div class="flex justify-between items-start">
+                  <div
+                    class="w-12 h-12 bg-surface-container-high rounded-lg flex items-center justify-center text-primary"
+                  >
+                    <span class="material-symbols-outlined"
+                      >directions_bike</span
+                    >
+                  </div>
+                  <span
+                    class="bg-surface-container-highest text-on-surface-variant px-3 py-1 rounded-full text-[10px] font-black tracking-widest uppercase"
+                    >Member</span
+                  >
+                </div>
+                <div>
+                  <h3
+                    class="font-headline font-bold text-xl group-hover:text-secondary transition-colors"
+                  >
+                    Alpine Ascent Cyclists
+                  </h3>
+                  <p class="text-sm text-on-surface-variant font-body">
+                    856 Members • Active Weekends
+                  </p>
+                </div>
+                <div class="flex -space-x-2 pt-2">
+                  <img
+                    alt=""
+                    class="w-8 h-8 rounded-full ring-2 ring-surface-container-lowest"
+                    data-alt="avatar of a male cyclist"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkW9oqo4PM7636plryBLNq9fz4-zlQ9BNs5r6e6DEJFO9EUMO7tE7qHc_Q8r_p9DTKmslHMCpVL115BI-4ERF_octLZCLQ4VWwwXSZm7KJCPzOWScSq5GSyOwY8e1-U4QqcexmyqHW1JJ4_GqbXAiakwiX3WOoRXLsPonyvupJIB-jOdGVSYSAT1c73bHALQ-Sxs6tkiqP8ap8lsE38uZdunc01tdgsD1KV1oXzb_YdfZsxB_SOToVDDBJtvIVRhi2tUAe88HctyxV"
+                  />
+                  <img
+                    alt=""
+                    class="w-8 h-8 rounded-full ring-2 ring-surface-container-lowest"
+                    data-alt="avatar of a female cyclist"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCIUVQy7OOrsEzY0G1vOaMcHgJ2GnHL-Pq2SE6c8id58Qiggf4Tlc-17tuMpUjMgBD_aiFzYXmPd5MeHyYvb6TL9ScHdmvFR4A_8Sr-nY0zTksv5xTD_u2Tko6kzreH7uWTzYeU6pB0d16ZDIJn3lY1dHWCYfTzrgErkDu2EJAff_6QnG9Mk3LSxBFUl-f-qyn0x8AT1HLhHkHD1gBrlP75pM1OwlMBUyuHSTZ-VVUofoFhIhxzCcM9X61eaNGezFecbFq4n71-_gSA"
+                  />
+                  <div
+                    class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-[10px] font-bold ring-2 ring-surface-container-lowest"
+                  >
+                    +4
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <!-- Activity History Section -->
+          <section id="history">
+            <h2
+              class="font-headline font-extrabold text-2xl tracking-tighter mb-6"
+            >
+              Activity History
+            </h2>
+            <div class="bg-surface-container-lowest rounded-xl overflow-hidden">
+              <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                  <thead
+                    class="bg-surface-container-low border-b border-outline-variant/15"
+                  >
+                    <tr>
+                      <th
+                        class="px-6 py-4 font-headline text-xs font-black uppercase tracking-widest text-on-surface-variant"
+                      >
+                        Event Name
+                      </th>
+                      <th
+                        class="px-6 py-4 font-headline text-xs font-black uppercase tracking-widest text-on-surface-variant"
+                      >
+                        Date
+                      </th>
+                      <th
+                        class="px-6 py-4 font-headline text-xs font-black uppercase tracking-widest text-on-surface-variant"
+                      >
+                        Performance
+                      </th>
+                      <th
+                        class="px-6 py-4 font-headline text-xs font-black uppercase tracking-widest text-on-surface-variant"
+                      >
+                        Status
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-surface-container-low">
+                    <tr
+                      class="hover:bg-surface-container-low/50 transition-colors"
+                    >
+                      <td class="px-6 py-6">
+                        <div class="flex items-center gap-3">
+                          <div
+                            class="w-10 h-10 rounded-lg bg-primary-container flex items-center justify-center text-white"
+                          >
+                            <span class="material-symbols-outlined text-lg"
+                              >timer</span
+                            >
+                          </div>
+                          <div>
+                            <p class="font-headline font-bold text-primary">
+                              Summit Trail Sprint
+                            </p>
+                            <p class="text-xs text-on-surface-variant">
+                              Forest Park, OR
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="px-6 py-6 font-body text-sm text-on-surface">
+                        Oct 14, 2024
+                      </td>
+                      <td
+                        class="px-6 py-6 font-headline font-bold text-primary"
+                      >
+                        Top 5%
+                      </td>
+                      <td class="px-6 py-6">
+                        <span
+                          class="px-3 py-1 bg-secondary/10 text-secondary text-[10px] font-black rounded-full uppercase tracking-widest"
+                          >Completed</span
+                        >
+                      </td>
+                    </tr>
+                    <tr
+                      class="hover:bg-surface-container-low/50 transition-colors"
+                    >
+                      <td class="px-6 py-6">
+                        <div class="flex items-center gap-3">
+                          <div
+                            class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-primary"
+                          >
+                            <span class="material-symbols-outlined text-lg"
+                              >fitness_center</span
+                            >
+                          </div>
+                          <div>
+                            <p class="font-headline font-bold text-primary">
+                              Iron Core Workshop
+                            </p>
+                            <p class="text-xs text-on-surface-variant">
+                              Athletic HQ
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="px-6 py-6 font-body text-sm text-on-surface">
+                        Sep 28, 2024
+                      </td>
+                      <td
+                        class="px-6 py-6 font-headline font-bold text-primary"
+                      >
+                        Certified
+                      </td>
+                      <td class="px-6 py-6">
+                        <span
+                          class="px-3 py-1 bg-secondary/10 text-secondary text-[10px] font-black rounded-full uppercase tracking-widest"
+                          >Completed</span
+                        >
+                      </td>
+                    </tr>
+                    <tr
+                      class="hover:bg-surface-container-low/50 transition-colors"
+                    >
+                      <td class="px-6 py-6">
+                        <div class="flex items-center gap-3">
+                          <div
+                            class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-primary"
+                          >
+                            <span class="material-symbols-outlined text-lg"
+                              >cycle</span
+                            >
+                          </div>
+                          <div>
+                            <p class="font-headline font-bold text-primary">
+                              Coastal Endurance Loop
+                            </p>
+                            <p class="text-xs text-on-surface-variant">
+                              Astoria, OR
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="px-6 py-6 font-body text-sm text-on-surface">
+                        Sep 12, 2024
+                      </td>
+                      <td
+                        class="px-6 py-6 font-headline font-bold text-primary"
+                      >
+                        DNP
+                      </td>
+                      <td class="px-6 py-6">
+                        <span
+                          class="px-3 py-1 bg-surface-container-high text-on-surface-variant text-[10px] font-black rounded-full uppercase tracking-widest"
+                          >Withdrawn</span
+                        >
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+    <!-- Footer Component -->
+    <footer class="w-full py-12 bg-slate-100 dark:bg-slate-900 mt-20">
+      <div
+        class="flex flex-col md:flex-row justify-between items-center px-8 max-w-7xl mx-auto space-y-6 md:space-y-0"
+      >
+        <div class="flex flex-col items-center md:items-start gap-2">
+          <span class="font-manrope font-bold text-slate-900 dark:text-slate-50"
+            >Athletic Editorial</span
+          >
+          <span
+            class="font-inter text-sm text-slate-600 dark:text-slate-400 opacity-80 hover:opacity-100 transition-all"
+            >© 2024 Athletic Editorial Precision Curator</span
+          >
+        </div>
+        <div class="flex gap-8">
+          <a
+            class="text-slate-500 dark:text-slate-400 hover:underline transition-all font-inter text-sm"
+            href="#"
+            >Privacy Policy</a
+          >
+          <a
+            class="text-slate-500 dark:text-slate-400 hover:underline transition-all font-inter text-sm"
+            href="#"
+            >Terms of Service</a
+          >
+          <a
+            class="text-slate-500 dark:text-slate-400 hover:underline transition-all font-inter text-sm"
+            href="#"
+            >Support</a
+          >
+          <a
+            class="text-slate-500 dark:text-slate-400 hover:underline transition-all font-inter text-sm"
+            href="#"
+            >Contact</a
+          >
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

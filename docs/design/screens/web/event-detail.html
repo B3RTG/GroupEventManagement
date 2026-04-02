@@ -1,0 +1,545 @@
+<!doctype html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Event Detail | Athletic Editorial</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              background: "#f6fafe",
+              "tertiary-fixed": "#ffdf9a",
+              secondary: "#0058be",
+              "outline-variant": "#c3c7cc",
+              "primary-container": "#122636",
+              "secondary-fixed": "#d8e2ff",
+              primary: "#00101e",
+              "surface-tint": "#4d6073",
+              "surface-container-highest": "#dfe3e7",
+              "surface-container-high": "#e4e9ed",
+              "on-tertiary-fixed-variant": "#5a4300",
+              "on-error-container": "#93000a",
+              "primary-fixed-dim": "#b5c9de",
+              outline: "#74777d",
+              "on-tertiary": "#ffffff",
+              "on-primary": "#ffffff",
+              "on-surface-variant": "#43474c",
+              surface: "#f6fafe",
+              "inverse-on-surface": "#edf1f5",
+              "surface-container-low": "#f0f4f8",
+              "tertiary-container": "#302200",
+              tertiary: "#160e00",
+              "secondary-container": "#2170e4",
+              error: "#ba1a1a",
+              "on-secondary-fixed": "#001a42",
+              "primary-fixed": "#d0e5fa",
+              "on-background": "#171c1f",
+              "tertiary-fixed-dim": "#f7be1d",
+              "on-secondary-container": "#fefcff",
+              "on-secondary": "#ffffff",
+              "surface-bright": "#f6fafe",
+              "on-tertiary-container": "#af8500",
+              "error-container": "#ffdad6",
+              "on-secondary-fixed-variant": "#004395",
+              "on-surface": "#171c1f",
+              "on-primary-container": "#7a8ea1",
+              "on-primary-fixed": "#081d2d",
+              "surface-dim": "#d6dade",
+              "surface-container-lowest": "#ffffff",
+              "secondary-fixed-dim": "#adc6ff",
+              "on-tertiary-fixed": "#251a00",
+              "on-error": "#ffffff",
+              "surface-container": "#eaeef2",
+              "inverse-surface": "#2c3134",
+              "surface-variant": "#dfe3e7",
+              "inverse-primary": "#b5c9de",
+              "on-primary-fixed-variant": "#36495a",
+            },
+            fontFamily: {
+              headline: ["Manrope"],
+              body: ["Inter"],
+              label: ["Inter"],
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+      .glass-nav {
+        background: rgba(246, 250, 254, 0.8);
+        backdrop-filter: blur(12px);
+      }
+      .editorial-shadow {
+        box-shadow: 0 12px 40px rgba(23, 28, 31, 0.06);
+      }
+      .asymmetric-bleed {
+        margin-right: -2rem;
+      }
+    </style>
+  </head>
+  <body class="bg-background font-body text-on-surface">
+    <!-- TopAppBar -->
+    <nav
+      class="fixed top-0 w-full z-50 bg-slate-50/80 dark:bg-slate-950/80 backdrop-blur-xl shadow-sm flex justify-between items-center px-8 h-16 max-w-full"
+    >
+      <div
+        class="text-xl font-black tracking-tighter text-slate-900 dark:text-slate-50 font-manrope"
+      >
+        Athletic Editorial
+      </div>
+      <div
+        class="hidden md:flex items-center gap-8 font-manrope tracking-tight font-bold"
+      >
+        <a
+          class="text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors"
+          href="#"
+          >Dashboard</a
+        >
+        <a
+          class="text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors"
+          href="#"
+          >Groups</a
+        >
+        <a
+          class="text-slate-900 dark:text-slate-50 border-b-2 border-slate-900 dark:border-slate-50 pb-1"
+          href="#"
+          >Events</a
+        >
+        <a
+          class="text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors"
+          href="#"
+          >Schedule</a
+        >
+      </div>
+      <div class="flex items-center gap-4">
+        <button
+          class="p-2 rounded-full hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors"
+        >
+          <span
+            class="material-symbols-outlined text-slate-900 dark:text-slate-50"
+            >notifications</span
+          >
+        </button>
+        <button
+          class="p-2 rounded-full hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors"
+        >
+          <span
+            class="material-symbols-outlined text-slate-900 dark:text-slate-50"
+            >settings</span
+          >
+        </button>
+        <img
+          alt="User profile"
+          class="w-8 h-8 rounded-full object-cover"
+          data-alt="Close-up portrait of a professional athlete with focused expression, soft natural side lighting, high contrast photography"
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuBfirUaBFF-ps936ZQrmJNldvqlhAvWSoc8PrpIZEzepRsYGFf4julhrO3-kaEJ_zFZs6uI4W8yLph4zFDDryFLIJfExJZW34HBKIA70jx9n4XtlnJb5s08hxxbACQT7_3NKPX4rq2f1zZykAq3-9zfSH1zQjDKKopyOFXJ1cWzI7p0pT_KJiPGsYO5WEB9aA_GZm4BRcxudCXWmOQgMU2OcAT0NUfe_7i35jBGhJQY0Q4IJf44LNKhgHI18A5iBlADYErYOwi21enI"
+        />
+      </div>
+    </nav>
+    <main class="pt-24 pb-20 px-8 max-w-7xl mx-auto">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+        <!-- Left Column: Content & Details -->
+        <div class="lg:col-span-8 space-y-12">
+          <!-- Hero Section -->
+          <section class="relative">
+            <div class="flex flex-col gap-4">
+              <div class="flex items-center gap-3">
+                <span
+                  class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full text-xs font-bold tracking-widest uppercase"
+                  >Elite Tournament</span
+                >
+                <span class="text-on-surface-variant text-sm font-medium"
+                  >Sat, Oct 12 • 09:00 AM</span
+                >
+              </div>
+              <h1
+                class="text-5xl md:text-7xl font-headline font-extrabold tracking-tighter text-primary leading-tight"
+              >
+                Midnight Padel <br />Master Series
+              </h1>
+            </div>
+            <div
+              class="mt-8 relative rounded-xl overflow-hidden aspect-[16/7] editorial-shadow"
+            >
+              <img
+                alt="Event cover"
+                class="w-full h-full object-cover"
+                data-alt="Modern indoor padel court with blue turf and high-tech overhead lighting at dusk, professional cinematic sports atmosphere"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAkcTaahwFYIGikgaQdHrdLnnQ6wcF8cEkj2jKKbp3QDdXDgSDIglpRUrmScrp7XAhv9D5XWODDq7WV2PACJy-2YLelXlQ7BUtZSJeUnZKIaECrDuFszMlDHVx-3ivW0JbZboHtFpXdSQ9SlhEaoWZKqxtr-iNDURRozw5y1g9rmYHceuB_4HsmfrGqOUidAOi9_HHOUqYsT5N9am2POtC-UlDeUw1YrLzCBdOLo2Hr_rJZgaYt1pbyUgI4ZL8EXL5Ch-x7J-ZX48pa"
+              />
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-primary/60 to-transparent"
+              ></div>
+              <div class="absolute bottom-6 left-6 flex items-center gap-4">
+                <div class="flex -space-x-3">
+                  <img
+                    class="w-10 h-10 rounded-full border-2 border-surface-container-lowest"
+                    data-alt="Portrait of a female runner in sportswear, outdoor lighting, blurred park background"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuAKxcz7iirb8j3pFkaEFEgD2uqNFpmWk6ZkJxxl8aTiGOrldDYsckrP4e957MGHYIpkZ-BKEkbS1cGiDl2zODvm4HZDRhckI-Srsh41c9nPxzXzsOZDyg8g5yAwlW9Jt_ytWiquJq8dmHxgI5XJkgJ-k66DkD99vua0boetczaIz1dK6e8Ly9G_CO0GUubTCBh0ijedyCAwqyIeTFpz0SU_w8u-by92Z7NchaeAIQHDRvP3teYqmp1Rx27siLcBeUvcEh8F8cE_Mg9-"
+                  />
+                  <img
+                    class="w-10 h-10 rounded-full border-2 border-surface-container-lowest"
+                    data-alt="Portrait of a athletic man, studio lighting, neutral background"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDXWrTFVbitjZALlDeSMFgAvvjZu1tyePHD0obDetUiL73ktFkk5c_r-rP1ppWbspEZgbvkiPk1hcxtO3vQRj9tWqOXbXcYO7SMx-uObu13RodcJmWBsxsLtOxTZ-EUdjn2bhm7SHD-u8n5yjjm_DJy7wn4aAdhA-_NVqUR88HOZsQNU1uAidzMsgHQh8NBtwkleEnUIG1WDi8JNwR_EITNKRvdUw-kddL0uPLEqbuuh6kn7941gzeAQHczX8GUlyi5dOk0zCMrpOjt"
+                  />
+                  <div
+                    class="w-10 h-10 rounded-full border-2 border-surface-container-lowest bg-primary-container flex items-center justify-center text-on-primary-container text-xs font-bold"
+                  >
+                    +24
+                  </div>
+                </div>
+                <p class="text-white text-sm font-medium">Joined the event</p>
+              </div>
+            </div>
+          </section>
+          <!-- Description Bento Grid -->
+          <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-surface-container-low p-8 rounded-xl">
+              <h3 class="font-headline font-bold text-xl mb-4">
+                The Challenge
+              </h3>
+              <p class="text-on-surface-variant leading-relaxed">
+                Experience the highest level of Padel coordination in the city.
+                This session focuses on high-speed transitions and defensive
+                strategy. Professional coaching staff will be on-site to provide
+                real-time data analysis.
+              </p>
+            </div>
+            <div
+              class="bg-surface-container-low p-8 rounded-xl flex flex-col justify-between"
+            >
+              <div>
+                <h3 class="font-headline font-bold text-xl mb-4">Location</h3>
+                <p class="text-on-surface-variant mb-2">
+                  Padel Dome Precinct, Court 4 &amp; 5
+                </p>
+                <p class="text-secondary font-medium flex items-center gap-2">
+                  <span class="material-symbols-outlined text-sm"
+                    >location_on</span
+                  >
+                  View in Maps
+                </p>
+              </div>
+              <div class="mt-4 pt-4 border-t border-outline-variant/15">
+                <div
+                  class="flex justify-between items-center text-sm font-medium"
+                >
+                  <span class="text-on-surface-variant">Weather Forecast</span>
+                  <span class="flex items-center gap-1 text-primary"
+                    >22°C
+                    <span class="material-symbols-outlined text-sm"
+                      >sunny</span
+                    ></span
+                  >
+                </div>
+              </div>
+            </div>
+          </section>
+          <!-- Tracks / Courts Info -->
+          <section class="space-y-6">
+            <div class="flex items-center justify-between">
+              <h2 class="text-3xl font-headline font-extrabold tracking-tight">
+                Assigned Tracks
+              </h2>
+              <span
+                class="text-secondary font-bold text-sm tracking-widest uppercase"
+                >2 Courts Reserved</span
+              >
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div
+                class="group relative overflow-hidden rounded-xl bg-surface-container-lowest border border-outline-variant/10 p-6 editorial-shadow transition-transform hover:-translate-y-1"
+              >
+                <div class="flex justify-between items-start mb-6">
+                  <div>
+                    <h4 class="font-headline font-bold text-lg">
+                      Main Track (C4)
+                    </h4>
+                    <p class="text-xs text-on-surface-variant font-medium">
+                      Advanced Play Level
+                    </p>
+                  </div>
+                  <span
+                    class="bg-primary text-on-primary px-3 py-1 rounded text-xs font-black tracking-tighter"
+                    >HD BROADCAST</span
+                  >
+                </div>
+                <div class="flex items-center gap-4">
+                  <div
+                    class="flex-1 h-2 bg-surface-container-high rounded-full overflow-hidden"
+                  >
+                    <div class="h-full bg-secondary w-full"></div>
+                  </div>
+                  <span class="text-sm font-bold text-primary">4/4</span>
+                </div>
+              </div>
+              <div
+                class="group relative overflow-hidden rounded-xl bg-surface-container-lowest border border-outline-variant/10 p-6 editorial-shadow transition-transform hover:-translate-y-1"
+              >
+                <div class="flex justify-between items-start mb-6">
+                  <div>
+                    <h4 class="font-headline font-bold text-lg">
+                      Secondary (C5)
+                    </h4>
+                    <p class="text-xs text-on-surface-variant font-medium">
+                      Intermediate Play
+                    </p>
+                  </div>
+                  <span
+                    class="bg-surface-container-highest text-on-surface-variant px-3 py-1 rounded text-xs font-bold tracking-tight"
+                    >OPEN</span
+                  >
+                </div>
+                <div class="flex items-center gap-4">
+                  <div
+                    class="flex-1 h-2 bg-surface-container-high rounded-full overflow-hidden"
+                  >
+                    <div class="h-full bg-secondary w-3/4"></div>
+                  </div>
+                  <span class="text-sm font-bold text-primary">3/4</span>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+        <!-- Right Column: Registration Card -->
+        <aside class="lg:col-span-4 lg:sticky lg:top-24 space-y-6">
+          <div
+            class="bg-surface-container-lowest rounded-xl p-8 editorial-shadow border border-outline-variant/10"
+          >
+            <div class="mb-8">
+              <div class="flex justify-between items-end mb-2">
+                <span class="text-sm font-bold text-on-surface-variant"
+                  >Current Capacity</span
+                >
+                <span class="text-xl font-headline font-black text-primary"
+                  >7 / 8
+                  <span class="text-sm text-on-surface-variant font-medium"
+                    >slots</span
+                  ></span
+                >
+              </div>
+              <div
+                class="w-full h-3 bg-surface-container-low rounded-full overflow-hidden"
+              >
+                <div
+                  class="h-full bg-gradient-to-r from-primary to-secondary w-[87.5%]"
+                ></div>
+              </div>
+              <p
+                class="mt-3 text-xs text-secondary font-bold flex items-center gap-1"
+              >
+                <span class="material-symbols-outlined text-xs"
+                  >local_fire_department</span
+                >
+                Only 1 spot remaining!
+              </p>
+            </div>
+            <div class="space-y-4 mb-8">
+              <div
+                class="flex items-center gap-4 p-4 rounded-lg bg-surface-container-low"
+              >
+                <span class="material-symbols-outlined text-secondary"
+                  >calendar_today</span
+                >
+                <div>
+                  <p
+                    class="text-xs font-bold text-on-surface-variant uppercase tracking-wider"
+                  >
+                    Date
+                  </p>
+                  <p class="text-sm font-bold">October 12, 2024</p>
+                </div>
+              </div>
+              <div
+                class="flex items-center gap-4 p-4 rounded-lg bg-surface-container-low"
+              >
+                <span class="material-symbols-outlined text-secondary"
+                  >schedule</span
+                >
+                <div>
+                  <p
+                    class="text-xs font-bold text-on-surface-variant uppercase tracking-wider"
+                  >
+                    Time
+                  </p>
+                  <p class="text-sm font-bold">09:00 AM - 11:30 AM</p>
+                </div>
+              </div>
+              <div
+                class="flex items-center gap-4 p-4 rounded-lg bg-surface-container-low"
+              >
+                <span class="material-symbols-outlined text-secondary"
+                  >payments</span
+                >
+                <div>
+                  <p
+                    class="text-xs font-bold text-on-surface-variant uppercase tracking-wider"
+                  >
+                    Price
+                  </p>
+                  <p class="text-sm font-bold">
+                    $25.00
+                    <span class="text-xs text-on-surface-variant"
+                      >/ player</span
+                    >
+                  </p>
+                </div>
+              </div>
+            </div>
+            <button
+              class="w-full py-4 bg-primary text-on-primary rounded-xl font-headline font-bold text-lg hover:bg-primary-container transition-all active:scale-95 shadow-lg shadow-primary/20"
+            >
+              Registrarme
+            </button>
+            <p class="mt-4 text-center text-xs text-on-surface-variant">
+              Cancel for free up to 24h before event.
+            </p>
+          </div>
+          <!-- Registered Members List -->
+          <div class="bg-surface-container-low rounded-xl p-6">
+            <h4
+              class="font-headline font-bold text-sm uppercase tracking-widest text-on-surface-variant mb-6"
+            >
+              Registered Players
+            </h4>
+            <div class="space-y-4">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <img
+                    class="w-10 h-10 rounded-full object-cover"
+                    data-alt="Portrait of a smiling man in athletic gear, morning sunlight, soft bokeh background"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1DARoZq1tA_kx6OZPUerxgTpRNn4G_Y8D1pE2ZiAWYbuMJpCU40Ne4W9zS9z2r6VaQ7eHGbxkrCvvW-waGouBE5bABMFJO7H5ZDtGVXdNQE12m3NPSA1QXCHbNU-_YtA1ZOOnI0hoNaJDqVLbXTDVDffIv-kicA6vD67uJ7ckMsCzIMaj2Jcqnpk2CXS8NknxM158A63QxGgSuyZavI_bMYdNO1dhef08PKoEexQcp-ckD-xf2iBwj7x5r2927seIgopsoU-5rl0n"
+                  />
+                  <div>
+                    <p class="text-sm font-bold">Marcus Chen</p>
+                    <p
+                      class="text-[10px] font-bold text-secondary uppercase tracking-tighter"
+                    >
+                      Pro Level
+                    </p>
+                  </div>
+                </div>
+                <span
+                  class="material-symbols-outlined text-on-surface-variant text-sm"
+                  style="font-variation-settings: &quot;FILL&quot; 1"
+                  >verified</span
+                >
+              </div>
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <img
+                    class="w-10 h-10 rounded-full object-cover"
+                    data-alt="Close-up portrait of a woman with braided hair, fitness studio environment, ambient lighting"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBEK8kjJYUYM5A0lnpn12IURSGsGdd9gFpsDIxAnGGdwlgclTUAUTy7d0HS2i6AjOa5YMUzbv5s0T5XrKzkX1r4n7vD2dIe0vG0hD898R2kSSao5J83l5JLq3ihxOUYBCo4PYQlc9dwVQ5JCSx6PNUhW7ZSy7JTD33W8Ag0wxN8LN4S3zHr8AauN5l4ExADsZh4btTGvu2hfaXW8wJGJW2Zcw5Lrd-FcgRPeByiclJf8NLWO9lXfIk0x1rh0JmAd7TNhJqbzEokc6rN"
+                  />
+                  <div>
+                    <p class="text-sm font-bold">Elena Rodriguez</p>
+                    <p
+                      class="text-[10px] font-bold text-on-surface-variant uppercase tracking-tighter"
+                    >
+                      Advanced
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <img
+                    class="w-10 h-10 rounded-full object-cover"
+                    data-alt="Business professional athlete portrait, soft office window light, clean composition"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCAjT2IfEWaBfK4bWZRZ6r3FbuVgET9OKZDc7VtsjMxU6iN3Rqpu5_2HQ_9DVt0ndl1ApangEt7ZMQghfGD8gcJlI6CW1H_UPb1gRMSAc1n4soecnE1qtNW60Zxo1rAEgxETIMwkzfShjMytLVH0vVJc_SZeg9ydpOzy5uax0Y56l-wxHf24Mo4V0ur4b3VR5yLfIRReJQrzLPkjN7FqNDi5cVJJw9aXKZj-UzQ0aAMU9BcBuPvxMOQWHBq5C8_MLwaJYVnLAaGWiin"
+                  />
+                  <div>
+                    <p class="text-sm font-bold">David Smith</p>
+                    <p
+                      class="text-[10px] font-bold text-on-surface-variant uppercase tracking-tighter"
+                    >
+                      Intermediate
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <button
+                class="w-full text-center text-xs font-bold text-secondary pt-2 border-t border-outline-variant/15 hover:underline transition-all"
+              >
+                See all 7 players
+              </button>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </main>
+    <!-- Footer -->
+    <footer class="bg-slate-100 dark:bg-slate-900 w-full py-12">
+      <div
+        class="flex flex-col md:flex-row justify-between items-center px-8 max-w-7xl mx-auto"
+      >
+        <div
+          class="font-manrope font-bold text-slate-900 dark:text-slate-50 mb-6 md:mb-0"
+        >
+          Athletic Editorial Precision Curator
+        </div>
+        <div
+          class="flex flex-wrap justify-center gap-8 font-inter text-sm text-slate-600 dark:text-slate-400"
+        >
+          <a
+            class="hover:underline transition-all opacity-80 hover:opacity-100"
+            href="#"
+            >Privacy Policy</a
+          >
+          <a
+            class="hover:underline transition-all opacity-80 hover:opacity-100"
+            href="#"
+            >Terms of Service</a
+          >
+          <a
+            class="hover:underline transition-all opacity-80 hover:opacity-100"
+            href="#"
+            >Support</a
+          >
+          <a
+            class="hover:underline transition-all opacity-80 hover:opacity-100"
+            href="#"
+            >Contact</a
+          >
+        </div>
+        <div
+          class="mt-8 md:mt-0 font-inter text-sm text-slate-500 dark:text-slate-400"
+        >
+          © 2024 Athletic Editorial Precision Curator
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

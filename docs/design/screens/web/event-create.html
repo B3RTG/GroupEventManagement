@@ -1,0 +1,579 @@
+<!doctype html>
+
+<html class="light" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Edit Event | Athletic Editorial</title>
+    <!-- Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap"
+      rel="stylesheet"
+    />
+    <!-- Icons -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-error": "#ffffff",
+              "on-surface-variant": "#43474c",
+              "on-primary-container": "#7a8ea1",
+              "surface-container-high": "#e4e9ed",
+              "surface-container-highest": "#dfe3e7",
+              error: "#ba1a1a",
+              "surface-container-lowest": "#ffffff",
+              "inverse-surface": "#2c3134",
+              primary: "#00101e",
+              "outline-variant": "#c3c7cc",
+              "on-secondary-fixed-variant": "#004395",
+              "on-error-container": "#93000a",
+              "tertiary-container": "#302200",
+              "on-tertiary-fixed": "#251a00",
+              surface: "#f6fafe",
+              "on-primary": "#ffffff",
+              "tertiary-fixed": "#ffdf9a",
+              "surface-variant": "#dfe3e7",
+              "inverse-on-surface": "#edf1f5",
+              "primary-container": "#122636",
+              "on-secondary-container": "#fefcff",
+              secondary: "#0058be",
+              "secondary-container": "#2170e4",
+              "on-primary-fixed": "#081d2d",
+              "surface-dim": "#d6dade",
+              "surface-bright": "#f6fafe",
+              "secondary-fixed": "#d8e2ff",
+              "on-secondary-fixed": "#001a42",
+              background: "#f6fafe",
+              "primary-fixed": "#d0e5fa",
+              "inverse-primary": "#b5c9de",
+              tertiary: "#160e00",
+              outline: "#74777d",
+              "on-secondary": "#ffffff",
+              "on-primary-fixed-variant": "#36495a",
+              "error-container": "#ffdad6",
+              "on-tertiary-fixed-variant": "#5a4300",
+              "on-tertiary-container": "#af8500",
+              "secondary-fixed-dim": "#adc6ff",
+              "tertiary-fixed-dim": "#f7be1d",
+              "surface-tint": "#4d6073",
+              "on-background": "#171c1f",
+              "primary-fixed-dim": "#b5c9de",
+              "surface-container-low": "#f0f4f8",
+              "on-surface": "#171c1f",
+              "surface-container": "#eaeef2",
+              "on-tertiary": "#ffffff",
+            },
+            fontFamily: {
+              headline: ["Manrope"],
+              body: ["Inter"],
+              label: ["Inter"],
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+      body {
+        font-family: "Inter", sans-serif;
+      }
+      h1,
+      h2,
+      h3,
+      .headline {
+        font-family: "Manrope", sans-serif;
+      }
+    </style>
+  </head>
+  <body class="bg-background text-on-background selection:bg-secondary-fixed">
+    <!-- TopNavBar -->
+    <nav
+      class="fixed top-0 w-full z-50 bg-slate-50/80 dark:bg-slate-950/80 backdrop-blur-xl shadow-sm dark:shadow-none"
+    >
+      <div class="flex justify-between items-center px-8 h-16 max-w-full">
+        <div class="flex items-center gap-8">
+          <span
+            class="text-xl font-black tracking-tighter text-slate-900 dark:text-slate-50"
+            >Athletic Editorial</span
+          >
+          <div class="hidden md:flex gap-6 items-center">
+            <a
+              class="font-manrope tracking-tight font-bold text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors"
+              href="#"
+              >Dashboard</a
+            >
+            <a
+              class="font-manrope tracking-tight font-bold text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors"
+              href="#"
+              >Groups</a
+            >
+            <a
+              class="font-manrope tracking-tight font-bold text-slate-900 dark:text-slate-50 border-b-2 border-slate-900 dark:border-slate-50 pb-1"
+              href="#"
+              >Events</a
+            >
+            <a
+              class="font-manrope tracking-tight font-bold text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors"
+              href="#"
+              >Schedule</a
+            >
+          </div>
+        </div>
+        <div class="flex items-center gap-4">
+          <button
+            class="p-2 rounded-full hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors scale-95 duration-150 ease-in-out"
+          >
+            <span
+              class="material-symbols-outlined text-slate-900 dark:text-slate-50"
+              data-icon="notifications"
+              >notifications</span
+            >
+          </button>
+          <button
+            class="p-2 rounded-full hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors scale-95 duration-150 ease-in-out"
+          >
+            <span
+              class="material-symbols-outlined text-slate-900 dark:text-slate-50"
+              data-icon="settings"
+              >settings</span
+            >
+          </button>
+          <img
+            alt="User profile"
+            class="w-8 h-8 rounded-full ml-2 ring-2 ring-surface-container-high"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAZYEmbFgec-eiJ21l0_CIoM6bTa7pdyK-BS_MMHT_vrXj6iB3ynC7kL5xBRkE5QYhULAVy1RCbG2DchD8Mvu-plPQDv6lrzM0pAFpfj63AKKYaT-VnNFSAfaD8Kx4q1oXe3qm4QH09_gIk5VEPR8zrUnsOfNNSPWokfbFqa9RxA1uxFRr4o0oFJ9AbwmVmw5cwBAjwRlSZK0i3AAb3CmD2VVqQo_oa938GbcOZJIFXjWYQhXsXldVFGDH5C96id3GE5O_spExb4JJQ"
+          />
+        </div>
+      </div>
+    </nav>
+    <!-- Main Content Canvas -->
+    <main class="pt-24 pb-20 px-4 md:px-8 max-w-7xl mx-auto">
+      <!-- Header Section -->
+      <header
+        class="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6"
+      >
+        <div class="space-y-2">
+          <div
+            class="flex items-center gap-2 text-secondary font-semibold text-sm tracking-wide uppercase"
+          >
+            <span class="material-symbols-outlined text-sm" data-icon="edit"
+              >edit</span
+            >
+            <span>Admin View</span>
+          </div>
+          <h1
+            class="text-4xl md:text-5xl font-extrabold tracking-tight text-primary leading-tight"
+          >
+            Edit Group Event
+          </h1>
+          <p class="text-on-surface-variant max-w-xl body-md">
+            Curate the precision of your upcoming athletic gathering. Managed
+            tracks and individual capacities ensure elite performance logistics.
+          </p>
+        </div>
+        <div class="flex items-center gap-3">
+          <button
+            class="px-6 py-3 rounded-xl bg-surface-container-highest text-primary font-bold transition-all hover:bg-surface-container-high scale-95 duration-150 active:scale-90"
+          >
+            Save as Draft
+          </button>
+          <button
+            class="px-8 py-3 rounded-xl bg-primary text-on-primary font-bold shadow-lg shadow-primary/20 transition-all hover:bg-primary-container scale-95 duration-150 active:scale-90 flex items-center gap-2"
+          >
+            <span class="material-symbols-outlined" data-icon="publish"
+              >publish</span
+            >
+            Publish
+          </button>
+        </div>
+      </header>
+      <!-- Bento Grid Form Layout -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <!-- Left Column: Primary Details (8 Cols) -->
+        <div class="lg:col-span-8 space-y-8">
+          <!-- General Information Card -->
+          <section class="p-8 rounded-xl bg-surface-container-lowest shadow-sm">
+            <h2
+              class="text-xl font-bold text-primary mb-6 flex items-center gap-3"
+            >
+              <span
+                class="material-symbols-outlined text-secondary"
+                data-icon="info"
+                >info</span
+              >
+              General Information
+            </h2>
+            <div class="space-y-6">
+              <div class="group">
+                <label
+                  class="block text-sm font-bold text-on-surface-variant mb-2 ml-1"
+                  >Event Name</label
+                >
+                <input
+                  class="w-full bg-surface-container-low border-none rounded-lg p-4 focus:ring-2 focus:ring-secondary/20 transition-all font-semibold"
+                  placeholder="Enter descriptive name..."
+                  type="text"
+                  value="Elite Sprint Series - North District"
+                />
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="group">
+                  <label
+                    class="block text-sm font-bold text-on-surface-variant mb-2 ml-1"
+                    >Date</label
+                  >
+                  <div class="relative">
+                    <input
+                      class="w-full bg-surface-container-low border-none rounded-lg p-4 focus:ring-2 focus:ring-secondary/20 transition-all font-semibold"
+                      type="date"
+                      value="2024-11-15"
+                    />
+                    <span
+                      class="material-symbols-outlined absolute right-4 top-4 text-outline"
+                      data-icon="calendar_today"
+                      >calendar_today</span
+                    >
+                  </div>
+                </div>
+                <div class="group">
+                  <label
+                    class="block text-sm font-bold text-on-surface-variant mb-2 ml-1"
+                    >Time</label
+                  >
+                  <div class="relative">
+                    <input
+                      class="w-full bg-surface-container-low border-none rounded-lg p-4 focus:ring-2 focus:ring-secondary/20 transition-all font-semibold"
+                      type="time"
+                      value="09:00"
+                    />
+                    <span
+                      class="material-symbols-outlined absolute right-4 top-4 text-outline"
+                      data-icon="schedule"
+                      >schedule</span
+                    >
+                  </div>
+                </div>
+              </div>
+              <div class="group">
+                <label
+                  class="block text-sm font-bold text-on-surface-variant mb-2 ml-1"
+                  >Description</label
+                >
+                <textarea
+                  class="w-full bg-surface-container-low border-none rounded-lg p-4 focus:ring-2 focus:ring-secondary/20 transition-all font-medium"
+                  placeholder="Describe the technical requirements and event flow..."
+                  rows="4"
+                >
+A high-intensity training session focusing on anaerobic threshold and peak velocity mechanics. Open to Group A and B members only. Professional coaching present for data review.</textarea
+                >
+              </div>
+            </div>
+          </section>
+          <!-- Track Management Section -->
+          <section class="p-8 rounded-xl bg-surface-container-lowest shadow-sm">
+            <div class="flex justify-between items-center mb-6">
+              <h2
+                class="text-xl font-bold text-primary flex items-center gap-3"
+              >
+                <span
+                  class="material-symbols-outlined text-secondary"
+                  data-icon="lan"
+                  >lan</span
+                >
+                Track Management
+              </h2>
+              <button
+                class="text-secondary font-bold text-sm flex items-center gap-1 hover:underline"
+              >
+                <span
+                  class="material-symbols-outlined text-base"
+                  data-icon="add_circle"
+                  >add_circle</span
+                >
+                Add Track
+              </button>
+            </div>
+            <div class="space-y-4">
+              <!-- Track Item 1 -->
+              <div
+                class="flex flex-col md:flex-row md:items-center gap-4 p-5 rounded-xl bg-surface-container-low group hover:bg-surface-container transition-all"
+              >
+                <div class="flex-grow">
+                  <label
+                    class="block text-[10px] font-black uppercase tracking-widest text-on-surface-variant mb-1"
+                    >Track Identifier</label
+                  >
+                  <input
+                    class="bg-transparent border-none p-0 focus:ring-0 w-full font-bold text-primary text-lg"
+                    type="text"
+                    value="Main Indoor Track"
+                  />
+                </div>
+                <div class="w-full md:w-32">
+                  <label
+                    class="block text-[10px] font-black uppercase tracking-widest text-on-surface-variant mb-1"
+                    >Capacity</label
+                  >
+                  <input
+                    class="bg-transparent border-none p-0 focus:ring-0 w-full font-bold text-secondary text-lg"
+                    type="number"
+                    value="24"
+                  />
+                </div>
+                <button
+                  class="p-2 rounded-lg text-outline-variant hover:text-error transition-colors"
+                >
+                  <span class="material-symbols-outlined" data-icon="delete"
+                    >delete</span
+                  >
+                </button>
+              </div>
+              <!-- Track Item 2 -->
+              <div
+                class="flex flex-col md:flex-row md:items-center gap-4 p-5 rounded-xl bg-surface-container-low group hover:bg-surface-container transition-all"
+              >
+                <div class="flex-grow">
+                  <label
+                    class="block text-[10px] font-black uppercase tracking-widest text-on-surface-variant mb-1"
+                    >Track Identifier</label
+                  >
+                  <input
+                    class="bg-transparent border-none p-0 focus:ring-0 w-full font-bold text-primary text-lg"
+                    type="text"
+                    value="Outdoor Warmup Lane"
+                  />
+                </div>
+                <div class="w-full md:w-32">
+                  <label
+                    class="block text-[10px] font-black uppercase tracking-widest text-on-surface-variant mb-1"
+                    >Capacity</label
+                  >
+                  <input
+                    class="bg-transparent border-none p-0 focus:ring-0 w-full font-bold text-secondary text-lg"
+                    type="number"
+                    value="12"
+                  />
+                </div>
+                <button
+                  class="p-2 rounded-lg text-outline-variant hover:text-error transition-colors"
+                >
+                  <span class="material-symbols-outlined" data-icon="delete"
+                    >delete</span
+                  >
+                </button>
+              </div>
+            </div>
+          </section>
+        </div>
+        <!-- Right Column: Location & Summary (4 Cols) -->
+        <div class="lg:col-span-4 space-y-8">
+          <!-- Location & Map Card -->
+          <section class="p-6 rounded-xl bg-surface-container-lowest shadow-sm">
+            <h2
+              class="text-xl font-bold text-primary mb-6 flex items-center gap-3"
+            >
+              <span
+                class="material-symbols-outlined text-secondary"
+                data-icon="location_on"
+                >location_on</span
+              >
+              Venue Details
+            </h2>
+            <div class="space-y-6">
+              <div class="group">
+                <label
+                  class="block text-sm font-bold text-on-surface-variant mb-2"
+                  >Location Name</label
+                >
+                <input
+                  class="w-full bg-surface-container-low border-none rounded-lg p-3 focus:ring-2 focus:ring-secondary/20 transition-all font-semibold"
+                  type="text"
+                  value="Olympic Training Center"
+                />
+              </div>
+              <!-- Map Preview -->
+              <div
+                class="relative w-full aspect-video rounded-xl overflow-hidden bg-surface-container-highest"
+              >
+                <img
+                  class="w-full h-full object-cover"
+                  data-alt="detailed satellite view of an olympic athletic complex with running tracks and training facilities"
+                  data-location="Colorado Springs"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJtYihDnYLZm33QnuTOw3GTg_2g_pIFQXI0fVYmYyIMRH2qTsPG1Lm1H1-T4i3W_suayYuIZKfQgNUNCSubA1Q3PW37fUt9ijpnAaW1Qx_Rgh3XY_-NpvkcdG1TR1FDjWebbD6bVcH_MgVDtvKRHOAeFFtJWmWTjeBChM6JTTF07KVn61gEA839Ekqsow6Nn6GUe-kumWxZXzoHRiIZ0mEGWrX38taGsCr2ouyanFGjUftp2jEMhTzZF5NJ6fbX1HsuTx9MFproT34"
+                />
+                <div
+                  class="absolute inset-0 bg-primary/10 pointer-events-none"
+                ></div>
+                <div
+                  class="absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur-md p-3 rounded-lg flex items-center gap-3 shadow-lg"
+                >
+                  <span
+                    class="material-symbols-outlined text-secondary"
+                    data-icon="pin_drop"
+                    >pin_drop</span
+                  >
+                  <span class="text-xs font-bold text-primary truncate"
+                    >1750 E Boulder St, Colorado Springs, CO</span
+                  >
+                </div>
+              </div>
+            </div>
+          </section>
+          <!-- Total Capacity & Quick Stats -->
+          <section
+            class="p-6 rounded-xl bg-primary text-on-primary shadow-xl overflow-hidden relative"
+          >
+            <!-- Decorate with a subtle gradient/texture effect as per guidelines -->
+            <div
+              class="absolute -right-4 -top-4 w-32 h-32 bg-primary-container rounded-full blur-3xl opacity-50"
+            ></div>
+            <h2 class="text-lg font-bold mb-6 relative z-10 opacity-80">
+              Capacity Overview
+            </h2>
+            <div class="space-y-6 relative z-10">
+              <div>
+                <span
+                  class="text-[10px] font-black uppercase tracking-[0.2em] opacity-60"
+                  >Total Event Capacity</span
+                >
+                <div class="flex items-end gap-2 mt-1">
+                  <span class="text-5xl font-black tracking-tighter">36</span>
+                  <span class="text-lg font-bold text-primary-fixed mb-1"
+                    >Athletes</span
+                  >
+                </div>
+              </div>
+              <div class="pt-6 border-t border-primary-container space-y-4">
+                <div class="flex justify-between items-center text-sm">
+                  <span class="opacity-70">Main Track</span>
+                  <span class="font-bold">24 Spots</span>
+                </div>
+                <div class="flex justify-between items-center text-sm">
+                  <span class="opacity-70">Warmup Lane</span>
+                  <span class="font-bold">12 Spots</span>
+                </div>
+              </div>
+              <div
+                class="bg-secondary-container/20 p-4 rounded-lg flex items-center gap-3"
+              >
+                <span
+                  class="material-symbols-outlined text-tertiary-fixed-dim"
+                  data-icon="verified"
+                  >verified</span
+                >
+                <p class="text-xs font-medium leading-relaxed">
+                  Capacity is automatically calculated from individual track
+                  allocations.
+                </p>
+              </div>
+            </div>
+          </section>
+          <!-- Visibility Section -->
+          <section class="p-6 rounded-xl bg-surface-container-low">
+            <h3
+              class="text-sm font-black uppercase tracking-widest text-on-surface-variant mb-4"
+            >
+              Privacy &amp; Visibility
+            </h3>
+            <div class="space-y-3">
+              <label
+                class="flex items-center gap-3 p-3 bg-surface-container-lowest rounded-lg cursor-pointer"
+              >
+                <input
+                  checked=""
+                  class="text-secondary focus:ring-secondary w-5 h-5"
+                  name="visibility"
+                  type="radio"
+                />
+                <div class="flex-grow">
+                  <div class="text-sm font-bold text-primary">
+                    Public to Group
+                  </div>
+                  <div class="text-[10px] text-on-surface-variant">
+                    Visible to all registered members.
+                  </div>
+                </div>
+              </label>
+              <label
+                class="flex items-center gap-3 p-3 rounded-lg cursor-pointer hover:bg-surface-container-lowest transition-colors"
+              >
+                <input
+                  class="text-secondary focus:ring-secondary w-5 h-5"
+                  name="visibility"
+                  type="radio"
+                />
+                <div class="flex-grow">
+                  <div class="text-sm font-bold text-primary">Admin Only</div>
+                  <div class="text-[10px] text-on-surface-variant">
+                    Only curators can view and edit.
+                  </div>
+                </div>
+              </label>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+    <!-- Footer -->
+    <footer class="bg-slate-100 dark:bg-slate-900 w-full py-12 mt-12">
+      <div
+        class="flex flex-col md:flex-row justify-between items-center px-8 max-w-7xl mx-auto gap-8"
+      >
+        <div class="flex flex-col items-center md:items-start gap-2">
+          <span class="font-manrope font-bold text-slate-900 dark:text-slate-50"
+            >Athletic Editorial Precision Curator</span
+          >
+          <span class="font-inter text-sm text-slate-600 dark:text-slate-400"
+            >© 2024 Athletic Editorial Precision Curator</span
+          >
+        </div>
+        <div class="flex gap-8">
+          <a
+            class="text-slate-500 dark:text-slate-400 hover:underline transition-all text-sm"
+            href="#"
+            >Privacy Policy</a
+          >
+          <a
+            class="text-slate-500 dark:text-slate-400 hover:underline transition-all text-sm"
+            href="#"
+            >Terms of Service</a
+          >
+          <a
+            class="text-slate-500 dark:text-slate-400 hover:underline transition-all text-sm"
+            href="#"
+            >Support</a
+          >
+          <a
+            class="text-slate-500 dark:text-slate-400 hover:underline transition-all text-sm"
+            href="#"
+            >Contact</a
+          >
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

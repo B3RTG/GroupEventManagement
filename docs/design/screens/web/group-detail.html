@@ -1,0 +1,756 @@
+<!doctype html>
+
+<html class="light" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Athletic Editorial - Group Detail</title>
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;400;700;800&amp;family=Inter:wght@300;400;500;600&amp;display=swap"
+      rel="stylesheet"
+    />
+    <!-- Material Symbols -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              background: "#f6fafe",
+              "tertiary-fixed": "#ffdf9a",
+              secondary: "#0058be",
+              "outline-variant": "#c3c7cc",
+              "primary-container": "#122636",
+              "secondary-fixed": "#d8e2ff",
+              primary: "#00101e",
+              "surface-tint": "#4d6073",
+              "surface-container-highest": "#dfe3e7",
+              "surface-container-high": "#e4e9ed",
+              "on-tertiary-fixed-variant": "#5a4300",
+              "on-error-container": "#93000a",
+              "primary-fixed-dim": "#b5c9de",
+              outline: "#74777d",
+              "on-tertiary": "#ffffff",
+              "on-primary": "#ffffff",
+              "on-surface-variant": "#43474c",
+              surface: "#f6fafe",
+              "inverse-on-surface": "#edf1f5",
+              "surface-container-low": "#f0f4f8",
+              "tertiary-container": "#302200",
+              tertiary: "#160e00",
+              "secondary-container": "#2170e4",
+              error: "#ba1a1a",
+              "on-secondary-fixed": "#001a42",
+              "primary-fixed": "#d0e5fa",
+              "on-background": "#171c1f",
+              "tertiary-fixed-dim": "#f7be1d",
+              "on-secondary-container": "#fefcff",
+              "on-secondary": "#ffffff",
+              "surface-bright": "#f6fafe",
+              "on-tertiary-container": "#af8500",
+              "error-container": "#ffdad6",
+              "on-secondary-fixed-variant": "#004395",
+              "on-surface": "#171c1f",
+              "on-primary-container": "#7a8ea1",
+              "on-primary-fixed": "#081d2d",
+              "surface-dim": "#d6dade",
+              "surface-container-lowest": "#ffffff",
+              "secondary-fixed-dim": "#adc6ff",
+              "on-tertiary-fixed": "#251a00",
+              "on-error": "#ffffff",
+              "surface-container": "#eaeef2",
+              "inverse-surface": "#2c3134",
+              "surface-variant": "#dfe3e7",
+              "inverse-primary": "#b5c9de",
+              "on-primary-fixed-variant": "#36495a",
+            },
+            fontFamily: {
+              headline: ["Manrope"],
+              body: ["Inter"],
+              label: ["Inter"],
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-background text-on-background font-body selection:bg-secondary-fixed selection:text-on-secondary-fixed"
+  >
+    <!-- TopNavBar -->
+    <nav
+      class="fixed top-0 w-full z-50 bg-slate-50/80 dark:bg-slate-950/80 backdrop-blur-xl shadow-sm dark:shadow-none"
+    >
+      <div class="flex justify-between items-center px-8 h-16 max-w-full">
+        <div class="flex items-center gap-8">
+          <span
+            class="text-xl font-black tracking-tighter text-slate-900 dark:text-slate-50 font-headline"
+            >Athletic Editorial</span
+          >
+          <div class="hidden md:flex gap-6 items-center">
+            <a
+              class="text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 font-manrope tracking-tight font-bold transition-colors"
+              href="#"
+              >Dashboard</a
+            >
+            <a
+              class="text-slate-900 dark:text-slate-50 border-b-2 border-slate-900 dark:border-slate-50 pb-1 font-manrope tracking-tight font-bold"
+              href="#"
+              >Groups</a
+            >
+            <a
+              class="text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 font-manrope tracking-tight font-bold transition-colors"
+              href="#"
+              >Events</a
+            >
+            <a
+              class="text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 font-manrope tracking-tight font-bold transition-colors"
+              href="#"
+              >Schedule</a
+            >
+          </div>
+        </div>
+        <div class="flex items-center gap-4">
+          <button
+            class="p-2 rounded-full hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors"
+          >
+            <span
+              class="material-symbols-outlined text-slate-900 dark:text-slate-50"
+              data-icon="notifications"
+              >notifications</span
+            >
+          </button>
+          <button
+            class="p-2 rounded-full hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors"
+          >
+            <span
+              class="material-symbols-outlined text-slate-900 dark:text-slate-50"
+              data-icon="settings"
+              >settings</span
+            >
+          </button>
+          <div
+            class="w-8 h-8 rounded-full overflow-hidden bg-surface-container-high ml-2"
+          >
+            <img
+              alt="User profile"
+              class="w-full h-full object-cover"
+              data-alt="Close-up portrait of a fit man in athletic wear with a neutral expression and soft lighting"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwd7lZ3bzRcA2UP2irf5zg6rIlpzoZyHlYKww0CHcStuFR8CH3d7kHCNesa87PsiODEigW_bdYL_PofWOUnv1_n7Aj8fFTD-YcCf9oV-UcmPXra3I2mSi_8y_B1n6EmmJ8JhgoWTBFHyMvEBlKHA8a33my492Ipp7vtAJQN8-23VEoUqMGuLBUejYOsCuLQPacnbSCsKxJCaL-v1IPgaAekBPCgn1cMeE4oufq5PCUS_-bj3d5t4CpBBlXeLw-VEFdMDz5-vz429WG"
+            />
+          </div>
+        </div>
+      </div>
+    </nav>
+    <main class="pt-24 pb-20 px-8 max-w-7xl mx-auto">
+      <!-- Header Section -->
+      <header class="mb-12">
+        <div
+          class="flex flex-col md:flex-row md:items-end justify-between gap-6"
+        >
+          <div>
+            <nav
+              class="flex gap-2 text-sm text-on-surface-variant mb-4 font-medium uppercase tracking-widest"
+            >
+              <span>Groups</span>
+              <span>/</span>
+              <span class="text-primary font-bold">Details</span>
+            </nav>
+            <h1
+              class="text-5xl md:text-6xl font-black font-headline tracking-tighter text-primary leading-none mb-4"
+            >
+              Elite Endurance Collective
+            </h1>
+            <p
+              class="text-on-surface-variant max-w-2xl text-lg leading-relaxed"
+            >
+              A high-performance community dedicated to marathon prep and
+              ultra-distance training. Precision coaching meet-ups every
+              weekend.
+            </p>
+          </div>
+          <div class="flex flex-col gap-3">
+            <span
+              class="text-xs font-bold uppercase tracking-widest text-on-surface-variant ml-1"
+              >Active Invitation Code</span
+            >
+            <div
+              class="bg-surface-container-lowest p-4 rounded-xl shadow-sm flex items-center gap-4 group cursor-pointer hover:bg-surface-bright transition-colors duration-300"
+            >
+              <span
+                class="text-2xl font-mono font-black tracking-widest text-primary"
+                >ENDUR-2024</span
+              >
+              <span
+                class="material-symbols-outlined text-secondary opacity-50 group-hover:opacity-100 transition-opacity"
+                data-icon="content_copy"
+                >content_copy</span
+              >
+            </div>
+          </div>
+        </div>
+      </header>
+      <!-- Asymmetric Dashboard Layout -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <!-- Sidebar Navigation / Stats -->
+        <aside class="lg:col-span-3">
+          <div class="sticky top-24 space-y-8">
+            <!-- Tab Navigation (Vertical for Editorial Look) -->
+            <nav class="space-y-2">
+              <a
+                class="flex items-center justify-between p-4 rounded-xl bg-primary text-on-primary font-bold font-headline transition-all transform hover:translate-x-1"
+                href="#events"
+              >
+                <span class="text-lg">Events</span>
+                <span
+                  class="material-symbols-outlined"
+                  data-icon="calendar_today"
+                  >calendar_today</span
+                >
+              </a>
+              <a
+                class="flex items-center justify-between p-4 rounded-xl bg-surface-container-low text-on-surface hover:bg-surface-container-high transition-all transform hover:translate-x-1"
+                href="#members"
+              >
+                <span class="text-lg font-headline font-bold">Members</span>
+                <span
+                  class="material-symbols-outlined text-on-surface-variant"
+                  data-icon="group"
+                  >group</span
+                >
+              </a>
+            </nav>
+            <!-- Group Snapshot -->
+            <div class="bg-surface-container-low p-6 rounded-xl">
+              <h3
+                class="text-xs font-black uppercase tracking-widest text-on-surface-variant mb-6"
+              >
+                Group Stats
+              </h3>
+              <div class="space-y-6">
+                <div>
+                  <p class="text-3xl font-black font-headline text-primary">
+                    24
+                  </p>
+                  <p class="text-sm text-on-surface-variant font-medium">
+                    Active Members
+                  </p>
+                </div>
+                <div class="h-px bg-outline-variant/15 w-full"></div>
+                <div>
+                  <p class="text-3xl font-black font-headline text-primary">
+                    12
+                  </p>
+                  <p class="text-sm text-on-surface-variant font-medium">
+                    Monthly Meetups
+                  </p>
+                </div>
+                <div class="h-px bg-outline-variant/15 w-full"></div>
+                <div>
+                  <p class="text-3xl font-black font-headline text-primary">
+                    482km
+                  </p>
+                  <p class="text-sm text-on-surface-variant font-medium">
+                    Group Distance (MTD)
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </aside>
+        <!-- Main Content Area -->
+        <div class="lg:col-span-9 space-y-12">
+          <!-- Events Section -->
+          <section id="events">
+            <div class="flex items-center justify-between mb-8">
+              <h2
+                class="text-3xl font-black font-headline tracking-tight text-primary"
+              >
+                Upcoming Events
+              </h2>
+              <button
+                class="bg-primary text-on-primary px-6 py-2 rounded-lg font-bold hover:bg-primary-container transition-colors"
+              >
+                Create New Event
+              </button>
+            </div>
+            <!-- Event Grid (Bento Style) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <!-- Primary Highlight Card -->
+              <div
+                class="md:col-span-2 relative overflow-hidden bg-primary-container rounded-xl min-h-[300px] flex flex-col justify-end p-8 text-on-primary group"
+              >
+                <div class="absolute inset-0 opacity-40">
+                  <img
+                    alt="Runners training"
+                    class="w-full h-full object-cover grayscale group-hover:scale-105 transition-transform duration-700"
+                    data-alt="Group of long-distance runners training on a misty mountain road at sunrise, dynamic motion blur"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDzMha1wHcuJ9fpQgy0pm7IFbBjmvawWd_xnrObtFp4wnskJdXaAImxuyyf8B5J83W76xIPk9ZkBGP5h2ZcRyHgYYmB5ULX0dBT7GxjUW3On0AuR2JwIxo_8L0WK-F6IXiKo41QXFe0CrxF2EDhbXWNVc2nM43aUHDU-X7jZDZ5cIx1_9ZGjVIKCBJ8RH0t_Y6bxNSJJEqaICuzp2_h3A4W_EQqY-6T7RCAk3XU56ABIam0fL8S7htBfAWmio9GKpvVCNFEWFh_UnRj"
+                  />
+                </div>
+                <div
+                  class="absolute inset-0 bg-gradient-to-t from-primary to-transparent opacity-80"
+                ></div>
+                <div class="relative z-10">
+                  <div class="flex items-center gap-3 mb-4">
+                    <span
+                      class="bg-tertiary-fixed-dim text-on-tertiary-fixed px-3 py-1 rounded-full text-xs font-black uppercase"
+                      >Feature Session</span
+                    >
+                    <span
+                      class="text-sm font-medium text-on-primary-container/80 italic"
+                      >Precision Track Series</span
+                    >
+                  </div>
+                  <h3
+                    class="text-4xl font-black font-headline mb-4 tracking-tighter"
+                  >
+                    Olympic Interval Testing
+                  </h3>
+                  <div class="flex flex-wrap items-center gap-6 text-sm">
+                    <span class="flex items-center gap-2"
+                      ><span
+                        class="material-symbols-outlined text-sm"
+                        data-icon="event"
+                        >event</span
+                      >
+                      Oct 12, 2024</span
+                    >
+                    <span class="flex items-center gap-2"
+                      ><span
+                        class="material-symbols-outlined text-sm"
+                        data-icon="schedule"
+                        >schedule</span
+                      >
+                      06:30 AM</span
+                    >
+                    <span class="flex items-center gap-2"
+                      ><span
+                        class="material-symbols-outlined text-sm"
+                        data-icon="location_on"
+                        >location_on</span
+                      >
+                      City Stadium</span
+                    >
+                    <span
+                      class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full font-bold"
+                      >12/15 Slots Full</span
+                    >
+                  </div>
+                </div>
+              </div>
+              <!-- Secondary Event Card 1 -->
+              <div
+                class="bg-surface-container-lowest p-6 rounded-xl shadow-sm hover:shadow-md transition-all duration-300"
+              >
+                <div class="flex justify-between items-start mb-6">
+                  <div
+                    class="bg-surface-container-high px-4 py-2 rounded-lg text-center"
+                  >
+                    <span
+                      class="block text-2xl font-black font-headline leading-none"
+                      >16</span
+                    >
+                    <span
+                      class="text-[10px] uppercase font-bold tracking-widest text-on-surface-variant"
+                      >OCT</span
+                    >
+                  </div>
+                  <span
+                    class="bg-secondary-fixed text-on-secondary-fixed-variant px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest"
+                    >Technique</span
+                  >
+                </div>
+                <h4 class="text-xl font-bold font-headline text-primary mb-2">
+                  Hill Recovery &amp; Form
+                </h4>
+                <p class="text-on-surface-variant text-sm mb-6">
+                  Focusing on vertical mechanics and sustained heart rate zones.
+                </p>
+                <div class="flex items-center justify-between mt-auto">
+                  <div class="flex -space-x-2">
+                    <div
+                      class="w-8 h-8 rounded-full border-2 border-surface-container-lowest overflow-hidden"
+                    >
+                      <img
+                        class="w-full h-full object-cover"
+                        data-alt="Female runner profile"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuC8M8k02oq64utk9PCbDjvQPBAU39yrgMJHWSyIJ9CoO15G3WUhMzIwqkzJVoA1Rgc_NvZA-r3xjyKIrUB70r0r_uy67sAqHA7yt4g5Rl9dmNMlJuCiOThPEIe2bVsHrL5Trwmgw7_9q1s3mTbwp74sYeJqy6xBqw-OzikU_7NZgUddlemEQPgeHgycvYhZs69Y32aVLSIW_EXAKsOyVYOcfyA77Pl5GbQYhmWVxn02kUKm6Gm7dOd7VlEPObDHjUXYfsvGs73I9oPR"
+                      />
+                    </div>
+                    <div
+                      class="w-8 h-8 rounded-full border-2 border-surface-container-lowest overflow-hidden"
+                    >
+                      <img
+                        class="w-full h-full object-cover"
+                        data-alt="Male athlete profile"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJnWoOww-eRMNFrMkjebRXZZoGkr-BuIXvLYmTA6hpMyszd0QEqRqN7ngV402_6F-rQrRfEf-iUhU0uAMhqgK_MUrRoL1UM0cuH97t_wdBtEwhaRWEcNRGcDDkuvw2qjADOdwYas-7GHwCc5SsC_e4hdwLFP9ee0aXbKOtDoad7FeP3e1d4-koLHSCU0Nyyn2RPe0heIueuDiMMaOw4ORSI65zLOvKoc9rgA8v6Fjf9Nolqo95s0uOjj4V4VKC4TJmIseof8mQpyM4"
+                      />
+                    </div>
+                    <div
+                      class="w-8 h-8 rounded-full border-2 border-surface-container-lowest bg-surface-container-high flex items-center justify-center text-[10px] font-bold"
+                    >
+                      +8
+                    </div>
+                  </div>
+                  <span class="text-xs font-black text-secondary"
+                    >10/20 spots filled</span
+                  >
+                </div>
+              </div>
+              <!-- Secondary Event Card 2 -->
+              <div
+                class="bg-surface-container-lowest p-6 rounded-xl shadow-sm hover:shadow-md transition-all duration-300"
+              >
+                <div class="flex justify-between items-start mb-6">
+                  <div
+                    class="bg-surface-container-high px-4 py-2 rounded-lg text-center"
+                  >
+                    <span
+                      class="block text-2xl font-black font-headline leading-none"
+                      >19</span
+                    >
+                    <span
+                      class="text-[10px] uppercase font-bold tracking-widest text-on-surface-variant"
+                      >OCT</span
+                    >
+                  </div>
+                  <span
+                    class="bg-secondary-fixed text-on-secondary-fixed-variant px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest"
+                    >Endurance</span
+                  >
+                </div>
+                <h4 class="text-xl font-bold font-headline text-primary mb-2">
+                  Lakeside Long Run
+                </h4>
+                <p class="text-on-surface-variant text-sm mb-6">
+                  25km steady state. Nutrition and hydration strategies
+                  provided.
+                </p>
+                <div class="flex items-center justify-between mt-auto">
+                  <div class="flex -space-x-2">
+                    <div
+                      class="w-8 h-8 rounded-full border-2 border-surface-container-lowest overflow-hidden"
+                    >
+                      <img
+                        class="w-full h-full object-cover"
+                        data-alt="Male athlete profile"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuAq6beZZbIrdknQkG6lwCnyUZmrSYvuKZwa9O5xRpuF4NKtp7xqWk08BRCSy_FP3KqZ-Vu2uR3xGziKYmILZf6PtFU6eZ6Ops2w5XH5wAHXhBj3p4gR-i9ad0_P4zEnrL6FDylWaoDgd5PBsGEyukibuH5hG3kZ3xybpDTuJDZTWHk1bp4tHO3kg1--g_8jBtDkmF5c-U5txjgl322axAUqoXrCVir8MUSZV068HKrFmfSx7GXNJPL5-ATzLspIqSLCG4W9re5BidU7"
+                      />
+                    </div>
+                    <div
+                      class="w-8 h-8 rounded-full border-2 border-surface-container-lowest overflow-hidden"
+                    >
+                      <img
+                        class="w-full h-full object-cover"
+                        data-alt="Female runner profile"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJiU8e10FORBueuQ4ksCD5ny0jSXco3ycjVEU65pgq0_AzIwwnwOn6NJwL9OlTldFO4Lf7gKzmzHF1w66IJ1qLgkfa24bjegFRDleHbHkN_QayP5j6xdGIoOhZcK5TUfIRio8dp_URlfEVwmezODNpWf7NIg7xMN3-gA_1EyH4zjnNs2BduY0BjNetrDJVsOLc8Y2HgWRnZWyEnyr9X2TpgbRt2tqOXGjRUebJc7rOsubVVAazlL-kvmYZLmMaTsPDHetKzLPGgiNq"
+                      />
+                    </div>
+                    <div
+                      class="w-8 h-8 rounded-full border-2 border-surface-container-lowest bg-surface-container-high flex items-center justify-center text-[10px] font-bold"
+                    >
+                      +14
+                    </div>
+                  </div>
+                  <span class="text-xs font-black text-secondary"
+                    >16/30 spots filled</span
+                  >
+                </div>
+              </div>
+            </div>
+          </section>
+          <!-- Members Section -->
+          <section class="pt-12" id="members">
+            <div class="flex items-center justify-between mb-8">
+              <h2
+                class="text-3xl font-black font-headline tracking-tight text-primary"
+              >
+                Member Roster
+              </h2>
+              <div class="flex gap-4">
+                <div
+                  class="bg-surface-container-low rounded-lg flex items-center px-4 py-2"
+                >
+                  <span
+                    class="material-symbols-outlined text-outline"
+                    data-icon="search"
+                    >search</span
+                  >
+                  <input
+                    class="bg-transparent border-none focus:ring-0 text-sm font-medium w-48"
+                    placeholder="Filter members..."
+                    type="text"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="bg-surface-container-lowest rounded-xl overflow-hidden">
+              <table class="w-full text-left border-collapse">
+                <thead>
+                  <tr class="bg-surface-container-low/50">
+                    <th
+                      class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-on-surface-variant"
+                    >
+                      Name &amp; Athlete ID
+                    </th>
+                    <th
+                      class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-on-surface-variant"
+                    >
+                      Role
+                    </th>
+                    <th
+                      class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-on-surface-variant"
+                    >
+                      Status
+                    </th>
+                    <th
+                      class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-on-surface-variant"
+                    >
+                      Activity
+                    </th>
+                    <th class="px-6 py-4"></th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-outline-variant/10">
+                  <!-- Member 1 -->
+                  <tr
+                    class="hover:bg-surface-container-low transition-colors group"
+                  >
+                    <td class="px-6 py-4">
+                      <div class="flex items-center gap-4">
+                        <div
+                          class="w-10 h-10 rounded-full overflow-hidden bg-slate-200"
+                        >
+                          <img
+                            class="w-full h-full object-cover"
+                            data-alt="Portrait of Sarah"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCpIdrUowjs5hRIuNKEK2PgKNz4g4oHiGpTQejkobP9Mf74Rd785l8eCDE1SOvGobd1RxvaaWwGLrCrPQtRYwk32g4aGF9WLH34xCpPiLQDoDsx7DSUqjz6Mh5awtWeZyD7vaoxXhEmmsSatSGHjuzl-uhra5NN-0VvJQmqaZMe4BXW_1O2BXv2Kk9aPsMchdRX5L0hCeWpAt-cX24bo1ru4T7cFrK_QrbUB3ly8KcJdZqsgaFrrI5UFr2UDdMrwFEvqOsoW9da6zZY"
+                          />
+                        </div>
+                        <div>
+                          <p class="font-bold text-primary">Sarah Jenkins</p>
+                          <p
+                            class="text-[10px] font-mono text-on-surface-variant uppercase"
+                          >
+                            ATH-99234
+                          </p>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="px-6 py-4">
+                      <span
+                        class="bg-primary-fixed text-on-primary-fixed px-2 py-0.5 rounded text-[10px] font-black uppercase"
+                        >Lead Coach</span
+                      >
+                    </td>
+                    <td class="px-6 py-4">
+                      <div class="flex items-center gap-1.5">
+                        <span
+                          class="w-1.5 h-1.5 rounded-full bg-green-500"
+                        ></span>
+                        <span class="text-xs font-semibold">Active</span>
+                      </div>
+                    </td>
+                    <td class="px-6 py-4">
+                      <span
+                        class="text-xs font-medium text-on-surface-variant italic"
+                        >Last active 2h ago</span
+                      >
+                    </td>
+                    <td class="px-6 py-4 text-right">
+                      <button
+                        class="material-symbols-outlined text-outline hover:text-primary transition-colors"
+                        data-icon="more_vert"
+                      >
+                        more_vert
+                      </button>
+                    </td>
+                  </tr>
+                  <!-- Member 2 -->
+                  <tr
+                    class="hover:bg-surface-container-low transition-colors group"
+                  >
+                    <td class="px-6 py-4">
+                      <div class="flex items-center gap-4">
+                        <div
+                          class="w-10 h-10 rounded-full overflow-hidden bg-slate-200"
+                        >
+                          <img
+                            class="w-full h-full object-cover"
+                            data-alt="Portrait of Marcus"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAPgnwB2qezGWa-mqn5gAKRNTsYSOwflx60_36PJBIC3WZsdSUx4VFKVcIn1_v19RS_7wpnGMK5tpCU3YhEJaIvm_SuCupo4oziGvk05kUDdiKUv1sF7-LwMi9GTIEkrwVNYcF_gUN7o1p0iiUwX8uIwrhp33w-fC2Hodao4w9EBjbPMRV-w4gqiCetmhN3dB_NHcAmNmjkRatB-d0fJXbGDXDiszlbSctkLlV6XMq93b92rxy45fDD9FsmoMHLaK5qC16lbxCfBTAW"
+                          />
+                        </div>
+                        <div>
+                          <p class="font-bold text-primary">Marcus Thorne</p>
+                          <p
+                            class="text-[10px] font-mono text-on-surface-variant uppercase"
+                          >
+                            ATH-11202
+                          </p>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="px-6 py-4">
+                      <span
+                        class="bg-surface-container-high text-on-surface-variant px-2 py-0.5 rounded text-[10px] font-black uppercase"
+                        >Elite Member</span
+                      >
+                    </td>
+                    <td class="px-6 py-4">
+                      <div class="flex items-center gap-1.5">
+                        <span
+                          class="w-1.5 h-1.5 rounded-full bg-green-500"
+                        ></span>
+                        <span class="text-xs font-semibold">Active</span>
+                      </div>
+                    </td>
+                    <td class="px-6 py-4">
+                      <span
+                        class="text-xs font-medium text-on-surface-variant italic"
+                        >Last active 14m ago</span
+                      >
+                    </td>
+                    <td class="px-6 py-4 text-right">
+                      <button
+                        class="material-symbols-outlined text-outline hover:text-primary transition-colors"
+                        data-icon="more_vert"
+                      >
+                        more_vert
+                      </button>
+                    </td>
+                  </tr>
+                  <!-- Member 3 -->
+                  <tr
+                    class="hover:bg-surface-container-low transition-colors group"
+                  >
+                    <td class="px-6 py-4">
+                      <div class="flex items-center gap-4">
+                        <div
+                          class="w-10 h-10 rounded-full overflow-hidden bg-slate-200"
+                        >
+                          <img
+                            class="w-full h-full object-cover"
+                            data-alt="Portrait of Elena"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQmga_2-crwEIVg5-6H6gLb9A7_CThbwdZTK8PH-XZbha5X38pe8WuyiLioObGuxNLFh06c8EeOrfHnKGdSHcGLNhQAuqpt3JwG9ZWyR1hvdoQy4e-P0RPC78OIq-cTLEv7VXyiDWVnZ6K1r9TPI-QzBM1_YvwfnG4VZ_QSOfIyYVLycx1TKl-wYrZG9Jm2dR7aoiO2kHGjnlx8YiiShPXNWuC46j2tVgDpMURXnr2eQKGudxLdNJB1YCDNZNfKHX9D4Vy4ReIHggH"
+                          />
+                        </div>
+                        <div>
+                          <p class="font-bold text-primary">Elena Rodriguez</p>
+                          <p
+                            class="text-[10px] font-mono text-on-surface-variant uppercase"
+                          >
+                            ATH-88491
+                          </p>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="px-6 py-4">
+                      <span
+                        class="bg-surface-container-high text-on-surface-variant px-2 py-0.5 rounded text-[10px] font-black uppercase"
+                        >Member</span
+                      >
+                    </td>
+                    <td class="px-6 py-4">
+                      <div class="flex items-center gap-1.5">
+                        <span
+                          class="w-1.5 h-1.5 rounded-full bg-slate-300"
+                        ></span>
+                        <span class="text-xs font-semibold">Offline</span>
+                      </div>
+                    </td>
+                    <td class="px-6 py-4">
+                      <span
+                        class="text-xs font-medium text-on-surface-variant italic"
+                        >Last active 2d ago</span
+                      >
+                    </td>
+                    <td class="px-6 py-4 text-right">
+                      <button
+                        class="material-symbols-outlined text-outline hover:text-primary transition-colors"
+                        data-icon="more_vert"
+                      >
+                        more_vert
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+    <!-- Footer -->
+    <footer class="bg-slate-100 dark:bg-slate-900 w-full py-12 mt-20">
+      <div
+        class="flex flex-col md:flex-row justify-between items-center px-8 max-w-7xl mx-auto"
+      >
+        <div class="mb-6 md:mb-0">
+          <span
+            class="font-manrope font-bold text-slate-900 dark:text-slate-50 text-lg"
+            >Athletic Editorial</span
+          >
+          <p class="text-slate-600 dark:text-slate-400 font-inter text-sm mt-2">
+            © 2024 Athletic Editorial Precision Curator
+          </p>
+        </div>
+        <div class="flex gap-8">
+          <a
+            class="text-slate-500 dark:text-slate-400 font-inter text-sm hover:underline transition-all opacity-80 hover:opacity-100"
+            href="#"
+            >Privacy Policy</a
+          >
+          <a
+            class="text-slate-500 dark:text-slate-400 font-inter text-sm hover:underline transition-all opacity-80 hover:opacity-100"
+            href="#"
+            >Terms of Service</a
+          >
+          <a
+            class="text-slate-500 dark:text-slate-400 font-inter text-sm hover:underline transition-all opacity-80 hover:opacity-100"
+            href="#"
+            >Support</a
+          >
+          <a
+            class="text-slate-500 dark:text-slate-400 font-inter text-sm hover:underline transition-all opacity-80 hover:opacity-100"
+            href="#"
+            >Contact</a
+          >
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,402 @@
+<!doctype html>
+
+<html class="light" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>The Athletic - Event Details</title>
+    <!-- Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@700;800&amp;display=swap"
+      rel="stylesheet"
+    />
+    <!-- Material Symbols -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary-fixed": "#d0e5fa",
+              "on-secondary-container": "#fefcff",
+              "on-primary-fixed-variant": "#36495a",
+              "secondary-container": "#2170e4",
+              "on-secondary-fixed-variant": "#004395",
+              "on-error": "#ffffff",
+              "primary-container": "#122636",
+              "on-primary": "#ffffff",
+              "error-container": "#ffdad6",
+              "outline-variant": "#c3c7cc",
+              tertiary: "#160e00",
+              "surface-tint": "#4d6073",
+              "on-tertiary-fixed": "#251a00",
+              "secondary-fixed-dim": "#adc6ff",
+              "on-tertiary-fixed-variant": "#5a4300",
+              "on-surface": "#171c1f",
+              "tertiary-fixed-dim": "#f7be1d",
+              "surface-container-high": "#e4e9ed",
+              "on-tertiary": "#ffffff",
+              "tertiary-container": "#302200",
+              "surface-container-lowest": "#ffffff",
+              primary: "#00101e",
+              "on-secondary-fixed": "#001a42",
+              "secondary-fixed": "#d8e2ff",
+              "on-tertiary-container": "#af8500",
+              "inverse-surface": "#2c3134",
+              "on-surface-variant": "#43474c",
+              "on-primary-fixed": "#081d2d",
+              "on-secondary": "#ffffff",
+              outline: "#74777d",
+              "surface-bright": "#f6fafe",
+              error: "#ba1a1a",
+              "on-primary-container": "#7a8ea1",
+              "tertiary-fixed": "#ffdf9a",
+              "surface-container-highest": "#dfe3e7",
+              "surface-dim": "#d6dade",
+              "surface-container": "#eaeef2",
+              "on-error-container": "#93000a",
+              "inverse-primary": "#b5c9de",
+              "inverse-on-surface": "#edf1f5",
+              "primary-fixed-dim": "#b5c9de",
+              "surface-container-low": "#f0f4f8",
+              background: "#f6fafe",
+              surface: "#f6fafe",
+              secondary: "#0058be",
+              "on-background": "#171c1f",
+              "surface-variant": "#dfe3e7",
+            },
+            fontFamily: {
+              headline: ["Manrope"],
+              body: ["Inter"],
+              label: ["Inter"],
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+      .glass-header {
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+      }
+    </style>
+    <style>
+      body {
+        min-height: max(884px, 100dvh);
+      }
+    </style>
+  </head>
+  <body
+    class="bg-background font-body text-on-surface selection:bg-primary-fixed"
+  >
+    <!-- TopAppBar -->
+    <nav
+      class="bg-[#f6fafe] dark:bg-[#00101e] w-full sticky top-0 z-50 flex items-center justify-between px-6 py-4 w-full"
+    >
+      <div class="flex items-center gap-4">
+        <span
+          class="material-symbols-outlined text-[#00101e] dark:text-[#f6fafe] scale-95 active:opacity-80 duration-150 cursor-pointer"
+          data-icon="arrow_back"
+          >arrow_back</span
+        >
+        <h1
+          class="text-xl font-extrabold tracking-tighter text-[#00101e] dark:text-[#f6fafe] font-['Manrope']"
+        >
+          The Athletic
+        </h1>
+      </div>
+      <span
+        class="material-symbols-outlined text-[#00101e] dark:text-[#f6fafe]"
+        data-icon="share"
+        >share</span
+      >
+    </nav>
+    <main class="pb-32">
+      <!-- Hero Section -->
+      <section class="relative h-[397px] w-full overflow-hidden">
+        <img
+          alt="Athletic training session"
+          class="w-full h-full object-cover"
+          data-alt="Intense close-up of a professional sprinter at the starting blocks, dramatic low-angle lighting, cinematic athletic atmosphere with motion blur"
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-rHFGk2yPbkDPoFvEZeKh7sknZ8Z-h9CKWaRtmq3slAw-q-wZnFPkg4Y7YUJmWYa2tBbz1MDk_u4GpHdld-GWESHp5T_IxkCkb3ys1jrNqDoWhd9AuWWV7OYmsIOXExV5QXQ8N7kk0t8WlxxDn9UvVP3O7iamg10NZ08FObfMb3QFHsP0DlbfUAKumhkzLdgZ-ZMyhwJRuI8eEIO5tLxd9T3DY8mtVXpoZk1kUQAnNXx-SoGAI01qqAGNSSL3pBJya3xiFQMCc6i4"
+        />
+        <div
+          class="absolute inset-0 bg-gradient-to-t from-primary via-primary/20 to-transparent"
+        ></div>
+        <div class="absolute bottom-0 left-0 w-full p-6 space-y-2">
+          <div
+            class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-tertiary-fixed-dim text-on-tertiary-fixed text-xs font-bold uppercase tracking-wider"
+          >
+            <span
+              class="material-symbols-outlined text-sm"
+              data-icon="bolt"
+              style="font-variation-settings: &quot;FILL&quot; 1"
+              >bolt</span
+            >
+            High Intensity
+          </div>
+          <h2
+            class="text-4xl font-headline font-extrabold text-on-primary tracking-tight leading-none"
+          >
+            Evening Elite Padel Masters
+          </h2>
+          <p class="text-on-primary/80 font-medium">Tonight • 19:30 - 21:00</p>
+        </div>
+      </section>
+      <!-- Dynamic Content Section -->
+      <div class="px-6 -mt-6 relative z-10 space-y-6">
+        <!-- Capacity Card -->
+        <div
+          class="bg-surface-container-lowest rounded-xl p-6 shadow-[0_12px_40px_rgba(23,28,31,0.06)]"
+        >
+          <div class="flex justify-between items-end mb-4">
+            <div>
+              <p
+                class="text-xs font-bold text-on-surface-variant uppercase tracking-widest mb-1"
+              >
+                Availability
+              </p>
+              <h3 class="text-2xl font-headline font-bold text-primary">
+                7/8 Slots Taken
+              </h3>
+            </div>
+            <div
+              class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-lg text-sm font-bold"
+            >
+              1 Spot Left
+            </div>
+          </div>
+          <div
+            class="w-full h-3 bg-surface-container rounded-full overflow-hidden"
+          >
+            <div
+              class="h-full bg-secondary w-[87.5%] rounded-full transition-all duration-1000"
+            ></div>
+          </div>
+        </div>
+        <!-- CTA Section -->
+        <button
+          class="w-full py-5 bg-primary text-on-primary rounded-xl font-headline font-extrabold text-lg flex items-center justify-center gap-3 active:scale-[0.98] transition-transform shadow-lg shadow-primary/20"
+        >
+          Registrarme
+          <span class="material-symbols-outlined" data-icon="chevron_right"
+            >chevron_right</span
+          >
+        </button>
+        <!-- Location & Map -->
+        <section class="space-y-4">
+          <div class="flex items-center justify-between">
+            <h4 class="text-lg font-headline font-bold text-primary">
+              Location
+            </h4>
+            <span class="text-sm font-bold text-secondary"
+              >View Directions</span
+            >
+          </div>
+          <div
+            class="bg-surface-container-low rounded-xl overflow-hidden group"
+          >
+            <div class="p-4 flex items-start gap-4">
+              <div class="p-3 bg-surface-container-highest rounded-lg">
+                <span
+                  class="material-symbols-outlined text-primary"
+                  data-icon="location_on"
+                  style="font-variation-settings: &quot;FILL&quot; 1"
+                  >location_on</span
+                >
+              </div>
+              <div>
+                <p class="font-bold text-primary">Centro Deportivo Municipal</p>
+                <p class="text-sm text-on-surface-variant">
+                  Calle de la Victoria, 45. Madrid, ES
+                </p>
+              </div>
+            </div>
+            <div class="h-40 w-full relative">
+              <img
+                alt="Map location"
+                class="w-full h-full object-cover contrast-[0.8] grayscale-[0.2]"
+                data-alt="Aerial satellite map view of an urban sports complex with tennis and padel courts, clean minimalist cartography style"
+                data-location="Madrid"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBpWtWpDKRvhhhKdyVie15jCf3Rc_-u2spOS0WKnEwkbbvCKAuG0fnRUhfiIILn3K5ZJ1RSPSyjlU3QcWxpwDDZvqNHViqZ31QKu8CvrQdI102cS6HfnybYysk3hc2kb3AiReREy7_svd0ibvFybwwSLVVQzWCZnnQZx9II7OGvcAarXHX0DY_4eGD5glKnPzzj0wH5qwzEYs98U4Zy9Z0vF2lcYLJQe-HTOODchlmmJ6NEKtLt1UJhg9butCdEXWlHqxMChusAF-FE"
+              />
+              <div
+                class="absolute inset-0 bg-secondary/10 pointer-events-none"
+              ></div>
+            </div>
+          </div>
+        </section>
+        <!-- Registered Players - Bento Style -->
+        <section class="space-y-4">
+          <div class="flex items-center justify-between">
+            <h4 class="text-lg font-headline font-bold text-primary">
+              Registered Players
+            </h4>
+            <span class="text-xs font-bold text-on-surface-variant"
+              >7 confirmed</span
+            >
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <!-- Main Organizer Card -->
+            <div
+              class="col-span-2 bg-surface-container-lowest p-4 rounded-xl flex items-center gap-4"
+            >
+              <div class="relative">
+                <img
+                  class="w-12 h-12 rounded-full object-cover"
+                  data-alt="Portrait of a professional athletic man in sportswear, outdoor natural lighting, neutral expression"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuBWuW2qziuWVPg84S0VEygS_k82YZP-H2YosPAfpdIYO51wg4Jm3H3dGbf3Z1YEk-xZlxj80JTms17YvyZK7TJzBOgIWMGQC0DGYLze4SCJugJaqq8H9dKgzcfGJ0_TjkxhhllrC8WH49bOaBbt22mMX7hR7i9SY34j86aSnBGA-Ib5pa_kbVch3ps1U3lJ_ZURnQrMPrB7Cmznh8JuO4pceGwMQ9s0cTePAku3wC8SHSHcCo_7uaGq_Q2u8AY60RjSKj-142vTo8oj"
+                />
+                <div
+                  class="absolute -bottom-1 -right-1 bg-tertiary-fixed-dim rounded-full p-1 border-2 border-surface-container-lowest"
+                >
+                  <span
+                    class="material-symbols-outlined text-[10px] text-on-tertiary-fixed font-bold"
+                    data-icon="verified"
+                    style="font-variation-settings: &quot;FILL&quot; 1"
+                    >verified</span
+                  >
+                </div>
+              </div>
+              <div>
+                <p class="font-bold text-primary leading-none">
+                  Carlos Mendoza
+                </p>
+                <p class="text-xs text-on-surface-variant mt-1">
+                  Lead Organizer
+                </p>
+              </div>
+              <div class="ml-auto flex -space-x-3">
+                <img
+                  class="w-8 h-8 rounded-full border-2 border-surface-container-lowest object-cover"
+                  data-alt="Close up portrait of a young woman runner with soft lighting"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9-06lxMuOh-cJawr8coLFwJx4FCxXWz5esNfiYr94w1PPwsDYBJvEiMn-nAvfllGQhoR0axWPECBs4DTd-n2dVA8iCbL9pEM2RdyHe1HaxvdoWsylNZu7T-Upt-CbD-Lqkgi1aZiZMf-2lH_5voS1UI7WMSxondpAFGd_vC6jCfaOuloc5HXydiZ2BqeqVSLnXMpgX3bB6yhw7O4HGmCr_yqqg_oZebiOfZiXK3nhfHDIHWg-5hC1k0E1RBwYRZQ4ghTWH_-8S0IH"
+                />
+                <img
+                  class="w-8 h-8 rounded-full border-2 border-surface-container-lowest object-cover"
+                  data-alt="Portrait of a focused athlete looking sideways"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYwlgFuGRDM6DmVCfnzhV79WftRT_hkeav2gPs9Ge_Kg_zWNtNLHjrmCqkC9Bt4cLXJYD8S1drIy_JzC0fjIBMjblVg7iwdsvXNoT_mEWkKxFElmfMLoc-9uU8Lw-I0wGhaJrCXz3rtpplu8xwhP9kHuuFiyCJCDx35Lm4CypmJQfEQFH-8CV-TtfQy9cpHh1Bjr_zds6Ya1yzFhiw1z9gLOeKM9ZxOsOoiA8RQzjh5a0GKrk63sES7iSmc0U-olu2kzWBHd3wKajt"
+                />
+                <div
+                  class="w-8 h-8 rounded-full border-2 border-surface-container-lowest bg-surface-container-high flex items-center justify-center text-[10px] font-bold"
+                >
+                  +4
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- Assigned Tracks -->
+        <section class="space-y-4">
+          <h4 class="text-lg font-headline font-bold text-primary">
+            Assigned Tracks
+          </h4>
+          <div class="space-y-3">
+            <div
+              class="bg-surface-container-low p-4 rounded-xl flex items-center justify-between"
+            >
+              <div class="flex items-center gap-4">
+                <div
+                  class="w-10 h-10 rounded-lg bg-primary-container flex items-center justify-center"
+                >
+                  <span
+                    class="material-symbols-outlined text-on-primary-container"
+                    data-icon="sports_tennis"
+                    >sports_tennis</span
+                  >
+                </div>
+                <div>
+                  <p class="font-bold text-primary">Track 04</p>
+                  <p class="text-xs text-on-surface-variant">
+                    Central Court • Indoor
+                  </p>
+                </div>
+              </div>
+              <span
+                class="text-xs font-bold text-on-surface-variant bg-surface-container-high px-2 py-1 rounded"
+                >Confirmed</span
+              >
+            </div>
+            <div
+              class="bg-surface-container-low p-4 rounded-xl flex items-center justify-between"
+            >
+              <div class="flex items-center gap-4">
+                <div
+                  class="w-10 h-10 rounded-lg bg-primary-container flex items-center justify-center"
+                >
+                  <span
+                    class="material-symbols-outlined text-on-primary-container"
+                    data-icon="sports_tennis"
+                    >sports_tennis</span
+                  >
+                </div>
+                <div>
+                  <p class="font-bold text-primary">Track 05</p>
+                  <p class="text-xs text-on-surface-variant">
+                    Side Court • Indoor
+                  </p>
+                </div>
+              </div>
+              <span
+                class="text-xs font-bold text-on-surface-variant bg-surface-container-high px-2 py-1 rounded"
+                >Confirmed</span
+              >
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+    <!-- BottomNavBar -->
+    <nav
+      class="bg-white/80 dark:bg-[#122636]/80 backdrop-blur-xl fixed bottom-0 left-0 w-full flex justify-around items-center px-8 pb-8 pt-4 z-50 shadow-[0_-12px_40px_rgba(23,28,31,0.06)] border-t border-[#f0f4f8]/15"
+    >
+      <div
+        class="flex flex-col items-center gap-1 text-[#122636]/40 dark:text-[#f0f4f8]/40 font-['Manrope'] text-[10px] font-bold uppercase tracking-widest hover:text-[#00101e] dark:hover:text-[#f6fafe] transition-transform active:scale-90 duration-200 cursor-pointer"
+      >
+        <span class="material-symbols-outlined" data-icon="dashboard"
+          >dashboard</span
+        >
+        <span>Dashboard</span>
+      </div>
+      <div
+        class="flex flex-col items-center gap-1 text-[#00101e] dark:text-[#f6fafe] scale-110 font-['Manrope'] text-[10px] font-bold uppercase tracking-widest transition-transform active:scale-90 duration-200 cursor-pointer"
+      >
+        <span
+          class="material-symbols-outlined"
+          data-icon="calendar_today"
+          style="font-variation-settings: &quot;FILL&quot; 1"
+          >calendar_today</span
+        >
+        <span>Events</span>
+      </div>
+      <div
+        class="flex flex-col items-center gap-1 text-[#122636]/40 dark:text-[#f0f4f8]/40 font-['Manrope'] text-[10px] font-bold uppercase tracking-widest hover:text-[#00101e] dark:hover:text-[#f6fafe] transition-transform active:scale-90 duration-200 cursor-pointer"
+      >
+        <span class="material-symbols-outlined" data-icon="person">person</span>
+        <span>Profile</span>
+      </div>
+    </nav>
+  </body>
+</html>
