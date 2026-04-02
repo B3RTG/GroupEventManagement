@@ -67,4 +67,16 @@ public class AuthController : ControllerBase
         var result = await _mediator.Send(new GetMeQuery(userId), ct);
         return Ok(result);
     }
+
+    /// <summary>Update the push token for the current device.</summary>
+    [Authorize]
+    [HttpPut("me")]
+    public async Task<IActionResult> UpdatePushToken(
+        [FromBody] UpdatePushTokenRequest request,
+        CancellationToken ct)
+    {
+        var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        await _mediator.Send(new UpdatePushTokenCommand(userId, request.PushToken), ct);
+        return NoContent();
+    }
 }

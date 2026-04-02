@@ -1,8 +1,12 @@
 using System.Text;
 using GroupEvents.Api.Middleware;
 using GroupEvents.Application.Auth.Commands;
+using GroupEvents.Contracts.Auth;
 using GroupEvents.Infrastructure;
+using GroupEvents.Infrastructure.Persistence;
+using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -68,8 +72,23 @@ app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 if (app.Environment.IsDevelopment())
 {
+    using (var scope = app.Services.CreateScope())
+    {
+        var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        await db.Database.MigrateAsync();
+        await DevDataSeeder.SeedAsync(db);
+    }
+
     app.UseSwagger();
     app.UseSwaggerUI();
+
+    // Dev-only: issues a real JWT for a seed user without going through Google/Apple OAuth.
+    // This route does not exist in any other environment.
+    app.MapPost("/api/v1/dev/login", async (DevLoginRequest req, IMediator mediator, CancellationToken ct) =>
+    {
+        var result = await mediator.Send(new DevLoginCommand(req.Email), ct);
+        return Results.Ok(result);
+    });
 }
 
 app.UseHttpsRedirection();
