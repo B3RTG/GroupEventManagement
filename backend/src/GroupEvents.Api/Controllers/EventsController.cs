@@ -2,6 +2,7 @@ using System.Security.Claims;
 using GroupEvents.Application.Events.Commands;
 using GroupEvents.Application.Events.Queries;
 using GroupEvents.Contracts.Events;
+using GroupEvents.Contracts.Registrations;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -124,6 +125,73 @@ public class EventsController : ControllerBase
         Guid groupId, Guid id, Guid trackId, CancellationToken ct)
     {
         await _mediator.Send(new DeleteTrackCommand(CurrentUserId, groupId, id, trackId), ct);
+        return NoContent();
+    }
+
+    // --- Registrations ---
+
+    /// <summary>List confirmed registrations for an event. Requires membership.</summary>
+    [HttpGet("{id:guid}/registrations")]
+    public async Task<ActionResult<IReadOnlyList<RegistrationResponse>>> GetRegistrations(
+        Guid groupId, Guid id, CancellationToken ct)
+    {
+        var result = await _mediator.Send(new GetRegistrationsQuery(CurrentUserId, groupId, id), ct);
+        return Ok(result);
+    }
+
+    /// <summary>Register the current user for a published event.</summary>
+    [HttpPost("{id:guid}/registrations")]
+    public async Task<IActionResult> Register(Guid groupId, Guid id, CancellationToken ct)
+    {
+        var result = await _mediator.Send(new RegisterForEventCommand(CurrentUserId, groupId, id), ct);
+        return CreatedAtAction(nameof(GetRegistrations), new { groupId, id },
+            new { result.RegistrationId, result.RegisteredAt });
+    }
+
+    /// <summary>Cancel the current user's registration.</summary>
+    [HttpDelete("{id:guid}/registrations")]
+    public async Task<IActionResult> CancelRegistration(Guid groupId, Guid id, CancellationToken ct)
+    {
+        await _mediator.Send(new CancelRegistrationCommand(CurrentUserId, groupId, id), ct);
+        return NoContent();
+    }
+
+    /// <summary>Register an external guest. Owner/co-admin only.</summary>
+    [HttpPost("{id:guid}/registrations/guest")]
+    public async Task<IActionResult> RegisterGuest(
+        Guid groupId, Guid id, [FromBody] RegisterGuestRequest request, CancellationToken ct)
+    {
+        var result = await _mediator.Send(
+            new RegisterGuestCommand(CurrentUserId, groupId, id, request.DisplayName, request.Email), ct);
+        return CreatedAtAction(nameof(GetRegistrations), new { groupId, id },
+            new { result.RegistrationId, result.RegisteredAt });
+    }
+
+    // --- Waitlist ---
+
+    /// <summary>Get the current user's position in the waitlist.</summary>
+    [HttpGet("{id:guid}/waitlist/position")]
+    public async Task<ActionResult<WaitlistPositionResponse>> GetWaitlistPosition(
+        Guid groupId, Guid id, CancellationToken ct)
+    {
+        var result = await _mediator.Send(new GetWaitlistPositionQuery(CurrentUserId, groupId, id), ct);
+        return Ok(result);
+    }
+
+    /// <summary>Join the waitlist for a published event.</summary>
+    [HttpPost("{id:guid}/waitlist")]
+    public async Task<IActionResult> JoinWaitlist(Guid groupId, Guid id, CancellationToken ct)
+    {
+        var result = await _mediator.Send(new JoinWaitlistCommand(CurrentUserId, groupId, id), ct);
+        return CreatedAtAction(nameof(GetWaitlistPosition), new { groupId, id },
+            new { result.EntryId, result.Position, result.JoinedAt });
+    }
+
+    /// <summary>Leave the waitlist.</summary>
+    [HttpDelete("{id:guid}/waitlist")]
+    public async Task<IActionResult> LeaveWaitlist(Guid groupId, Guid id, CancellationToken ct)
+    {
+        await _mediator.Send(new LeaveWaitlistCommand(CurrentUserId, groupId, id), ct);
         return NoContent();
     }
 }

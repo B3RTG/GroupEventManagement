@@ -1,10 +1,12 @@
 using GroupEvents.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace GroupEvents.Application.Common.Interfaces;
 
 public interface IAppDbContext
 {
+    DatabaseFacade Database { get; }
     DbSet<User> Users { get; }
     DbSet<Group> Groups { get; }
     DbSet<GroupMembership> GroupMemberships { get; }
