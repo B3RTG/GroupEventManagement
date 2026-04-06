@@ -1,5 +1,6 @@
 using GroupEvents.Application.Common.Exceptions;
 using GroupEvents.Application.Common.Interfaces;
+using GroupEvents.Application.Common.Notifications;
 using GroupEvents.Domain.Entities;
 using GroupEvents.Domain.Enums;
 using MediatR;
@@ -13,7 +14,13 @@ public record CancelRegistrationCommand(Guid UserId, Guid GroupId, Guid EventId)
 public class CancelRegistrationCommandHandler : IRequestHandler<CancelRegistrationCommand>
 {
     private readonly IAppDbContext _db;
-    public CancelRegistrationCommandHandler(IAppDbContext db) => _db = db;
+    private readonly INotificationService _notifications;
+
+    public CancelRegistrationCommandHandler(IAppDbContext db, INotificationService notifications)
+    {
+        _db = db;
+        _notifications = notifications;
+    }
 
     public async Task Handle(CancelRegistrationCommand request, CancellationToken ct)
     {
@@ -49,6 +56,18 @@ public class CancelRegistrationCommandHandler : IRequestHandler<CancelRegistrati
 
             await _db.SaveChangesAsync(ct);
             if (tx != null) await tx.CommitAsync(ct);
+
+            if (nextInLine != null)
+            {
+                await _notifications.EnqueueAsync(
+                    nextInLine.UserId,
+                    NotificationTypes.PromotedFromWaitlist,
+                    "Plaza confirmada",
+                    "¡Tienes plaza! Has sido promovido desde la lista de espera.",
+                    NotificationChannel.Push,
+                    idempotencyKey: $"promoted:{request.EventId}:{nextInLine.UserId}",
+                    ct: ct);
+            }
         }
         catch
         {

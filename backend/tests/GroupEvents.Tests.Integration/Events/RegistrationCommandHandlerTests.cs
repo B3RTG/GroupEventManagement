@@ -1,17 +1,21 @@
 using GroupEvents.Application.Common.Exceptions;
+using GroupEvents.Application.Common.Interfaces;
 using GroupEvents.Application.Events.Commands;
 using GroupEvents.Application.Events.Queries;
 using GroupEvents.Domain.Entities;
 using GroupEvents.Domain.Enums;
 using GroupEvents.Infrastructure.Persistence;
 using GroupEvents.Tests.Integration.Helpers;
+using NSubstitute;
 
 namespace GroupEvents.Tests.Integration.Events;
 
 public class RegistrationCommandHandlerTests
 {
-    private static RegisterForEventCommandHandler   RegisterHandler(AppDbContext db)  => new(db);
-    private static CancelRegistrationCommandHandler CancelHandler(AppDbContext db)    => new(db);
+    private static INotificationService NoopNotifications() => Substitute.For<INotificationService>();
+
+    private static RegisterForEventCommandHandler   RegisterHandler(AppDbContext db)  => new(db, NoopNotifications());
+    private static CancelRegistrationCommandHandler CancelHandler(AppDbContext db)    => new(db, NoopNotifications());
     private static JoinWaitlistCommandHandler       WaitlistHandler(AppDbContext db)  => new(db);
     private static LeaveWaitlistCommandHandler      LeaveHandler(AppDbContext db)     => new(db);
     private static RegisterGuestCommandHandler      GuestHandler(AppDbContext db)     => new(db);

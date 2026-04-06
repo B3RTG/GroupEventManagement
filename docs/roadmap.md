@@ -88,21 +88,22 @@
 
 ---
 
-## Fase 6 — Notificaciones y jobs
+## Fase 6 — Notificaciones y jobs ✅
 
 **Objetivo**: push + email reales, jobs automáticos de Hangfire.
 
-- [ ] Integración FCM — envío de push notifications
-- [ ] Integración Resend — envío de emails con plantillas
-- [ ] `NotificationService` — escribe `pending`, desacoplado del HTTP request
-- [ ] Job `NotificationDispatchJob` — cada 30s, envía pendientes
-- [ ] Job `WaitlistSafetyNetJob` — cada 5min, detecta eventos con plazas + waitlist sin cubrir
-- [ ] Job `CompletedEventsJob` — diario, marca eventos pasados como `completed`
-- [ ] Job `PushTokenCleanupJob` — diario, limpia tokens `UNREGISTERED` devueltos por FCM
-- [ ] Notificación: confirmación de inscripción
-- [ ] Notificación: promovido desde waitlist
-- [ ] Notificación: cancelación de evento
-- [ ] Notificación: recordatorio previo al evento (con idempotencia para inscripciones tardías)
+- [x] Integración FCM — `FcmPushNotificationService` vía HTTP v1 API + service account (`Google.Apis.Auth`)
+- [x] Integración Resend — `ResendEmailService` vía REST API
+- [x] `NotificationService` — escribe `Pending`, desacoplado del HTTP request; idempotencia por clave única
+- [x] Job `NotificationDispatchJob` — cada minuto, despacha hasta 100 pendientes; limpia token `UNREGISTERED` inline
+- [x] Job `WaitlistSafetyNetJob` — cada 5min, detecta eventos con plazas + waitlist sin cubrir, promueve en FIFO
+- [x] Job `CompletedEventsJob` — diario 02:00 UTC, marca eventos pasados como `Completed`
+- [x] Job `PushTokenCleanupJob` — diario 03:00 UTC, limpia tokens de usuarios con 100% de push fallidos en 30 días
+- [x] Job `EventReminderJob` — cada hora, crea recordatorios para eventos en las próximas 24h
+- [x] Notificación: confirmación de inscripción (`RegisterForEventCommand`)
+- [x] Notificación: promovido desde waitlist (`CancelRegistrationCommand` + `WaitlistSafetyNetJob`)
+- [x] Notificación: cancelación de evento (`CancelEventCommand`, fan-out a todos los inscritos)
+- [x] Notificación: recordatorio previo al evento (idempotency key `reminder:{eventId}:{userId}` previene duplicados)
 
 ---
 

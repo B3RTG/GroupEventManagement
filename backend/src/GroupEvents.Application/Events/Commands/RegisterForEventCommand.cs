@@ -1,5 +1,6 @@
 using GroupEvents.Application.Common.Exceptions;
 using GroupEvents.Application.Common.Interfaces;
+using GroupEvents.Application.Common.Notifications;
 using GroupEvents.Domain.Entities;
 using GroupEvents.Domain.Enums;
 using MediatR;
@@ -15,7 +16,13 @@ public record RegisterForEventResult(Guid RegistrationId, DateTime RegisteredAt)
 public class RegisterForEventCommandHandler : IRequestHandler<RegisterForEventCommand, RegisterForEventResult>
 {
     private readonly IAppDbContext _db;
-    public RegisterForEventCommandHandler(IAppDbContext db) => _db = db;
+    private readonly INotificationService _notifications;
+
+    public RegisterForEventCommandHandler(IAppDbContext db, INotificationService notifications)
+    {
+        _db = db;
+        _notifications = notifications;
+    }
 
     public async Task<RegisterForEventResult> Handle(RegisterForEventCommand request, CancellationToken ct)
     {
@@ -50,6 +57,15 @@ public class RegisterForEventCommandHandler : IRequestHandler<RegisterForEventCo
             await _db.SaveChangesAsync(ct);
 
             if (tx != null) await tx.CommitAsync(ct);
+
+            await _notifications.EnqueueAsync(
+                request.UserId,
+                NotificationTypes.RegistrationConfirmed,
+                "Inscripción confirmada",
+                $"Tu inscripción al evento ha sido confirmada.",
+                NotificationChannel.Push,
+                idempotencyKey: $"registration-confirmed:{registration.Id}",
+                ct: ct);
 
             return new RegisterForEventResult(registration.Id, registration.CreatedAt);
         }

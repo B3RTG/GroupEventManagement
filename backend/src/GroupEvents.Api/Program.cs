@@ -3,7 +3,9 @@ using GroupEvents.Api.Middleware;
 using GroupEvents.Application.Auth.Commands;
 using GroupEvents.Contracts.Auth;
 using GroupEvents.Infrastructure;
+using GroupEvents.Infrastructure.Jobs;
 using GroupEvents.Infrastructure.Persistence;
+using Hangfire;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +13,7 @@ using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Infrastructure (DB, auth services, JWT)
+// Infrastructure (DB, auth services, JWT, Hangfire)
 builder.Services.AddInfrastructure(builder.Configuration);
 
 // MediatR — scans Application assembly for handlers
@@ -82,6 +84,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 
+    // Hangfire dashboard — dev only, no auth required
+    app.UseHangfireDashboard("/hangfire");
+
     // Dev-only: issues a real JWT for a seed user without going through Google/Apple OAuth.
     // This route does not exist in any other environment.
     app.MapPost("/api/v1/dev/login", async (DevLoginRequest req, IMediator mediator, CancellationToken ct) =>
@@ -90,6 +95,32 @@ if (app.Environment.IsDevelopment())
         return Results.Ok(result);
     });
 }
+
+// Register recurring Hangfire jobs
+RecurringJob.AddOrUpdate<NotificationDispatchJob>(
+    "notification-dispatch",
+    job => job.ExecuteAsync(CancellationToken.None),
+    "* * * * *"); // every minute
+
+RecurringJob.AddOrUpdate<WaitlistSafetyNetJob>(
+    "waitlist-safety-net",
+    job => job.ExecuteAsync(CancellationToken.None),
+    "*/5 * * * *"); // every 5 minutes
+
+RecurringJob.AddOrUpdate<CompletedEventsJob>(
+    "completed-events",
+    job => job.ExecuteAsync(CancellationToken.None),
+    "0 2 * * *"); // daily at 02:00 UTC
+
+RecurringJob.AddOrUpdate<PushTokenCleanupJob>(
+    "push-token-cleanup",
+    job => job.ExecuteAsync(CancellationToken.None),
+    "0 3 * * *"); // daily at 03:00 UTC
+
+RecurringJob.AddOrUpdate<EventReminderJob>(
+    "event-reminder",
+    job => job.ExecuteAsync(CancellationToken.None),
+    "0 * * * *"); // every hour
 
 app.UseHttpsRedirection();
 app.UseAuthentication();

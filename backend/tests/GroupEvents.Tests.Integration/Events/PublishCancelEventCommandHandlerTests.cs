@@ -1,16 +1,20 @@
 using GroupEvents.Application.Common.Exceptions;
+using GroupEvents.Application.Common.Interfaces;
 using GroupEvents.Application.Events.Commands;
 using GroupEvents.Domain.Entities;
 using GroupEvents.Domain.Enums;
 using GroupEvents.Infrastructure.Persistence;
 using GroupEvents.Tests.Integration.Helpers;
+using NSubstitute;
 
 namespace GroupEvents.Tests.Integration.Events;
 
 public class PublishCancelEventCommandHandlerTests
 {
+    private static INotificationService NoopNotifications() => Substitute.For<INotificationService>();
+
     private static PublishEventCommandHandler PublishHandler(AppDbContext db) => new(db);
-    private static CancelEventCommandHandler  CancelHandler(AppDbContext db)  => new(db);
+    private static CancelEventCommandHandler  CancelHandler(AppDbContext db)  => new(db, NoopNotifications());
 
     private static (User owner, User member, Group group, Event ev) Seed(AppDbContext db)
     {
