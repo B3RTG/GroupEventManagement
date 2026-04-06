@@ -13,7 +13,7 @@ export const groupsApi = createApi({
   tagTypes: ['Group', 'Member'],
   endpoints: (build) => ({
     getMyGroups: build.query<Group[], void>({
-      query: () => '/groups',
+      query: () => '/groups/me',
       providesTags: ['Group'],
     }),
 
@@ -57,7 +57,7 @@ export const groupsApi = createApi({
       invalidatesTags: (_r, _e, { groupId }) => [{ type: 'Member', id: groupId }],
     }),
 
-    regenerateInviteCode: build.mutation<{ code: string }, UUID>({
+    regenerateInviteCode: build.mutation<{ inviteCode: string }, UUID>({
       query: (groupId) => ({
         url: `/groups/${groupId}/invite-code/regenerate`,
         method: 'POST',
