@@ -37,9 +37,9 @@ public class DevLoginCommandHandler : IRequestHandler<DevLoginCommand, AuthRespo
         await _db.SaveChangesAsync(cancellationToken);
 
         return new AuthResponse(
-            accessToken,
+            accessToken.Token,
             refreshToken.Token,
-            refreshToken.ExpiresAt,
+            accessToken.ExpiresIn,
             new UserResponse(user.Id, user.DisplayName, user.Email, user.AvatarUrl));
     }
 }

@@ -16,7 +16,7 @@ public class JwtTokenService : IJwtTokenService
 
     public JwtTokenService(IOptions<JwtSettings> options) => _settings = options.Value;
 
-    public string GenerateAccessToken(User user)
+    public AccessTokenResult GenerateAccessToken(User user)
     {
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_settings.Secret));
         var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -29,14 +29,15 @@ public class JwtTokenService : IJwtTokenService
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         };
 
+        var expiresIn = _settings.AccessTokenExpiryMinutes * 60;
         var token = new JwtSecurityToken(
             issuer: _settings.Issuer,
             audience: _settings.Audience,
             claims: claims,
-            expires: DateTime.UtcNow.AddMinutes(_settings.AccessTokenExpiryMinutes),
+            expires: DateTime.UtcNow.AddSeconds(expiresIn),
             signingCredentials: credentials);
 
-        return new JwtSecurityTokenHandler().WriteToken(token);
+        return new AccessTokenResult(new JwtSecurityTokenHandler().WriteToken(token), expiresIn);
     }
 
     public RefreshToken GenerateRefreshToken(Guid userId)

@@ -9,6 +9,15 @@ export interface User {
   email: string | null;
   displayName: string;
   avatarUrl: string | null;
+  pushToken: string | null;
+}
+
+export interface AuthResponse {
+  accessToken: string;
+  refreshToken: string;
+  /** Lifetime in seconds */
+  expiresIn: number;
+  user: User;
 }
 
 // Groups
@@ -22,6 +31,7 @@ export interface Group {
   avatarUrl: string | null;
   role: GroupRole;
   memberCount: number;
+  inviteCode: string | null;
   createdAt: ISODateString;
 }
 

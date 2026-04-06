@@ -41,9 +41,9 @@ public class RefreshTokenCommandHandler : IRequestHandler<RefreshTokenCommand, A
         await _db.SaveChangesAsync(cancellationToken);
 
         return new AuthResponse(
-            accessToken,
+            accessToken.Token,
             newRefreshToken.Token,
-            newRefreshToken.ExpiresAt,
+            accessToken.ExpiresIn,
             new UserResponse(existing.User.Id, existing.User.DisplayName,
                              existing.User.Email, existing.User.AvatarUrl));
     }

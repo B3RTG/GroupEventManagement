@@ -3,6 +3,7 @@ namespace GroupEvents.Contracts.Auth;
 public record AuthResponse(
     string AccessToken,
     string RefreshToken,
-    DateTime RefreshTokenExpiresAt,
+    /// <summary>Seconds until the access token expires.</summary>
+    int ExpiresIn,
     UserResponse User
 );

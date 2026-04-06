@@ -62,16 +62,16 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, AuthResponse>
             user.UpdatePushToken(request.PushToken);
 
         // 4. Generate tokens
-        var accessToken = _jwtService.GenerateAccessToken(user);
+        var accessToken  = _jwtService.GenerateAccessToken(user);
         var refreshToken = _jwtService.GenerateRefreshToken(user.Id);
         _db.RefreshTokens.Add(refreshToken);
 
         await _db.SaveChangesAsync(cancellationToken);
 
         return new AuthResponse(
-            accessToken,
+            accessToken.Token,
             refreshToken.Token,
-            refreshToken.ExpiresAt,
+            accessToken.ExpiresIn,
             new UserResponse(user.Id, user.DisplayName, user.Email, user.AvatarUrl));
     }
 }
