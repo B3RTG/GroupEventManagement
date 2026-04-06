@@ -24,9 +24,7 @@ public class RegisterGuestCommandHandler : IRequestHandler<RegisterGuestCommand,
         if (membership is null || membership.Role == MemberRole.Member)
             throw new ForbiddenException("Only owner or co-admin can register guests.");
 
-        IDbContextTransaction? tx = null;
-        try { tx = await _db.Database.BeginTransactionAsync(ct); }
-        catch (InvalidOperationException) { /* InMemory: no transaction support */ }
+        var tx = await _db.BeginSerializableTransactionAsync(ct);
 
         try
         {

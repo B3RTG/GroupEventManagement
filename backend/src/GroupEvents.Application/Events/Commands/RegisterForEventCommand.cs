@@ -24,10 +24,7 @@ public class RegisterForEventCommandHandler : IRequestHandler<RegisterForEventCo
         if (!isMember) throw new ForbiddenException("Not a member of this group.");
 
         // Serializable transaction prevents phantom reads (race condition on capacity).
-        // InMemory provider does not support transactions — we catch and continue.
-        IDbContextTransaction? tx = null;
-        try { tx = await _db.Database.BeginTransactionAsync(ct); }
-        catch (InvalidOperationException) { /* InMemory: no transaction support */ }
+        var tx = await _db.BeginSerializableTransactionAsync(ct);
 
         try
         {

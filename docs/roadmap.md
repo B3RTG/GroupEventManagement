@@ -72,19 +72,19 @@
 
 ---
 
-## Fase 5 — MVP: Sprint 4 — Registros, Waitlist e Invitados
+## Fase 5 — MVP: Sprint 4 — Registros, Waitlist e Invitados ✅
 
 **Objetivo**: inscripción con concurrencia correcta, waitlist automática, invitados externos.
 
-- [ ] `POST /api/v1/groups/{groupId}/events/{id}/registrations` — apuntarse (→ 409 si lleno)
-- [ ] `DELETE /api/v1/groups/{groupId}/events/{id}/registrations` — cancelar plaza
-- [ ] `POST /api/v1/groups/{groupId}/events/{id}/waitlist` — unirse a waitlist
-- [ ] `DELETE /api/v1/groups/{groupId}/events/{id}/waitlist` — salir de waitlist
-- [ ] `GET /api/v1/groups/{groupId}/events/{id}/waitlist/position` — posición en waitlist
-- [ ] Registro de invitado externo (`guest_id`)
-- [ ] `RegistrationService` con `SELECT FOR UPDATE` (anti race condition)
-- [ ] `WaitlistService` con promoción FIFO en transacción serializable
-- [ ] Verificación de membresía dentro de la transacción de registro
+- [x] `POST /api/v1/groups/{groupId}/events/{id}/registrations` — apuntarse (→ 409 si lleno)
+- [x] `DELETE /api/v1/groups/{groupId}/events/{id}/registrations` — cancelar plaza
+- [x] `POST /api/v1/groups/{groupId}/events/{id}/waitlist` — unirse a waitlist
+- [x] `DELETE /api/v1/groups/{groupId}/events/{id}/waitlist` — salir de waitlist
+- [x] `GET /api/v1/groups/{groupId}/events/{id}/waitlist/position` — posición en waitlist
+- [x] Registro de invitado externo (`guest_id`)
+- [x] `RegisterForEventCommand` con transacción `IsolationLevel.Serializable` (anti race condition)
+- [x] Promoción FIFO en `CancelRegistrationCommand` con transacción serializable
+- [x] Verificación de membresía dentro de la transacción de registro
 
 ---
 

@@ -21,9 +21,7 @@ public class CancelRegistrationCommandHandler : IRequestHandler<CancelRegistrati
             m => m.GroupId == request.GroupId && m.UserId == request.UserId, ct);
         if (!isMember) throw new ForbiddenException("Not a member of this group.");
 
-        IDbContextTransaction? tx = null;
-        try { tx = await _db.Database.BeginTransactionAsync(ct); }
-        catch (InvalidOperationException) { /* InMemory: no transaction support */ }
+        var tx = await _db.BeginSerializableTransactionAsync(ct);
 
         try
         {

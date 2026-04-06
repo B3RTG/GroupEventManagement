@@ -1,7 +1,9 @@
+using System.Data;
 using GroupEvents.Application.Common.Interfaces;
 using GroupEvents.Domain.Common;
 using GroupEvents.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace GroupEvents.Infrastructure.Persistence;
 
@@ -25,6 +27,12 @@ public class AppDbContext : DbContext, IAppDbContext
     {
         base.OnModelCreating(modelBuilder);
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
+    }
+
+    public async Task<IDbContextTransaction?> BeginSerializableTransactionAsync(CancellationToken ct = default)
+    {
+        try { return await Database.BeginTransactionAsync(IsolationLevel.Serializable, ct); }
+        catch (InvalidOperationException) { return null; } // InMemory: no transaction support
     }
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
