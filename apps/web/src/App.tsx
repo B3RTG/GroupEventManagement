@@ -1,8 +1,3 @@
-export default function App() {
-  return (
-    <div style={{ fontFamily: 'sans-serif', padding: '2rem' }}>
-      <h1>Group Event Management</h1>
-      <p>Fase 0 — scaffold completo ✓</p>
-    </div>
-  );
-}
+// Entry point is main.tsx — App.tsx is unused in this project.
+// Routing is handled by src/router/index.tsx via RouterProvider.
+export default {};
