@@ -23,16 +23,10 @@ dev: ## Start backend + frontend (Postgres must be running via docker-compose)
 
 ## ── Stop everything ─────────────────────────────────────────
 stop: ## Stop backend and frontend processes
-	@if [ -f /tmp/gem-backend.pid ]; then \
-		kill $$(cat /tmp/gem-backend.pid) 2>/dev/null && rm /tmp/gem-backend.pid; \
-		pkill -f "GroupEvents.Api" 2>/dev/null || true; \
-		echo "■  Backend stopped"; \
-	fi
-	@if [ -f /tmp/gem-frontend.pid ]; then \
-		kill $$(cat /tmp/gem-frontend.pid) 2>/dev/null && rm /tmp/gem-frontend.pid; \
-		pkill -f "vite" 2>/dev/null || true; \
-		echo "■  Frontend stopped"; \
-	fi
+	@# Kill by port — reliable regardless of process tree or PID file staleness
+	@fuser -k 5189/tcp 2>/dev/null && echo "■  Backend stopped"  || echo "■  Backend was not running"
+	@fuser -k 5173/tcp 2>/dev/null && echo "■  Frontend stopped" || echo "■  Frontend was not running"
+	@rm -f /tmp/gem-backend.pid /tmp/gem-frontend.pid
 
 ## ── Logs ────────────────────────────────────────────────────
 logs-backend: ## Tail backend logs
