@@ -115,7 +115,7 @@ export function DashboardPage() {
     if (!trimmed) return;
     setJoinError(null);
     try {
-      await joinGroup({ code: trimmed }).unwrap();
+      await joinGroup({ inviteCode: trimmed }).unwrap();
       setCode('');
     } catch {
       setJoinError('Invalid or expired invite code.');

@@ -16,7 +16,7 @@ export const createGroupSchema = z.object({
 export const updateGroupSchema = createGroupSchema.partial();
 
 export const joinGroupSchema = z.object({
-  code: z.string().min(4).max(20).toUpperCase(),
+  inviteCode: z.string().min(4).max(20).toUpperCase(),
 });
 
 export const updateMemberRoleSchema = z.object({
