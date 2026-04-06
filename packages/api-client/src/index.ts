@@ -26,12 +26,12 @@ export type GroupRole = 'owner' | 'co_admin' | 'member';
 export interface Group {
   id: UUID;
   name: string;
-  description: string | null;
   slug: string;
-  avatarUrl: string | null;
-  role: GroupRole;
+  inviteCode: string;
+  inviteLinkEnabled: boolean;
+  ownerId: UUID;
   memberCount: number;
-  inviteCode: string | null;
+  role: GroupRole;
   createdAt: ISODateString;
 }
 

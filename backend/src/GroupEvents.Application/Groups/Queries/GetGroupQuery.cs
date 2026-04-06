@@ -2,6 +2,7 @@ using GroupEvents.Application.Common.Exceptions;
 using GroupEvents.Application.Common.Interfaces;
 using GroupEvents.Contracts.Groups;
 using GroupEvents.Domain.Entities;
+using GroupEvents.Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,11 +18,12 @@ public class GetGroupQueryHandler : IRequestHandler<GetGroupQuery, GroupResponse
 
     public async Task<GroupResponse> Handle(GetGroupQuery request, CancellationToken cancellationToken)
     {
-        var isMember = await _db.GroupMemberships.AnyAsync(
-            m => m.GroupId == request.GroupId && m.UserId == request.UserId && m.IsActive,
-            cancellationToken);
+        var membership = await _db.GroupMemberships
+            .FirstOrDefaultAsync(
+                m => m.GroupId == request.GroupId && m.UserId == request.UserId && m.IsActive,
+                cancellationToken);
 
-        if (!isMember)
+        if (membership is null)
             throw new ForbiddenException("You are not a member of this group.");
 
         var group = await _db.Groups
@@ -31,7 +33,18 @@ public class GetGroupQueryHandler : IRequestHandler<GetGroupQuery, GroupResponse
         var memberCount = await _db.GroupMemberships
             .CountAsync(m => m.GroupId == group.Id && m.IsActive, cancellationToken);
 
-        return new GroupResponse(group.Id, group.Name, group.Slug,
-            group.InviteCode, group.InviteLinkEnabled, group.OwnerId, memberCount);
+        return new GroupResponse(
+            group.Id, group.Name, group.Slug,
+            group.InviteCode, group.InviteLinkEnabled, group.OwnerId,
+            memberCount,
+            ToRoleString(membership.Role),
+            group.CreatedAt);
     }
+
+    private static string ToRoleString(MemberRole role) => role switch
+    {
+        MemberRole.Owner   => "owner",
+        MemberRole.CoAdmin => "co_admin",
+        _                  => "member",
+    };
 }

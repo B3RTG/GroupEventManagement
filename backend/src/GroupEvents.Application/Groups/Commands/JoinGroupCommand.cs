@@ -39,6 +39,7 @@ public class JoinGroupCommandHandler : IRequestHandler<JoinGroupCommand, GroupRe
             .CountAsync(m => m.GroupId == group.Id && m.IsActive, cancellationToken);
 
         return new GroupResponse(group.Id, group.Name, group.Slug,
-            group.InviteCode, group.InviteLinkEnabled, group.OwnerId, memberCount);
+            group.InviteCode, group.InviteLinkEnabled, group.OwnerId, memberCount,
+            "member", group.CreatedAt);
     }
 }

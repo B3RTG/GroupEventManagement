@@ -223,11 +223,6 @@ export function GroupDetailPage() {
             <h1 className="text-4xl md:text-5xl font-black font-headline tracking-tighter text-primary leading-none mb-3">
               {group.name}
             </h1>
-            {group.description && (
-              <p className="text-on-surface-variant max-w-2xl text-base leading-relaxed">
-                {group.description}
-              </p>
-            )}
           </div>
 
           {/* Invite code — only for admins */}

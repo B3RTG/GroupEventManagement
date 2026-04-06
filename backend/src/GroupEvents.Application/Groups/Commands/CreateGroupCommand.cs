@@ -28,7 +28,8 @@ public class CreateGroupCommandHandler : IRequestHandler<CreateGroupCommand, Gro
         await _db.SaveChangesAsync(cancellationToken);
 
         return new GroupResponse(group.Id, group.Name, group.Slug,
-            group.InviteCode, group.InviteLinkEnabled, group.OwnerId, MemberCount: 1);
+            group.InviteCode, group.InviteLinkEnabled, group.OwnerId,
+            MemberCount: 1, Role: "owner", CreatedAt: group.CreatedAt);
     }
 
     private async Task<string> BuildUniqueSlugAsync(string name, CancellationToken ct)

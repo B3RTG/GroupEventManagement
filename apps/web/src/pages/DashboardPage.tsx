@@ -22,13 +22,9 @@ function FeaturedGroupCard({ group }: { group: Group }) {
       className="md:col-span-8 group cursor-pointer bg-surface-container-lowest rounded-[1.5rem] shadow-soft overflow-hidden transition-all hover:-translate-y-1"
     >
       <div className="flex flex-col md:flex-row h-full">
-        {/* Avatar / placeholder */}
+        {/* Avatar placeholder */}
         <div className="md:w-2/5 relative h-48 md:h-auto overflow-hidden bg-primary-container flex items-center justify-center">
-          {group.avatarUrl ? (
-            <img src={group.avatarUrl} alt={group.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-          ) : (
-            <span className="material-symbols-outlined text-on-primary-container text-6xl opacity-40">groups</span>
-          )}
+          <span className="material-symbols-outlined text-on-primary-container text-6xl opacity-40">groups</span>
           <div className="absolute top-4 left-4 bg-tertiary-fixed-dim text-on-tertiary-fixed text-[10px] font-black uppercase tracking-widest px-2 py-1 rounded">
             <RoleBadge role={group.role} />
           </div>
@@ -44,11 +40,6 @@ function FeaturedGroupCard({ group }: { group: Group }) {
                 Active
               </span>
             </div>
-            {group.description && (
-              <p className="text-on-surface-variant text-sm leading-relaxed mb-6">
-                {group.description}
-              </p>
-            )}
           </div>
           <div className="pt-6 border-t border-surface-container flex items-center gap-2 text-on-surface-variant">
             <span className="material-symbols-outlined text-lg">group</span>
@@ -77,11 +68,6 @@ function GroupCard({ group }: { group: Group }) {
       <h3 className="font-headline text-xl font-bold tracking-tight text-primary mb-2">
         {group.name}
       </h3>
-      {group.description && (
-        <p className="text-on-surface-variant text-sm leading-relaxed mb-4 line-clamp-2">
-          {group.description}
-        </p>
-      )}
       <div className="mt-auto flex items-center gap-2 text-on-surface-variant">
         <span className="material-symbols-outlined text-sm">group</span>
         <span className="text-xs font-semibold">{group.memberCount} members</span>

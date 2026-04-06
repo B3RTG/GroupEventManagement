@@ -1,5 +1,6 @@
 using GroupEvents.Application.Common.Interfaces;
 using GroupEvents.Contracts.Groups;
+using GroupEvents.Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,21 +18,33 @@ public class GetMyGroupsQueryHandler : IRequestHandler<GetMyGroupsQuery, IReadOn
     {
         var memberships = await _db.GroupMemberships
             .Where(m => m.UserId == request.UserId && m.IsActive)
-            .Select(m => m.GroupId)
             .ToListAsync(cancellationToken);
 
+        var groupIds = memberships.Select(m => m.GroupId).ToList();
+
         var groups = await _db.Groups
-            .Where(g => memberships.Contains(g.Id) && g.IsActive)
+            .Where(g => groupIds.Contains(g.Id) && g.IsActive)
             .ToListAsync(cancellationToken);
 
         var memberCounts = await _db.GroupMemberships
-            .Where(m => memberships.Contains(m.GroupId) && m.IsActive)
+            .Where(m => groupIds.Contains(m.GroupId) && m.IsActive)
             .GroupBy(m => m.GroupId)
             .Select(g => new { GroupId = g.Key, Count = g.Count() })
             .ToDictionaryAsync(x => x.GroupId, x => x.Count, cancellationToken);
 
+        var roleByGroup = memberships.ToDictionary(m => m.GroupId, m => m.Role);
+
         return groups.Select(g => new GroupResponse(
             g.Id, g.Name, g.Slug, g.InviteCode, g.InviteLinkEnabled,
-            g.OwnerId, memberCounts.GetValueOrDefault(g.Id, 0))).ToList();
+            g.OwnerId, memberCounts.GetValueOrDefault(g.Id, 0),
+            ToRoleString(roleByGroup.GetValueOrDefault(g.Id, MemberRole.Member)),
+            g.CreatedAt)).ToList();
     }
+
+    private static string ToRoleString(MemberRole role) => role switch
+    {
+        MemberRole.Owner   => "owner",
+        MemberRole.CoAdmin => "co_admin",
+        _                  => "member",
+    };
 }
