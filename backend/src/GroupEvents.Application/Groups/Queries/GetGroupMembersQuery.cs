@@ -28,7 +28,7 @@ public class GetGroupMembersQueryHandler : IRequestHandler<GetGroupMembersQuery,
             .Join(_db.Users,
                 m => m.UserId,
                 u => u.Id,
-                (m, u) => new MemberResponse(u.Id, u.DisplayName, u.Email, u.AvatarUrl, m.Role.ToString()))
+                (m, u) => new MemberResponse(u.Id, u.DisplayName, u.Email, u.AvatarUrl, m.Role.ToString(), m.CreatedAt))
             .ToListAsync(cancellationToken);
     }
 }
