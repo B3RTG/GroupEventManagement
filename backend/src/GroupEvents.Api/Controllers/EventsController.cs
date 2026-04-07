@@ -51,7 +51,7 @@ public class EventsController : ControllerBase
             request.Title, request.EventType, request.Location, request.Timezone,
             request.ScheduledAt, request.DurationMinutes,
             request.TrackCount, request.CapacityPerTrack,
-            request.Notes, request.RegistrationOpensAt, request.RegistrationClosesAt), ct);
+            Notes: request.Description, request.RegistrationOpensAt, request.RegistrationClosesAt), ct);
 
         return CreatedAtAction(nameof(GetById), new { groupId, id = result.Id }, result);
     }
@@ -64,7 +64,7 @@ public class EventsController : ControllerBase
         await _mediator.Send(new UpdateEventCommand(
             CurrentUserId, groupId, id,
             request.Title, request.Location, request.ScheduledAt, request.DurationMinutes,
-            request.Notes, request.RegistrationOpensAt, request.RegistrationClosesAt,
+            Notes: request.Description, request.RegistrationOpensAt, request.RegistrationClosesAt,
             request.TrackCount, request.CapacityPerTrack), ct);
 
         return NoContent();

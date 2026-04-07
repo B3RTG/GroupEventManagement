@@ -108,7 +108,7 @@ function MemberRow({
       {/* Avatar */}
       <div className="w-10 h-10 rounded-full bg-surface-container-high flex-shrink-0 overflow-hidden flex items-center justify-center">
         {member.avatarUrl
-          ? <img src={member.avatarUrl} alt={member.displayName} className="w-full h-full object-cover" />
+          ? <img src={member.avatarUrl} alt={member.displayName} referrerPolicy="no-referrer" className="w-full h-full object-cover" />
           : <span className="material-symbols-outlined text-on-surface-variant text-xl">person</span>
         }
       </div>

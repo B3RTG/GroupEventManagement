@@ -5,7 +5,7 @@ public record UpdateEventRequest(
     string?   Location              = null,
     DateTime? ScheduledAt           = null,
     int?      DurationMinutes       = null,
-    string?   Notes                 = null,
+    string?   Description           = null,
     DateTime? RegistrationOpensAt  = null,
     DateTime? RegistrationClosesAt = null,
     int?      TrackCount            = null,

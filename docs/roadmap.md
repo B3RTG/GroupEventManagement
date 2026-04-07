@@ -111,14 +111,14 @@
 
 **Objetivo**: aplicación web funcional con todas las features del MVP.
 
-- [ ] Autenticación (Google / Apple OAuth)
-- [ ] Pantalla de grupos (listado + detalle)
-- [ ] Unirse a grupo por código
-- [ ] Gestión de miembros (owner/co-admin)
-- [ ] Listado y detalle de eventos con capacidad en vivo
-- [ ] Inscripción / cancelación / waitlist
-- [ ] Crear y editar eventos con pistas
-- [ ] Perfil de usuario
+- [x] Autenticación (Google / Apple OAuth)
+- [x] Pantalla de grupos (listado + detalle)
+- [x] Unirse a grupo por código
+- [x] Gestión de miembros (owner/co-admin)
+- [x] Listado y detalle de eventos con capacidad en vivo
+- [x] Inscripción / cancelación / waitlist
+- [x] Crear y editar eventos con pistas
+- [x] Perfil de usuario
 
 ---
 

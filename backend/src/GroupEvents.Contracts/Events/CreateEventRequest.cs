@@ -9,7 +9,7 @@ public record CreateEventRequest(
     int      DurationMinutes,
     int      TrackCount,
     int      CapacityPerTrack,
-    string?  Notes                  = null,
+    string?  Description             = null,
     DateTime? RegistrationOpensAt  = null,
     DateTime? RegistrationClosesAt = null
 );

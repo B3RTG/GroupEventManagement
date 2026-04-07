@@ -1,7 +1,6 @@
 import { Link, NavLink, Outlet, useNavigate } from 'react-router';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../store/authSlice';
-import { useLogoutSessionMutation } from '../store/api/authApi';
 import { getInitials } from '@gem/utils';
 
 /**
@@ -10,12 +9,6 @@ import { getInitials } from '@gem/utils';
 export function AppLayout() {
   const user     = useSelector(selectUser);
   const navigate = useNavigate();
-  const [logoutSession] = useLogoutSessionMutation();
-
-  const handleLogout = async () => {
-    await logoutSession().catch(() => {});
-    navigate('/login', { replace: true });
-  };
 
   return (
     <div className="min-h-screen bg-background font-body">
@@ -32,24 +25,24 @@ export function AppLayout() {
 
           <div className="hidden md:flex items-center gap-6">
             <NavItem to="/dashboard" label="Dashboard" />
-            <NavItem to="/groups"    label="Grupos"    />
           </div>
         </div>
 
-        {/* Right: user avatar */}
+        {/* Right: notifications + avatar → profile */}
         <div className="flex items-center gap-3">
-          {/* Notifications placeholder */}
           <button className="p-2 rounded-xl text-on-surface-variant hover:bg-surface-container transition-colors">
             <span className="material-symbols-outlined text-[22px]">notifications</span>
           </button>
 
-          {/* User menu (simple — dropdown comes in Sprint 7.6) */}
           <button
-            onClick={handleLogout}
-            title={user?.displayName ?? 'Perfil'}
-            className="w-9 h-9 rounded-full bg-primary-container text-on-primary-container text-sm font-bold font-headline flex items-center justify-center hover:opacity-80 transition-opacity"
+            onClick={() => navigate('/profile')}
+            title={user?.displayName ?? 'Profile'}
+            className="w-9 h-9 rounded-full overflow-hidden bg-primary-container text-on-primary-container text-sm font-bold font-headline flex items-center justify-center hover:opacity-80 transition-opacity flex-shrink-0"
           >
-            {user ? getInitials(user.displayName) : '?'}
+            {user?.avatarUrl
+              ? <img src={user.avatarUrl} alt={user.displayName} referrerPolicy="no-referrer" className="w-full h-full object-cover" />
+              : (user ? getInitials(user.displayName) : '?')
+            }
           </button>
         </div>
       </nav>

@@ -38,7 +38,7 @@ public class GetEventsQueryHandler : IRequestHandler<GetEventsQuery, IReadOnlyLi
             .ToDictionaryAsync(x => x.EventId, x => x.Count, cancellationToken);
 
         return events.Select(e => new EventSummaryResponse(
-            e.Id, e.Title, e.EventType, e.Location, e.Status.ToString(),
+            e.Id, e.Title, e.EventType, e.Location, e.Status.ToString().ToLower(),
             e.ScheduledAt, e.TotalCapacity,
             confirmedCounts.GetValueOrDefault(e.Id, 0))).ToList();
     }
