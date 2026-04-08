@@ -25,6 +25,7 @@ export function AppLayout() {
 
           <div className="hidden md:flex items-center gap-6">
             <NavItem to="/dashboard" label="Dashboard" />
+            <NavItem to="/groups"    label="Groups" />
           </div>
         </div>
 

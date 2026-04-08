@@ -47,6 +47,13 @@ public class CreateEventCommandHandler : IRequestHandler<CreateEventCommand, Eve
             request.RegistrationOpensAt, request.RegistrationClosesAt);
 
         _db.Events.Add(ev);
+
+        // Auto-create the named tracks so they appear immediately in edit/detail views
+        for (var i = 0; i < request.TrackCount; i++)
+        {
+            _db.Tracks.Add(new Track(ev.Id, $"Track {i + 1}", request.CapacityPerTrack, sortOrder: i));
+        }
+
         await _db.SaveChangesAsync(cancellationToken);
 
         return ev.ToResponse(confirmedCount: 0);

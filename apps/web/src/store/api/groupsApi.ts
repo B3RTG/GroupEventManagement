@@ -57,6 +57,14 @@ export const groupsApi = createApi({
       invalidatesTags: (_r, _e, { groupId }) => [{ type: 'Member', id: groupId }],
     }),
 
+    updateGroup: build.mutation<void, { id: UUID; name: string }>({
+      query: ({ id, name }) => ({ url: `/groups/${id}`, method: 'PATCH', body: { name } }),
+      invalidatesTags: (_r, _e, { id }) => [
+        { type: 'Group', id },
+        'Group',
+      ],
+    }),
+
     regenerateInviteCode: build.mutation<{ inviteCode: string }, UUID>({
       query: (groupId) => ({
         url: `/groups/${groupId}/invite-code/regenerate`,
@@ -71,6 +79,7 @@ export const {
   useGetMyGroupsQuery,
   useGetGroupQuery,
   useCreateGroupMutation,
+  useUpdateGroupMutation,
   useJoinGroupMutation,
   useGetMembersQuery,
   useChangeMemberRoleMutation,

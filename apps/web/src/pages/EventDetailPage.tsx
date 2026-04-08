@@ -46,7 +46,9 @@ const STATUS_CFG: Record<EventStatus, { label: string; cls: string }> = {
 
 // ── Track card ────────────────────────────────────────────────
 
-function TrackCard({ track, fillPct, isFull }: { track: Track; fillPct: number; isFull: boolean }) {
+function TrackCard({ track, occupied }: { track: Track; occupied: number }) {
+  const fillPct = track.capacity > 0 ? (occupied / track.capacity) * 100 : 0;
+  const isFull  = occupied >= track.capacity;
   return (
     <div className="group relative overflow-hidden rounded-xl bg-surface-container-lowest border-ghost p-6 shadow-soft transition-transform hover:-translate-y-1">
       <div className="flex justify-between items-start mb-6">
@@ -68,7 +70,7 @@ function TrackCard({ track, fillPct, isFull }: { track: Track; fillPct: number; 
           />
         </div>
         <span className="text-sm font-bold text-primary tabular-nums">
-          {Math.round(track.capacity * fillPct / 100)}/{track.capacity}
+          {occupied}/{track.capacity}
         </span>
       </div>
     </div>
@@ -151,6 +153,17 @@ export function EventDetailPage() {
 
   const sortedTracks   = [...tracks].sort((a, b) => a.sortOrder - b.sortOrder);
   const confirmedRegs  = registrations.filter(r => r.status === 'confirmed');
+
+  // Distribute confirmed count sequentially across tracks for display purposes
+  // (registrations are event-level; tracks show estimated occupancy)
+  const tracksWithOccupancy = (() => {
+    let remaining = event.confirmedCount;
+    return sortedTracks.map(track => {
+      const occupied = Math.min(remaining, track.capacity);
+      remaining -= occupied;
+      return { track, occupied };
+    });
+  })();
   const previewRegs    = confirmedRegs.slice(0, 4);
 
   // ── Action button ──────────────────────────────────────────
@@ -311,7 +324,7 @@ export function EventDetailPage() {
           )}
 
           {/* Tracks */}
-          {sortedTracks.length > 0 && (
+          {tracksWithOccupancy.length > 0 && (
             <section className="space-y-6">
               <div className="flex items-center justify-between">
                 <h2 className="text-3xl font-headline font-extrabold tracking-tight text-primary">
@@ -322,12 +335,11 @@ export function EventDetailPage() {
                 </span>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {sortedTracks.map(track => (
+                {tracksWithOccupancy.map(({ track, occupied }) => (
                   <TrackCard
                     key={track.id}
                     track={track}
-                    fillPct={capacityPct}
-                    isFull={isFull}
+                    occupied={occupied}
                   />
                 ))}
               </div>

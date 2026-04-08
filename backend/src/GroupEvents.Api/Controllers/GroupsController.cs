@@ -40,6 +40,14 @@ public class GroupsController : ControllerBase
         return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
     }
 
+    /// <summary>Update group settings (name). Owner or co-admin only.</summary>
+    [HttpPatch("{id:guid}")]
+    public async Task<IActionResult> Update(Guid id, [FromBody] UpdateGroupRequest request, CancellationToken ct)
+    {
+        await _mediator.Send(new UpdateGroupCommand(CurrentUserId, id, request.Name), ct);
+        return NoContent();
+    }
+
     /// <summary>Get group details. Requires membership.</summary>
     [HttpGet("{id:guid}")]
     public async Task<ActionResult<GroupResponse>> GetById(Guid id, CancellationToken ct)

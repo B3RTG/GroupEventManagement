@@ -1,6 +1,7 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import type {
   Event,
+  UpcomingEvent,
   Track,
   Registration,
   WaitlistEntry,
@@ -17,6 +18,15 @@ export const eventsApi = createApi({
   baseQuery: baseQueryWithReauth,
   tagTypes: ['Event', 'Track', 'Registration', 'Waitlist'],
   endpoints: (build) => ({
+    // ── My upcoming events (cross-group) ────────────────────
+    getMyUpcomingEvents: build.query<UpcomingEvent[], { limit?: number } | void>({
+      query: (args) => {
+        const limit = args?.limit ?? 10;
+        return `/events/upcoming?limit=${limit}`;
+      },
+      providesTags: [{ type: 'Event', id: 'UPCOMING' }],
+    }),
+
     // ── Events ──────────────────────────────────────────────
     getEvents: build.query<Event[], UUID>({
       query: (groupId) => `/groups/${groupId}/events`,
@@ -51,7 +61,25 @@ export const eventsApi = createApi({
         url: `/groups/${groupId}/events/${id}/publish`,
         method: 'POST',
       }),
-      invalidatesTags: (_r, _e, { id }) => [{ type: 'Event', id }],
+      async onQueryStarted({ groupId, id }, { dispatch, queryFulfilled }) {
+        // Optimistic update: mark event as published in the local cache immediately
+        const patch = dispatch(
+          eventsApi.util.updateQueryData('getEvents', groupId, (draft) => {
+            const ev = draft.find(e => e.id === id);
+            if (ev) ev.status = 'published';
+          })
+        );
+        try {
+          await queryFulfilled;
+        } catch {
+          patch.undo();
+        }
+      },
+      invalidatesTags: (_r, _e, { id, groupId }) => [
+        { type: 'Event', id },
+        { type: 'Event', id: groupId },
+        { type: 'Event', id: 'UPCOMING' },
+      ],
     }),
 
     cancelEvent: build.mutation<void, EventKey & { id: UUID }>({
@@ -62,6 +90,7 @@ export const eventsApi = createApi({
       invalidatesTags: (_r, _e, { id, groupId }) => [
         { type: 'Event', id },
         { type: 'Event', id: groupId },
+        { type: 'Event', id: 'UPCOMING' },
       ],
     }),
 
@@ -164,6 +193,7 @@ export const eventsApi = createApi({
 });
 
 export const {
+  useGetMyUpcomingEventsQuery,
   useGetEventsQuery,
   useGetEventQuery,
   useCreateEventMutation,

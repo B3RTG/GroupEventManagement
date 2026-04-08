@@ -6,6 +6,8 @@ import { PrivateRoute }  from '../components/PrivateRoute';
 // Pages (placeholder imports — implementations in sprints 7.2–7.6)
 import { LoginPage }         from '../pages/LoginPage';
 import { DashboardPage }     from '../pages/DashboardPage';
+import { GroupsPage }        from '../pages/GroupsPage';
+import { GroupFormPage }     from '../pages/GroupFormPage';
 import { GroupDetailPage }   from '../pages/GroupDetailPage';
 import { EventDetailPage }   from '../pages/EventDetailPage';
 import { EventCreatePage }   from '../pages/EventCreatePage';
@@ -30,6 +32,9 @@ export const router = createBrowserRouter([
         children: [
           { index: true,                                       element: <Navigate to="/dashboard" replace /> },
           { path: '/dashboard',                                element: <DashboardPage /> },
+          { path: '/groups',                                   element: <GroupsPage /> },
+          { path: '/groups/new',                               element: <GroupFormPage /> },
+          { path: '/groups/:groupId/edit',                     element: <GroupFormPage /> },
           { path: '/groups/:groupId',                          element: <GroupDetailPage /> },
           { path: '/groups/:groupId/events/new',               element: <EventCreatePage /> },
           { path: '/groups/:groupId/events/:eventId',          element: <EventDetailPage /> },

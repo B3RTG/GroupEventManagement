@@ -67,6 +67,20 @@ export interface Event {
   myRegistration: RegistrationStatus | null;
 }
 
+export interface UpcomingEvent {
+  id: UUID;
+  groupId: UUID;
+  groupName: string;
+  title: string;
+  eventType: string;
+  location: string | null;
+  status: EventStatus;
+  scheduledAt: ISODateString;
+  totalCapacity: number;
+  confirmedCount: number;
+  myRegistration: RegistrationStatus | null;
+}
+
 export interface Track {
   id: UUID;
   eventId: UUID;

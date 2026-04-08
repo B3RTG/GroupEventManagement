@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { useGetMyGroupsQuery, useJoinGroupMutation } from '../store/api/groupsApi';
-import type { Group, GroupRole } from '@gem/api-client';
+import { useGetMyUpcomingEventsQuery } from '../store/api/eventsApi';
+import type { Group, GroupRole, UpcomingEvent } from '@gem/api-client';
 
 // ── Role badge ────────────────────────────────────────────────
 function RoleBadge({ role }: { role: GroupRole }) {
@@ -76,6 +77,67 @@ function GroupCard({ group }: { group: Group }) {
   );
 }
 
+// ── Upcoming event card ───────────────────────────────────────
+function UpcomingEventCard({ event }: { event: UpcomingEvent }) {
+  const navigate = useNavigate();
+  const date     = new Date(event.scheduledAt);
+  const isFull   = event.confirmedCount >= event.totalCapacity;
+
+  const regBadge = event.myRegistration === 'confirmed'
+    ? { label: 'Confirmed', cls: 'bg-secondary-fixed text-on-secondary-fixed-variant' }
+    : event.myRegistration === 'waitlisted'
+    ? { label: 'Waitlisted', cls: 'bg-surface-container-high text-on-surface-variant' }
+    : null;
+
+  return (
+    <div
+      onClick={() => navigate(`/groups/${event.groupId}/events/${event.id}`)}
+      className="flex-shrink-0 w-64 bg-surface-container-lowest rounded-2xl shadow-soft p-5 cursor-pointer hover:-translate-y-1 transition-all duration-300 flex flex-col gap-3"
+    >
+      {/* Date chip + group */}
+      <div className="flex items-center justify-between">
+        <div className="bg-surface-container-high px-3 py-1.5 rounded-lg text-center">
+          <span className="block text-xl font-black font-headline leading-none">{date.getDate()}</span>
+          <span className="text-[9px] uppercase font-bold tracking-widest text-on-surface-variant">
+            {date.toLocaleString('en', { month: 'short' })}
+          </span>
+        </div>
+        <span className="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant/60 text-right max-w-[7rem] truncate">
+          {event.groupName}
+        </span>
+      </div>
+
+      {/* Title */}
+      <h4 className="font-headline font-bold text-primary text-base leading-tight line-clamp-2">
+        {event.title}
+      </h4>
+
+      {/* Meta */}
+      <div className="flex items-center gap-3 text-xs text-on-surface-variant mt-auto">
+        <span className="flex items-center gap-1">
+          <span className="material-symbols-outlined text-sm">schedule</span>
+          {date.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}
+        </span>
+        <span className={`flex items-center gap-1 font-semibold ${isFull ? 'text-error' : 'text-secondary'}`}>
+          <span className="material-symbols-outlined text-sm">group</span>
+          {event.confirmedCount}/{event.totalCapacity}
+        </span>
+      </div>
+
+      {/* Registration badge or CTA */}
+      {regBadge ? (
+        <span className={`self-start text-[10px] font-black uppercase tracking-widest px-2 py-1 rounded-full ${regBadge.cls}`}>
+          {regBadge.label}
+        </span>
+      ) : (
+        <span className="self-start text-[10px] font-black uppercase tracking-widest px-2 py-1 rounded-full bg-primary/10 text-primary">
+          {isFull ? 'Join waitlist →' : 'Register →'}
+        </span>
+      )}
+    </div>
+  );
+}
+
 // ── Empty state ───────────────────────────────────────────────
 function EmptyState() {
   return (
@@ -94,6 +156,7 @@ export function DashboardPage() {
   const [code, setCode]   = useState('');
   const [joinError, setJoinError] = useState<string | null>(null);
   const { data: groups = [], isLoading } = useGetMyGroupsQuery();
+  const { data: upcomingEvents = [], isLoading: loadingUpcoming } = useGetMyUpcomingEventsQuery();
   const [joinGroup, { isLoading: isJoining }] = useJoinGroupMutation();
 
   const handleJoin = async () => {
@@ -155,6 +218,34 @@ export function DashboardPage() {
           </div>
         </div>
       </section>
+
+      {/* ── Upcoming events ── */}
+      {(loadingUpcoming || upcomingEvents.length > 0) && (
+        <section className="mb-12">
+          <div className="flex justify-between items-end mb-6">
+            <div>
+              <h2 className="font-headline text-3xl font-extrabold tracking-tighter text-primary">
+                Upcoming Events
+              </h2>
+              <p className="text-on-surface-variant text-sm">Your next scheduled sessions across all groups.</p>
+            </div>
+          </div>
+
+          {loadingUpcoming ? (
+            <div className="flex gap-4 overflow-x-auto pb-2">
+              {[...Array(4)].map((_, i) => (
+                <div key={i} className="flex-shrink-0 w-64 h-48 bg-surface-container-lowest rounded-2xl animate-pulse" />
+              ))}
+            </div>
+          ) : (
+            <div className="flex gap-4 overflow-x-auto pb-2">
+              {upcomingEvents.map((event) => (
+                <UpcomingEventCard key={event.id} event={event} />
+              ))}
+            </div>
+          )}
+        </section>
+      )}
 
       {/* ── Group list ── */}
       <div className="flex justify-between items-end mb-8">

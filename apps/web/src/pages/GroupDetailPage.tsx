@@ -7,12 +7,12 @@ import {
   useChangeMemberRoleMutation,
   useRemoveMemberMutation,
 } from '../store/api/groupsApi';
-import { useGetEventsQuery } from '../store/api/eventsApi';
+import { useGetEventsQuery, usePublishEventMutation } from '../store/api/eventsApi';
 import { useAppSelector } from '../store/hooks';
 import { selectUser } from '../store/authSlice';
 import type { GroupRole, Event, GroupMember } from '@gem/api-client';
 
-type Tab = 'events' | 'members';
+type Tab = 'events' | 'drafts' | 'members';
 
 // ── Helpers ───────────────────────────────────────────────────
 function formatDate(iso: string) {
@@ -170,11 +170,16 @@ export function GroupDetailPage() {
   const { data: events = [], isLoading: loadingEvents } = useGetEventsQuery(groupId);
   const { data: members = [], isLoading: loadingMembers } = useGetMembersQuery(groupId);
   const [regenerateCode] = useRegenerateInviteCodeMutation();
+  const [publishEvent]   = usePublishEventMutation();
 
   const isAdmin = group?.role === 'owner' || group?.role === 'co_admin';
 
   const upcomingEvents = events
     .filter(e => e.status === 'published' && new Date(e.scheduledAt) > new Date())
+    .sort((a, b) => new Date(a.scheduledAt).getTime() - new Date(b.scheduledAt).getTime());
+
+  const draftEvents = events
+    .filter(e => e.status === 'draft')
     .sort((a, b) => new Date(a.scheduledAt).getTime() - new Date(b.scheduledAt).getTime());
 
   const sortedMembers = [...members].sort((a, b) => rolePriority(a.role) - rolePriority(b.role));
@@ -216,7 +221,7 @@ export function GroupDetailPage() {
           <div>
             {/* Breadcrumb */}
             <nav className="flex gap-2 text-sm text-on-surface-variant mb-4 font-medium uppercase tracking-widest">
-              <Link to="/dashboard" className="hover:text-primary transition-colors">Groups</Link>
+              <Link to="/groups" className="hover:text-primary transition-colors">Groups</Link>
               <span>/</span>
               <span className="text-primary font-bold">Details</span>
             </nav>
@@ -264,20 +269,31 @@ export function GroupDetailPage() {
           <div className="sticky top-24 space-y-6">
             {/* Tab nav */}
             <nav className="space-y-2">
-              {(['events', 'members'] as Tab[]).map((tab) => (
+              {([
+                { key: 'events',  label: 'Events',  icon: 'calendar_today', count: null },
+                ...(isAdmin ? [{ key: 'drafts', label: 'Drafts', icon: 'edit_note', count: draftEvents.length }] : []),
+                { key: 'members', label: 'Members', icon: 'group',          count: null },
+              ] as { key: Tab; label: string; icon: string; count: number | null }[]).map(({ key, label, icon, count }) => (
                 <button
-                  key={tab}
-                  onClick={() => setActiveTab(tab)}
+                  key={key}
+                  onClick={() => setActiveTab(key)}
                   className={`w-full flex items-center justify-between p-4 rounded-xl font-headline font-bold transition-all hover:translate-x-1 ${
-                    activeTab === tab
+                    activeTab === key
                       ? 'bg-primary text-on-primary'
                       : 'bg-surface-container-low text-on-surface hover:bg-surface-container-high'
                   }`}
                 >
-                  <span className="text-base capitalize">{tab}</span>
-                  <span className="material-symbols-outlined">
-                    {tab === 'events' ? 'calendar_today' : 'group'}
+                  <span className="flex items-center gap-2 text-base">
+                    {label}
+                    {count !== null && count > 0 && (
+                      <span className={`text-xs font-black px-1.5 py-0.5 rounded-full ${
+                        activeTab === key ? 'bg-on-primary/20 text-on-primary' : 'bg-error/10 text-error'
+                      }`}>
+                        {count}
+                      </span>
+                    )}
                   </span>
+                  <span className="material-symbols-outlined">{icon}</span>
                 </button>
               ))}
             </nav>
@@ -349,6 +365,87 @@ export function GroupDetailPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {upcomingEvents.map((event) => (
                     <EventCard key={event.id} event={event} groupId={groupId} />
+                  ))}
+                </div>
+              )}
+            </section>
+          )}
+
+          {/* ── Drafts tab ── */}
+          {activeTab === 'drafts' && (
+            <section>
+              <div className="flex items-center justify-between mb-8">
+                <h2 className="text-3xl font-black font-headline tracking-tight text-primary">
+                  Draft Events
+                </h2>
+                <button
+                  onClick={() => navigate(`/groups/${groupId}/events/new`)}
+                  className="bg-primary text-on-primary px-6 py-2 rounded-lg font-bold hover:bg-primary-container transition-colors"
+                >
+                  Create Event
+                </button>
+              </div>
+
+              {loadingEvents ? (
+                <div className="space-y-4">
+                  {[...Array(2)].map((_, i) => (
+                    <div key={i} className="h-24 bg-surface-container-lowest rounded-xl animate-pulse" />
+                  ))}
+                </div>
+              ) : draftEvents.length === 0 ? (
+                <div className="bg-surface-container-lowest rounded-xl p-12 text-center">
+                  <span className="material-symbols-outlined text-4xl text-on-surface-variant/30 mb-3 block">edit_off</span>
+                  <p className="font-headline font-bold text-primary mb-1">No draft events</p>
+                  <p className="text-on-surface-variant text-sm">Create an event to start building your schedule.</p>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {draftEvents.map((event) => (
+                    <div
+                      key={event.id}
+                      className="bg-surface-container-lowest rounded-xl p-5 flex items-center gap-5"
+                    >
+                      {/* Date chip */}
+                      <div className="bg-surface-container-high px-3 py-2 rounded-lg text-center min-w-[52px] flex-shrink-0">
+                        <span className="block text-xl font-black font-headline leading-none">
+                          {new Date(event.scheduledAt).getDate()}
+                        </span>
+                        <span className="text-[9px] uppercase font-bold tracking-widest text-on-surface-variant">
+                          {new Date(event.scheduledAt).toLocaleString('en', { month: 'short' })}
+                        </span>
+                      </div>
+
+                      {/* Info */}
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className="text-[10px] font-black uppercase tracking-widest text-on-surface-variant/60 bg-surface-container-high px-2 py-0.5 rounded">
+                            Draft
+                          </span>
+                        </div>
+                        <h4 className="font-headline font-bold text-primary text-base truncate">{event.title}</h4>
+                        <p className="text-xs text-on-surface-variant mt-0.5">
+                          {new Date(event.scheduledAt).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}
+                          {event.location && ` · ${event.location}`}
+                          {` · ${event.totalCapacity} spots`}
+                        </p>
+                      </div>
+
+                      {/* Actions */}
+                      <div className="flex items-center gap-2 flex-shrink-0">
+                        <button
+                          onClick={() => navigate(`/groups/${groupId}/events/${event.id}/edit`)}
+                          className="px-4 py-2 rounded-lg bg-surface-container-high text-on-surface font-bold text-sm hover:bg-surface-container-highest transition-colors"
+                        >
+                          Edit
+                        </button>
+                        <button
+                          onClick={() => publishEvent({ groupId, id: event.id, eventId: event.id })}
+                          className="px-4 py-2 rounded-lg bg-primary text-on-primary font-bold text-sm hover:bg-primary-container transition-colors"
+                        >
+                          Publish →
+                        </button>
+                      </div>
+                    </div>
                   ))}
                 </div>
               )}
