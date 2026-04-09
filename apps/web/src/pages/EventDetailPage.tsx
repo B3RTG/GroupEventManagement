@@ -254,6 +254,15 @@ export function EventDetailPage() {
 
           {/* Hero section */}
           <section>
+            <nav className="flex gap-2 text-sm text-on-surface-variant mb-4 font-medium uppercase tracking-widest">
+              <Link to="/groups" className="hover:text-primary transition-colors">Groups</Link>
+              <span>/</span>
+              <Link to={`/groups/${groupId}`} className="hover:text-primary transition-colors">
+                {group?.name ?? 'Group'}
+              </Link>
+              <span>/</span>
+              <span className="text-primary font-bold">Event</span>
+            </nav>
             <div className="flex flex-col gap-4">
               <div className="flex items-center gap-3 flex-wrap">
                 <span className={`px-3 py-1 rounded-full text-xs font-bold tracking-widest uppercase ${status.cls}`}>
@@ -267,17 +276,6 @@ export function EventDetailPage() {
                 {event.title}
               </h1>
             </div>
-
-            {/* Breadcrumb below title */}
-            <nav className="flex gap-2 text-xs text-on-surface-variant mt-4 font-medium uppercase tracking-widest">
-              <Link to="/dashboard" className="hover:text-primary transition-colors">Groups</Link>
-              <span>/</span>
-              <Link to={`/groups/${groupId}`} className="hover:text-primary transition-colors">
-                {group?.name ?? 'Group'}
-              </Link>
-              <span>/</span>
-              <span className="text-primary font-bold">Event</span>
-            </nav>
           </section>
 
           {/* Description bento */}

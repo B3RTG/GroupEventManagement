@@ -281,10 +281,13 @@ export function EventCreatePage() {
       {/* ── Header ── */}
       <header className="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div className="space-y-2">
-          <div className="flex items-center gap-2 text-secondary font-semibold text-sm tracking-wide uppercase">
-            <span className="material-symbols-outlined text-sm">edit</span>
-            <span>{isEditing ? 'Admin View' : 'Create Event'}</span>
-          </div>
+          <nav className="flex gap-2 text-sm text-on-surface-variant font-medium uppercase tracking-widest">
+            <Link to="/groups" className="hover:text-primary transition-colors">Groups</Link>
+            <span>/</span>
+            <Link to={`/groups/${groupId}`} className="hover:text-primary transition-colors">Group</Link>
+            <span>/</span>
+            <span className="text-primary font-bold">{isEditing ? 'Edit Event' : 'New Event'}</span>
+          </nav>
           <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-primary leading-tight font-headline">
             {isEditing ? 'Edit Group Event' : 'New Group Event'}
           </h1>
