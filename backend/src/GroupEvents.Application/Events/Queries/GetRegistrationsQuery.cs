@@ -35,7 +35,7 @@ public class GetRegistrationsQueryHandler
             r.EventId,
             r.UserId,
             r.IsGuestRegistration ? r.Guest?.DisplayName : r.User?.DisplayName,
-            r.Status.ToString(),
+            r.Status.ToString().ToLower(),
             r.PromotedFromWaitlist,
             r.PromotedAt,
             r.IsGuestRegistration,

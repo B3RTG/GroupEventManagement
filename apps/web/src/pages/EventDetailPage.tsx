@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router';
 import {
   useGetEventQuery,
@@ -10,6 +11,7 @@ import {
   useLeaveWaitlistMutation,
   usePublishEventMutation,
   useCancelEventMutation,
+  useRegisterGuestMutation,
 } from '../store/api/eventsApi';
 import { useGetGroupQuery } from '../store/api/groupsApi';
 import type { EventStatus, Track } from '@gem/api-client';
@@ -101,6 +103,12 @@ export function EventDetailPage() {
   const [leaveWaitlist, { isLoading: leavingWl     }] = useLeaveWaitlistMutation();
   const [publishEvent,  { isLoading: publishing    }] = usePublishEventMutation();
   const [cancelEvent,   { isLoading: cancellingEv  }] = useCancelEventMutation();
+  const [registerGuest, { isLoading: registeringGuest }] = useRegisterGuestMutation();
+
+  const [guestFormOpen,  setGuestFormOpen]  = useState(false);
+  const [guestName,      setGuestName]      = useState('');
+  const [guestEmail,     setGuestEmail]     = useState('');
+  const [guestFormError, setGuestFormError] = useState<string | null>(null);
 
   const isAdmin      = group?.role === 'owner' || group?.role === 'co_admin';
   const isActionBusy = registering || cancellingReg || joiningWl || leavingWl;
@@ -165,6 +173,28 @@ export function EventDetailPage() {
     });
   })();
   const previewRegs    = confirmedRegs.slice(0, 4);
+
+  // ── Guest registration ─────────────────────────────────────
+
+  async function handleRegisterGuest(e: React.FormEvent) {
+    e.preventDefault();
+    setGuestFormError(null);
+    if (!guestName.trim()) { setGuestFormError('Display name is required.'); return; }
+    try {
+      await registerGuest({
+        groupId, eventId,
+        displayName: guestName.trim(),
+        email: guestEmail.trim() || undefined,
+      }).unwrap();
+      setGuestFormOpen(false);
+      setGuestName('');
+      setGuestEmail('');
+    } catch (err: unknown) {
+      const msg = (err as { data?: { detail?: string } })?.data?.detail
+        ?? 'Failed to register guest. Please try again.';
+      setGuestFormError(msg);
+    }
+  }
 
   // ── Action button ──────────────────────────────────────────
 
@@ -246,6 +276,78 @@ export function EventDetailPage() {
   // ── Render ────────────────────────────────────────────────
 
   return (
+    <>
+    {/* ── Guest modal ───────────────────────────────────────── */}
+    {guestFormOpen && (
+      <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+        <div
+          className="absolute inset-0"
+          style={{ background: 'rgba(0,16,30,0.4)', backdropFilter: 'blur(4px)' }}
+          onClick={() => { setGuestFormOpen(false); setGuestName(''); setGuestEmail(''); setGuestFormError(null); }}
+        />
+        <div className="relative bg-surface-container-lowest w-full max-w-md rounded-2xl p-8 shadow-soft border border-outline-variant/20">
+          <div className="flex justify-between items-start mb-6">
+            <h3 className="font-headline font-extrabold text-2xl text-primary">Add a Guest</h3>
+            <button
+              onClick={() => { setGuestFormOpen(false); setGuestName(''); setGuestEmail(''); setGuestFormError(null); }}
+              className="p-1 hover:bg-surface-container-high rounded-full transition-colors"
+            >
+              <span className="material-symbols-outlined text-outline">close</span>
+            </button>
+          </div>
+          <form onSubmit={handleRegisterGuest} className="space-y-4">
+            <div>
+              <label className="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">
+                Guest Name
+              </label>
+              <input
+                type="text"
+                value={guestName}
+                onChange={e => setGuestName(e.target.value)}
+                placeholder="Enter guest's full name"
+                required
+                className="w-full bg-surface-container-low border border-outline-variant rounded-xl p-4 text-on-surface placeholder:text-on-surface-variant/40 focus:outline-none focus:ring-2 focus:ring-secondary/40 transition-all"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">
+                Email (Optional)
+              </label>
+              <input
+                type="email"
+                value={guestEmail}
+                onChange={e => setGuestEmail(e.target.value)}
+                placeholder="For event updates"
+                className="w-full bg-surface-container-low border border-outline-variant rounded-xl p-4 text-on-surface placeholder:text-on-surface-variant/40 focus:outline-none focus:ring-2 focus:ring-secondary/40 transition-all"
+              />
+            </div>
+            {guestFormError && (
+              <p className="text-xs font-bold text-error flex items-center gap-1">
+                <span className="material-symbols-outlined text-sm">error</span>
+                {guestFormError}
+              </p>
+            )}
+            <div className="mt-8 flex gap-3">
+              <button
+                type="button"
+                onClick={() => { setGuestFormOpen(false); setGuestName(''); setGuestEmail(''); setGuestFormError(null); }}
+                disabled={registeringGuest}
+                className="flex-1 py-4 text-on-surface-variant font-bold hover:bg-surface-container-high rounded-xl transition-colors disabled:opacity-50"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                disabled={registeringGuest}
+                className="flex-1 py-4 bg-primary text-on-primary rounded-xl font-headline font-bold hover:bg-primary-container transition-all active:scale-[0.98] disabled:opacity-50"
+              >
+                {registeringGuest ? 'Registering…' : 'Confirm Guest'}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    )}
     <main className="pt-8 pb-20 px-8 max-w-7xl mx-auto">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
 
@@ -452,6 +554,25 @@ export function EventDetailPage() {
               )}
             </div>
 
+            {/* Bring a Guest */}
+            {isAdmin && isPublished && !isFull && (
+              <button
+                onClick={() => { setGuestFormOpen(true); setGuestFormError(null); }}
+                className="w-full group flex items-center justify-between p-4 rounded-xl border-2 border-dashed border-outline-variant hover:border-secondary hover:bg-secondary/[0.02] transition-all mb-4"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center text-secondary group-hover:bg-secondary group-hover:text-on-secondary transition-colors">
+                    <span className="material-symbols-outlined">person_add</span>
+                  </div>
+                  <div className="text-left">
+                    <p className="text-sm font-bold text-primary">Bring a Guest</p>
+                    <p className="text-xs text-on-surface-variant">Expand the squad</p>
+                  </div>
+                </div>
+                <span className="material-symbols-outlined text-outline-variant group-hover:text-secondary transition-colors">chevron_right</span>
+              </button>
+            )}
+
             {/* Action */}
             <ActionButton />
           </div>
@@ -498,5 +619,6 @@ export function EventDetailPage() {
         </aside>
       </div>
     </main>
+    </>
   );
 }

@@ -124,34 +124,38 @@ function MemberRow({
       <span className={`px-2 py-1 rounded text-[10px] font-black uppercase tracking-widest ${roleBadgeClass[member.role]}`}>
         {member.role.replace('_', ' ')}
       </span>
-      {/* Admin actions */}
-      {canManage && (
-        <div className="flex items-center gap-1">
-          {member.role === 'member' && (
-            <button
-              onClick={() => changeRole({ groupId, userId: member.userId, role: 'co_admin' })}
-              title="Promote to admin"
-              className="p-1.5 rounded-lg hover:bg-surface-container-high transition-colors text-on-surface-variant"
-            >
-              <span className="material-symbols-outlined text-lg">arrow_upward</span>
-            </button>
+      {/* Admin actions — always reserve space when admin to keep rows aligned */}
+      {isAdmin && (
+        <div className="flex items-center gap-1 w-[72px] justify-end">
+          {canManage && (
+            <>
+              {member.role === 'member' && (
+                <button
+                  onClick={() => changeRole({ groupId, userId: member.userId, role: 'co_admin' })}
+                  title="Promote to admin"
+                  className="p-1.5 rounded-lg hover:bg-surface-container-high transition-colors text-on-surface-variant"
+                >
+                  <span className="material-symbols-outlined text-lg">arrow_upward</span>
+                </button>
+              )}
+              {member.role === 'co_admin' && (
+                <button
+                  onClick={() => changeRole({ groupId, userId: member.userId, role: 'member' })}
+                  title="Demote to member"
+                  className="p-1.5 rounded-lg hover:bg-surface-container-high transition-colors text-on-surface-variant"
+                >
+                  <span className="material-symbols-outlined text-lg">arrow_downward</span>
+                </button>
+              )}
+              <button
+                onClick={() => { if (confirm(`Remove ${member.displayName}?`)) remove({ groupId, userId: member.userId }); }}
+                title="Remove member"
+                className="p-1.5 rounded-lg hover:bg-error-container transition-colors text-error"
+              >
+                <span className="material-symbols-outlined text-lg">person_remove</span>
+              </button>
+            </>
           )}
-          {member.role === 'co_admin' && (
-            <button
-              onClick={() => changeRole({ groupId, userId: member.userId, role: 'member' })}
-              title="Demote to member"
-              className="p-1.5 rounded-lg hover:bg-surface-container-high transition-colors text-on-surface-variant"
-            >
-              <span className="material-symbols-outlined text-lg">arrow_downward</span>
-            </button>
-          )}
-          <button
-            onClick={() => { if (confirm(`Remove ${member.displayName}?`)) remove({ groupId, userId: member.userId }); }}
-            title="Remove member"
-            className="p-1.5 rounded-lg hover:bg-error-container transition-colors text-error"
-          >
-            <span className="material-symbols-outlined text-lg">person_remove</span>
-          </button>
         </div>
       )}
     </div>

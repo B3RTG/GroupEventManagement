@@ -165,7 +165,11 @@ export const eventsApi = createApi({
         method: 'POST',
         body,
       }),
-      invalidatesTags: (_r, _e, { eventId }) => [{ type: 'Registration', id: eventId }],
+      invalidatesTags: (_r, _e, { eventId, groupId: gid }) => [
+        { type: 'Registration', id: eventId },
+        { type: 'Event', id: eventId },
+        { type: 'Event', id: gid },
+      ],
     }),
 
     // ── Waitlist ─────────────────────────────────────────────
