@@ -126,11 +126,17 @@
 
 **Objetivo**: app mobile iOS + Android con paridad de features con la web.
 
-- [ ] Setup Expo Router y navegación (Stack + Tab)
-- [ ] Autenticación OAuth nativa (Expo AuthSession)
-- [ ] Registro y envío de push token a la API
-- [ ] Push notifications con Expo Notifications
-- [ ] Todas las pantallas equivalentes a la web
+- [x] Setup navegación (React Navigation — Stack + Bottom Tabs)
+- [x] Autenticación OAuth nativa (`@react-native-google-signin` + `expo-apple-authentication`)
+- [x] Store Redux + AsyncStorage (persistencia de sesión)
+- [x] Pantalla Login — hero gradient + Google + Apple
+- [x] Dashboard — grupos, join por código, stats card, FAB
+- [x] GroupDetail — invite code copiable, eventos horizontal scroll, roster de miembros
+- [x] EventDetail — capacity card, CTA contextual (register/cancel/waitlist), location, tracks
+- [x] EventsScreen — lista de próximos eventos con estado de inscripción
+- [x] ProfileScreen — stats, lista de grupos con roles, cerrar sesión
+- [ ] Registro y envío de push token a la API (`expo-notifications` → `PUT /auth/me`)
+- [ ] Push notifications — handlers foreground + background + navegación desde tap
 - [ ] Build EAS (Expo Application Services) para distribución TestFlight / Play Store
 
 ---
