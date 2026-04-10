@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "expo start",
+    "tunnel": "pkill ngrok 2>/dev/null; sleep 1; expo start --tunnel --clear",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "type-check": "tsc --noEmit",
