@@ -50,9 +50,9 @@ export default function LoginScreen() {
         loginWithGoogle({ idToken: data.idToken });
       }
     } catch (e: unknown) {
-      const err = e as { code?: string; message?: string };
+      const err = e as { code?: string };
       if (err?.code !== statusCodes.SIGN_IN_CANCELLED) {
-        setGoogleNativeError(`[${err?.code}] ${err?.message}`);
+        console.warn("Google Sign In error", e);
       }
     }
   };
@@ -78,7 +78,6 @@ export default function LoginScreen() {
     }
   };
 
-  const [googleNativeError, setGoogleNativeError] = React.useState<string | null>(null);
   const isLoading = googleLoading || appleLoading;
   const error = googleError || appleError;
 
@@ -130,9 +129,9 @@ export default function LoginScreen() {
 
         {/* ── Auth buttons ─────────────────────────────────── */}
         <View style={styles.authSection}>
-          {(error || googleNativeError) && (
+          {error && (
             <Text style={styles.errorText}>
-              {googleNativeError ?? "Error al iniciar sesión. Inténtalo de nuevo."}
+              Error al iniciar sesión. Inténtalo de nuevo.
             </Text>
           )}
 
