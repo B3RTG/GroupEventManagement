@@ -66,6 +66,11 @@ public class CancelRegistrationCommandHandler : IRequestHandler<CancelRegistrati
                     "¡Tienes plaza! Has sido promovido desde la lista de espera.",
                     NotificationChannel.Push,
                     idempotencyKey: $"promoted:{request.EventId}:{nextInLine.UserId}",
+                    data: System.Text.Json.JsonSerializer.Serialize(new Dictionary<string, string>
+                    {
+                        ["groupId"] = request.GroupId.ToString(),
+                        ["eventId"] = request.EventId.ToString()
+                    }),
                     ct: ct);
             }
         }

@@ -135,9 +135,9 @@
 - [x] EventDetail — capacity card, CTA contextual (register/cancel/waitlist), location, tracks
 - [x] EventsScreen — lista de próximos eventos con estado de inscripción
 - [x] ProfileScreen — stats, lista de grupos con roles, cerrar sesión
-- [ ] Registro y envío de push token a la API (`expo-notifications` → `PUT /auth/me`)
-- [ ] Push notifications — handlers foreground + background + navegación desde tap
-- [ ] Build EAS (Expo Application Services) para distribución TestFlight / Play Store
+- [x] Registro y envío de push token a la API (`expo-notifications` → `PUT /auth/me`)
+- [x] Push notifications — handlers foreground + background + navegación desde tap
+- [x] Build EAS (Expo Application Services) — `eas.json` configurado con perfiles development/preview/production
 
 ---
 

@@ -21,7 +21,7 @@ Repositorio central de decisiones, arquitectura y planificación del proyecto.
 
 ## Estado actual
 
-> Última actualización: 2026-04-02
+> Última actualización: 2026-04-10
 
 | Fase | Estado |
 |---|---|
@@ -30,8 +30,8 @@ Repositorio central de decisiones, arquitectura y planificación del proyecto.
 | Fase 2 — Sprint 1: Auth | ✅ Completo |
 | Fase 3 — Sprint 2: Grupos | ✅ Completo |
 | Fase 4 — Sprint 3: Eventos y pistas | ✅ Completo |
-| Fase 5 — Sprint 4: Registros y Waitlist | ⏳ Pendiente |
-| Fase 6 — Notificaciones y jobs | ⏳ Pendiente |
-| Fase 7 — Frontend Web | ⏳ Pendiente |
-| Fase 8 — Mobile (React Native + Expo) | ⏳ Pendiente |
+| Fase 5 — Sprint 4: Registros y Waitlist | ✅ Completo |
+| Fase 6 — Notificaciones y jobs | ✅ Completo |
+| Fase 7 — Frontend Web | ✅ Completo |
+| Fase 8 — Mobile (React Native + Expo) | ✅ Completo |
 | Fase 9 — Infraestructura y despliegue | ⏳ Pendiente |

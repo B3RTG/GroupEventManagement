@@ -65,6 +65,11 @@ public class RegisterForEventCommandHandler : IRequestHandler<RegisterForEventCo
                 $"Tu inscripción al evento ha sido confirmada.",
                 NotificationChannel.Push,
                 idempotencyKey: $"registration-confirmed:{registration.Id}",
+                data: System.Text.Json.JsonSerializer.Serialize(new Dictionary<string, string>
+                {
+                    ["groupId"] = request.GroupId.ToString(),
+                    ["eventId"] = request.EventId.ToString()
+                }),
                 ct: ct);
 
             return new RegisterForEventResult(registration.Id, registration.CreatedAt);

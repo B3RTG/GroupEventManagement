@@ -37,6 +37,10 @@ appsettings.Development.json
 appsettings.Production.json
 appsettings.Staging.json
 
+# Mobile — Firebase config (contains project metadata, do not commit)
+apps/mobile/google-services.json
+apps/mobile/GoogleService-Info.plist
+
 # ── OS ────────────────────────────────────────────────────
 .DS_Store
 Thumbs.db

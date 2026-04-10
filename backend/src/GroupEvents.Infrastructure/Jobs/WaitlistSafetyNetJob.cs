@@ -91,7 +91,12 @@ public class WaitlistSafetyNetJob
                     "Plaza confirmada",
                     $"¡Tienes plaza! Has sido promovido desde la lista de espera.",
                     Domain.Enums.NotificationChannel.Push,
-                    $"promoted:{ev.Id}:{entry.UserId}",
+                    idempotencyKey: $"promoted:{ev.Id}:{entry.UserId}",
+                    data: System.Text.Json.JsonSerializer.Serialize(new Dictionary<string, string>
+                    {
+                        ["groupId"] = ev.GroupId.ToString(),
+                        ["eventId"] = ev.Id.ToString()
+                    }),
                     ct: ct);
             }
         }

@@ -28,7 +28,15 @@
       "expo-dev-client",
       "expo-font",
       "expo-web-browser",
-      "@react-native-google-signin/google-signin"
+      "@react-native-google-signin/google-signin",
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/notification-icon.png",
+          "color": "#122636",
+          "sounds": []
+        }
+      ]
     ],
     "extra": {
       "eas": {

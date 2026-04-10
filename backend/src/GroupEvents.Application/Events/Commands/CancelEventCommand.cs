@@ -52,6 +52,11 @@ public class CancelEventCommandHandler : IRequestHandler<CancelEventCommand>
                 $"El evento \"{ev.Title}\" ha sido cancelado.",
                 NotificationChannel.Push,
                 idempotencyKey: $"event-cancelled:{ev.Id}:{userId}",
+                data: System.Text.Json.JsonSerializer.Serialize(new Dictionary<string, string>
+                {
+                    ["groupId"] = request.GroupId.ToString(),
+                    ["eventId"] = request.EventId.ToString()
+                }),
                 ct: cancellationToken);
         }
     }

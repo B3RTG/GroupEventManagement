@@ -76,7 +76,11 @@ public class NotificationDispatchJob
             return false;
         }
 
-        var result = await _push.SendAsync(pushToken, notification.Title, notification.Body, ct: ct);
+        Dictionary<string, string>? data = null;
+        if (notification.Data is not null)
+            data = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, string>>(notification.Data);
+
+        var result = await _push.SendAsync(pushToken, notification.Title, notification.Body, data, ct);
 
         if (result.TokenUnregistered)
         {

@@ -36,7 +36,7 @@ public class EventReminderJob
             .Where(e => e.Status == EventStatus.Published
                         && e.ScheduledAt >= now
                         && e.ScheduledAt <= window)
-            .Select(e => new { e.Id, e.Title, e.ScheduledAt })
+            .Select(e => new { e.Id, e.GroupId, e.Title, e.ScheduledAt })
             .ToListAsync(ct);
 
         if (upcomingEventIds.Count == 0) return;
@@ -57,6 +57,11 @@ public class EventReminderJob
                     $"Tu evento \"{ev.Title}\" comienza el {ev.ScheduledAt:dd/MM/yyyy} a las {ev.ScheduledAt:HH:mm} UTC.",
                     NotificationChannel.Push,
                     idempotencyKey: $"reminder:{ev.Id}:{userId}",
+                    data: System.Text.Json.JsonSerializer.Serialize(new Dictionary<string, string>
+                    {
+                        ["groupId"] = ev.GroupId.ToString(),
+                        ["eventId"] = ev.Id.ToString()
+                    }),
                     ct: ct);
             }
 
