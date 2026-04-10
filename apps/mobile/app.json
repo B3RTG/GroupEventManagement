@@ -5,6 +5,11 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "automatic",
+    "platforms": [
+      "ios",
+      "android"
+    ],
+    "scheme": "gem",
     "splash": {
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
@@ -19,11 +24,17 @@
       },
       "package": "com.groupeventmanagement.app"
     },
-    "plugins": [],
+    "plugins": [
+      "expo-dev-client",
+      "expo-font",
+      "expo-web-browser",
+      "@react-native-google-signin/google-signin"
+    ],
     "extra": {
       "eas": {
-        "projectId": "REPLACE_WITH_EAS_PROJECT_ID"
+        "projectId": "c6583365-9d1e-46a1-aa62-d59ae5f14be6"
       }
-    }
+    },
+    "owner": "al6ertk"
   }
 }
