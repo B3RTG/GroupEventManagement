@@ -101,7 +101,12 @@ export const eventsApi = createApi({
         method: 'POST',
         body,
       }),
-      invalidatesTags: (_r, _e, { eventId }) => [{ type: 'Track', id: eventId }],
+      invalidatesTags: (_r, _e, { eventId, groupId: gid }) => [
+        { type: 'Track', id: eventId },
+        { type: 'Event', id: eventId },
+        { type: 'Event', id: gid },
+        { type: 'Event', id: 'UPCOMING' },
+      ],
     }),
 
     updateTrack: build.mutation<void, TrackKey & { name: string; sortOrder: number }>({
@@ -118,7 +123,12 @@ export const eventsApi = createApi({
         url: `/groups/${groupId}/events/${eventId}/tracks/${trackId}`,
         method: 'DELETE',
       }),
-      invalidatesTags: (_r, _e, { eventId }) => [{ type: 'Track', id: eventId }],
+      invalidatesTags: (_r, _e, { eventId, groupId: gid }) => [
+        { type: 'Track', id: eventId },
+        { type: 'Event', id: eventId },
+        { type: 'Event', id: gid },
+        { type: 'Event', id: 'UPCOMING' },
+      ],
     }),
 
     // ── Registrations ─────────────────────────────────────
@@ -132,10 +142,20 @@ export const eventsApi = createApi({
         url: `/groups/${groupId}/events/${eventId}/registrations`,
         method: 'POST',
       }),
+      async onQueryStarted({ groupId, eventId }, { dispatch, queryFulfilled }) {
+        const patch = dispatch(
+          eventsApi.util.updateQueryData('getEvent', { groupId, id: eventId }, (draft) => {
+            draft.myRegistration = 'confirmed';
+            draft.confirmedCount += 1;
+          })
+        );
+        try { await queryFulfilled; } catch { patch.undo(); }
+      },
       invalidatesTags: (_r, _e, { eventId, groupId: gid }) => [
         { type: 'Registration', id: eventId },
         { type: 'Event', id: eventId },
         { type: 'Event', id: gid },
+        { type: 'Event', id: 'UPCOMING' },
       ],
     }),
 
@@ -144,10 +164,41 @@ export const eventsApi = createApi({
         url: `/groups/${groupId}/events/${eventId}/registrations`,
         method: 'DELETE',
       }),
+      async onQueryStarted({ groupId, eventId }, { dispatch, queryFulfilled }) {
+        const patch = dispatch(
+          eventsApi.util.updateQueryData('getEvent', { groupId, id: eventId }, (draft) => {
+            draft.myRegistration = null;
+            draft.confirmedCount = Math.max(0, draft.confirmedCount - 1);
+          })
+        );
+        try { await queryFulfilled; } catch { patch.undo(); }
+      },
       invalidatesTags: (_r, _e, { eventId, groupId: gid }) => [
         { type: 'Registration', id: eventId },
         { type: 'Event', id: eventId },
         { type: 'Event', id: gid },
+        { type: 'Event', id: 'UPCOMING' },
+      ],
+    }),
+
+    cancelRegistrationById: build.mutation<void, EventKey & { registrationId: UUID }>({
+      query: ({ groupId, eventId, registrationId }) => ({
+        url: `/groups/${groupId}/events/${eventId}/registrations/${registrationId}`,
+        method: 'DELETE',
+      }),
+      async onQueryStarted({ groupId, eventId }, { dispatch, queryFulfilled }) {
+        const patch = dispatch(
+          eventsApi.util.updateQueryData('getEvent', { groupId, id: eventId }, (draft) => {
+            draft.confirmedCount = Math.max(0, draft.confirmedCount - 1);
+          })
+        );
+        try { await queryFulfilled; } catch { patch.undo(); }
+      },
+      invalidatesTags: (_r, _e, { eventId, groupId: gid }) => [
+        { type: 'Registration', id: eventId },
+        { type: 'Event', id: eventId },
+        { type: 'Event', id: gid },
+        { type: 'Event', id: 'UPCOMING' },
       ],
     }),
 
@@ -178,7 +229,19 @@ export const eventsApi = createApi({
         url: `/groups/${groupId}/events/${eventId}/waitlist`,
         method: 'POST',
       }),
-      invalidatesTags: (_r, _e, { eventId }) => [{ type: 'Waitlist', id: eventId }],
+      async onQueryStarted({ groupId, eventId }, { dispatch, queryFulfilled }) {
+        const patch = dispatch(
+          eventsApi.util.updateQueryData('getEvent', { groupId, id: eventId }, (draft) => {
+            draft.myRegistration = 'waitlisted';
+            draft.waitlistCount += 1;
+          })
+        );
+        try { await queryFulfilled; } catch { patch.undo(); }
+      },
+      invalidatesTags: (_r, _e, { eventId }) => [
+        { type: 'Waitlist', id: eventId },
+        { type: 'Event', id: eventId },
+      ],
     }),
 
     leaveWaitlist: build.mutation<void, EventKey>({
@@ -186,7 +249,19 @@ export const eventsApi = createApi({
         url: `/groups/${groupId}/events/${eventId}/waitlist`,
         method: 'DELETE',
       }),
-      invalidatesTags: (_r, _e, { eventId }) => [{ type: 'Waitlist', id: eventId }],
+      async onQueryStarted({ groupId, eventId }, { dispatch, queryFulfilled }) {
+        const patch = dispatch(
+          eventsApi.util.updateQueryData('getEvent', { groupId, id: eventId }, (draft) => {
+            draft.myRegistration = null;
+            draft.waitlistCount = Math.max(0, draft.waitlistCount - 1);
+          })
+        );
+        try { await queryFulfilled; } catch { patch.undo(); }
+      },
+      invalidatesTags: (_r, _e, { eventId }) => [
+        { type: 'Waitlist', id: eventId },
+        { type: 'Event', id: eventId },
+      ],
     }),
   }),
 });
@@ -206,6 +281,7 @@ export const {
   useGetRegistrationsQuery,
   useRegisterMutation,
   useCancelRegistrationMutation,
+  useCancelRegistrationByIdMutation,
   useRegisterGuestMutation,
   useGetWaitlistPositionQuery,
   useJoinWaitlistMutation,

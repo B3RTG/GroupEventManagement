@@ -12,6 +12,7 @@ import {
   usePublishEventMutation,
   useCancelEventMutation,
   useRegisterGuestMutation,
+  useCancelRegistrationByIdMutation,
 } from '../store/api/eventsApi';
 import { useGetGroupQuery } from '../store/api/groupsApi';
 import type { EventStatus, Track } from '@gem/api-client';
@@ -103,7 +104,8 @@ export function EventDetailPage() {
   const [leaveWaitlist, { isLoading: leavingWl     }] = useLeaveWaitlistMutation();
   const [publishEvent,  { isLoading: publishing    }] = usePublishEventMutation();
   const [cancelEvent,   { isLoading: cancellingEv  }] = useCancelEventMutation();
-  const [registerGuest, { isLoading: registeringGuest }] = useRegisterGuestMutation();
+  const [registerGuest,          { isLoading: registeringGuest }] = useRegisterGuestMutation();
+  const [cancelRegistrationById, { isLoading: cancellingById   }] = useCancelRegistrationByIdMutation();
 
   const [guestFormOpen,  setGuestFormOpen]  = useState(false);
   const [guestName,      setGuestName]      = useState('');
@@ -585,13 +587,13 @@ export function EventDetailPage() {
               </h4>
               <div className="space-y-4">
                 {previewRegs.map(reg => (
-                  <div key={reg.id} className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
+                  <div key={reg.id} className="flex items-center justify-between gap-2">
+                    <div className="flex items-center gap-3 min-w-0">
                       <div className="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container text-xs font-black flex-shrink-0">
                         {getInitials(reg.displayName)}
                       </div>
-                      <div>
-                        <p className="text-sm font-bold">{reg.displayName}</p>
+                      <div className="min-w-0">
+                        <p className="text-sm font-bold truncate">{reg.displayName}</p>
                         {reg.promotedFromWaitlist && (
                           <p className="text-[10px] font-bold text-secondary uppercase tracking-tighter">From waitlist</p>
                         )}
@@ -600,12 +602,23 @@ export function EventDetailPage() {
                         )}
                       </div>
                     </div>
-                    <span
-                      className="material-symbols-outlined text-secondary text-sm"
-                      style={{ fontVariationSettings: '"FILL" 1' }}
-                    >
-                      verified
-                    </span>
+                    {isAdmin && isPublished ? (
+                      <button
+                        onClick={() => cancelRegistrationById({ groupId, eventId, registrationId: reg.id })}
+                        disabled={cancellingById}
+                        title="Cancel registration"
+                        className="flex-shrink-0 p-1.5 rounded-lg text-on-surface-variant hover:bg-error-container hover:text-on-error-container transition-colors disabled:opacity-40"
+                      >
+                        <span className="material-symbols-outlined text-base leading-none">person_remove</span>
+                      </button>
+                    ) : (
+                      <span
+                        className="material-symbols-outlined text-secondary text-sm flex-shrink-0"
+                        style={{ fontVariationSettings: '"FILL" 1' }}
+                      >
+                        verified
+                      </span>
+                    )}
                   </div>
                 ))}
                 {confirmedRegs.length > 4 && (

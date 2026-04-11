@@ -44,6 +44,7 @@ public class RegisterForEventCommandHandler : IRequestHandler<RegisterForEventCo
 
             var alreadyRegistered = await _db.EventRegistrations.AnyAsync(
                 r => r.EventId == request.EventId && r.UserId == request.UserId
+                     && r.IsGuestRegistration == false
                      && r.Status == RegistrationStatus.Confirmed, ct);
             if (alreadyRegistered) throw new ConflictException("Already registered for this event.");
 

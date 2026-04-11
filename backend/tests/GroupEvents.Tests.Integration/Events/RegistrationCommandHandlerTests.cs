@@ -14,13 +14,14 @@ public class RegistrationCommandHandlerTests
 {
     private static INotificationService NoopNotifications() => Substitute.For<INotificationService>();
 
-    private static RegisterForEventCommandHandler   RegisterHandler(AppDbContext db)  => new(db, NoopNotifications());
-    private static CancelRegistrationCommandHandler CancelHandler(AppDbContext db)    => new(db, NoopNotifications());
-    private static JoinWaitlistCommandHandler       WaitlistHandler(AppDbContext db)  => new(db);
-    private static LeaveWaitlistCommandHandler      LeaveHandler(AppDbContext db)     => new(db);
-    private static RegisterGuestCommandHandler      GuestHandler(AppDbContext db)     => new(db);
-    private static GetRegistrationsQueryHandler     GetRegHandler(AppDbContext db)    => new(db);
-    private static GetWaitlistPositionQueryHandler  GetPosHandler(AppDbContext db)    => new(db);
+    private static RegisterForEventCommandHandler        RegisterHandler(AppDbContext db)      => new(db, NoopNotifications());
+    private static CancelRegistrationCommandHandler      CancelHandler(AppDbContext db)        => new(db, NoopNotifications());
+    private static CancelRegistrationByIdCommandHandler  CancelByIdHandler(AppDbContext db)   => new(db, NoopNotifications());
+    private static JoinWaitlistCommandHandler            WaitlistHandler(AppDbContext db)      => new(db);
+    private static LeaveWaitlistCommandHandler           LeaveHandler(AppDbContext db)         => new(db);
+    private static RegisterGuestCommandHandler           GuestHandler(AppDbContext db)         => new(db);
+    private static GetRegistrationsQueryHandler          GetRegHandler(AppDbContext db)        => new(db);
+    private static GetWaitlistPositionQueryHandler       GetPosHandler(AppDbContext db)        => new(db);
 
     private static (User owner, User member, Group group, Event ev) Seed(
         AppDbContext db, int trackCount = 2, int capacityPerTrack = 10)
@@ -112,6 +113,30 @@ public class RegistrationCommandHandlerTests
     }
 
     // --- Cancel Registration ---
+
+    [Fact]
+    public async Task CancelRegistration_AdminWithGuestRegistration_CancelsOwnNotGuest()
+    {
+        // Regression: guest registrations share the admin's UserId.
+        // CancelRegistration must cancel the admin's own (non-guest) row, not the guest's.
+        using var db = TestDbContextFactory.Create();
+        var (owner, _, group, ev) = Seed(db);
+
+        var ownerReg = new EventRegistration(ev.Id, owner.Id);
+        db.EventRegistrations.Add(ownerReg);
+        var guest = new Guest(owner.Id, group.Id, "Guest Person", null);
+        db.Guests.Add(guest);
+        db.SaveChanges();
+        var guestReg = new EventRegistration(ev.Id, owner.Id, isGuestRegistration: true, guestId: guest.Id);
+        db.EventRegistrations.Add(guestReg);
+        db.SaveChanges();
+
+        await CancelHandler(db).Handle(
+            new CancelRegistrationCommand(owner.Id, group.Id, ev.Id), default);
+
+        Assert.Equal(RegistrationStatus.Cancelled, db.EventRegistrations.Single(r => r.Id == ownerReg.Id).Status);
+        Assert.Equal(RegistrationStatus.Confirmed,  db.EventRegistrations.Single(r => r.Id == guestReg.Id).Status);
+    }
 
     [Fact]
     public async Task CancelRegistration_Succeeds()
@@ -229,6 +254,84 @@ public class RegistrationCommandHandlerTests
         await Assert.ThrowsAsync<NotFoundException>(() =>
             LeaveHandler(db).Handle(
                 new LeaveWaitlistCommand(member.Id, group.Id, ev.Id), default));
+    }
+
+    // --- Cancel Registration By Id ---
+
+    [Fact]
+    public async Task CancelRegistrationById_AdminCancelsOtherMember_Succeeds()
+    {
+        using var db = TestDbContextFactory.Create();
+        var (owner, member, group, ev) = Seed(db);
+        var reg = new EventRegistration(ev.Id, member.Id);
+        db.EventRegistrations.Add(reg);
+        db.SaveChanges();
+
+        await CancelByIdHandler(db).Handle(
+            new CancelRegistrationByIdCommand(owner.Id, group.Id, ev.Id, reg.Id), default);
+
+        Assert.Equal(RegistrationStatus.Cancelled, db.EventRegistrations.Single().Status);
+    }
+
+    [Fact]
+    public async Task CancelRegistrationById_AdminCancelsGuestRegistration_Succeeds()
+    {
+        using var db = TestDbContextFactory.Create();
+        var (owner, _, group, ev) = Seed(db);
+        var guest = new Guest(owner.Id, group.Id, "Guest Person", null);
+        db.Guests.Add(guest);
+        db.SaveChanges();
+        var guestReg = new EventRegistration(ev.Id, owner.Id, isGuestRegistration: true, guestId: guest.Id);
+        db.EventRegistrations.Add(guestReg);
+        db.SaveChanges();
+
+        await CancelByIdHandler(db).Handle(
+            new CancelRegistrationByIdCommand(owner.Id, group.Id, ev.Id, guestReg.Id), default);
+
+        Assert.Equal(RegistrationStatus.Cancelled, db.EventRegistrations.Single().Status);
+    }
+
+    [Fact]
+    public async Task CancelRegistrationById_MemberTries_ThrowsForbiddenException()
+    {
+        using var db = TestDbContextFactory.Create();
+        var (owner, member, group, ev) = Seed(db);
+        var reg = new EventRegistration(ev.Id, owner.Id);
+        db.EventRegistrations.Add(reg);
+        db.SaveChanges();
+
+        await Assert.ThrowsAsync<ForbiddenException>(() =>
+            CancelByIdHandler(db).Handle(
+                new CancelRegistrationByIdCommand(member.Id, group.Id, ev.Id, reg.Id), default));
+    }
+
+    [Fact]
+    public async Task CancelRegistrationById_NotFound_ThrowsNotFoundException()
+    {
+        using var db = TestDbContextFactory.Create();
+        var (owner, _, group, ev) = Seed(db);
+
+        await Assert.ThrowsAsync<NotFoundException>(() =>
+            CancelByIdHandler(db).Handle(
+                new CancelRegistrationByIdCommand(owner.Id, group.Id, ev.Id, Guid.NewGuid()), default));
+    }
+
+    [Fact]
+    public async Task CancelRegistrationById_WithWaitlist_PromotesFirst()
+    {
+        using var db = TestDbContextFactory.Create();
+        var (owner, member, group, ev) = Seed(db, trackCount: 1, capacityPerTrack: 1);
+        var reg = new EventRegistration(ev.Id, owner.Id);
+        db.EventRegistrations.Add(reg);
+        db.WaitlistEntries.Add(new WaitlistEntry(ev.Id, member.Id));
+        db.SaveChanges();
+
+        await CancelByIdHandler(db).Handle(
+            new CancelRegistrationByIdCommand(owner.Id, group.Id, ev.Id, reg.Id), default);
+
+        Assert.Equal(RegistrationStatus.Cancelled, db.EventRegistrations.First(r => r.UserId == owner.Id && !r.IsGuestRegistration).Status);
+        Assert.Equal(RegistrationStatus.Confirmed,  db.EventRegistrations.First(r => r.UserId == member.Id).Status);
+        Assert.Equal(WaitlistStatus.Promoted, db.WaitlistEntries.Single().Status);
     }
 
     // --- Register Guest ---

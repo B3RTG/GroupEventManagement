@@ -34,15 +34,17 @@ public class GetEventQueryHandler : IRequestHandler<GetEventQuery, EventResponse
         var waitlistCount = await _db.WaitlistEntries.CountAsync(
             w => w.EventId == ev.Id, cancellationToken);
 
-        // Determine current user's registration status (confirmed only — cancelled rows are irrelevant)
+        // Determine current user's own registration status (exclude guest registrations they created)
         var myRegStatus = await _db.EventRegistrations
             .Where(r => r.EventId == ev.Id && r.UserId == request.UserId
-                        && r.Status == RegistrationStatus.Confirmed)
+                        && r.Status == RegistrationStatus.Confirmed
+                        && !r.IsGuestRegistration)
             .Select(r => (RegistrationStatus?)r.Status)
             .FirstOrDefaultAsync(cancellationToken);
 
         var isOnWaitlist = await _db.WaitlistEntries
-            .AnyAsync(w => w.EventId == ev.Id && w.UserId == request.UserId, cancellationToken);
+            .AnyAsync(w => w.EventId == ev.Id && w.UserId == request.UserId
+                           && w.Status == WaitlistStatus.Waiting, cancellationToken);
 
         // Waitlist takes priority: if user is on waitlist AND has a cancelled registration
         string? myRegistration = isOnWaitlist

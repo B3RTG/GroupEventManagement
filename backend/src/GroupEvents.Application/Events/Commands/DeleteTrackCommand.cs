@@ -3,6 +3,7 @@ using GroupEvents.Application.Common.Interfaces;
 using GroupEvents.Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using GroupEvents.Domain.Entities;
 
 namespace GroupEvents.Application.Events.Commands;
 
@@ -24,9 +25,17 @@ public class DeleteTrackCommandHandler : IRequestHandler<DeleteTrackCommand>
         if (membership.Role == MemberRole.Member)
             throw new ForbiddenException("Only owners and co-admins can manage tracks.");
 
+        var ev = await _db.Events.FirstOrDefaultAsync(
+            e => e.Id == request.EventId && e.GroupId == request.GroupId, cancellationToken)
+            ?? throw new NotFoundException("Event", request.EventId);
+
         var track = await _db.Tracks.FirstOrDefaultAsync(
             t => t.Id == request.TrackId && t.EventId == request.EventId, cancellationToken)
             ?? throw new NotFoundException("Track", request.TrackId);
+
+        var confirmedCount = await _db.EventRegistrations.CountAsync(
+            r => r.EventId == ev.Id && r.Status == RegistrationStatus.Confirmed, cancellationToken);
+        ev.UpdateCapacity(ev.TrackCount - 1, ev.CapacityPerTrack, confirmedCount);
 
         _db.Tracks.Remove(track);
         await _db.SaveChangesAsync(cancellationToken);

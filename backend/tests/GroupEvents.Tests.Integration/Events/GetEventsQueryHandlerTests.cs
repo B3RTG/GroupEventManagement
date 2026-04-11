@@ -130,7 +130,119 @@ public class GetEventsQueryHandlerTests
             new GetEventQuery(owner.Id, group.Id, ev.Id), default);
 
         Assert.Equal(1,  result.ConfirmedCount);
-        Assert.Equal(19, result.AvailableSpots);
+        Assert.Equal(19, result.TotalCapacity - result.ConfirmedCount);
         Assert.Equal(20, result.TotalCapacity);
+    }
+
+    [Fact]
+    public async Task GetEvent_UserRegistered_MyRegistrationIsConfirmed()
+    {
+        using var db = TestDbContextFactory.Create();
+        var (owner, member, group) = SeedGroup(db);
+        var ev = AddEvent(db, group.Id, owner.Id);
+        db.EventRegistrations.Add(new EventRegistration(ev.Id, member.Id));
+        await db.SaveChangesAsync();
+
+        var result = await DetailHandler(db).Handle(
+            new GetEventQuery(member.Id, group.Id, ev.Id), default);
+
+        Assert.Equal("confirmed", result.MyRegistration);
+    }
+
+    [Fact]
+    public async Task GetEvent_UserNotRegistered_MyRegistrationIsNull()
+    {
+        using var db = TestDbContextFactory.Create();
+        var (owner, member, group) = SeedGroup(db);
+        var ev = AddEvent(db, group.Id, owner.Id);
+        await db.SaveChangesAsync();
+
+        var result = await DetailHandler(db).Handle(
+            new GetEventQuery(member.Id, group.Id, ev.Id), default);
+
+        Assert.Null(result.MyRegistration);
+    }
+
+    [Fact]
+    public async Task GetEvent_UserCancelledRegistration_MyRegistrationIsNull()
+    {
+        // Regression: previously a cancelled row was still returning "confirmed"
+        using var db = TestDbContextFactory.Create();
+        var (owner, member, group) = SeedGroup(db);
+        var ev = AddEvent(db, group.Id, owner.Id);
+        var reg = new EventRegistration(ev.Id, member.Id);
+        reg.Cancel(owner.Id);
+        db.EventRegistrations.Add(reg);
+        await db.SaveChangesAsync();
+
+        var result = await DetailHandler(db).Handle(
+            new GetEventQuery(member.Id, group.Id, ev.Id), default);
+
+        Assert.Null(result.MyRegistration);
+    }
+
+    [Fact]
+    public async Task GetEvent_UserOnWaitlist_MyRegistrationIsWaitlisted()
+    {
+        using var db = TestDbContextFactory.Create();
+        var (owner, member, group) = SeedGroup(db);
+        var ev = AddEvent(db, group.Id, owner.Id);
+        db.WaitlistEntries.Add(new WaitlistEntry(ev.Id, member.Id));
+        await db.SaveChangesAsync();
+
+        var result = await DetailHandler(db).Handle(
+            new GetEventQuery(member.Id, group.Id, ev.Id), default);
+
+        Assert.Equal("waitlisted", result.MyRegistration);
+    }
+
+    [Fact]
+    public async Task GetEvent_UserLeftWaitlist_MyRegistrationIsNull()
+    {
+        // Regression: previously any waitlist row (including Cancelled/Promoted) returned "waitlisted"
+        using var db = TestDbContextFactory.Create();
+        var (owner, member, group) = SeedGroup(db);
+        var ev = AddEvent(db, group.Id, owner.Id);
+        var entry = new WaitlistEntry(ev.Id, member.Id);
+        entry.Cancel();
+        db.WaitlistEntries.Add(entry);
+        await db.SaveChangesAsync();
+
+        var result = await DetailHandler(db).Handle(
+            new GetEventQuery(member.Id, group.Id, ev.Id), default);
+
+        Assert.Null(result.MyRegistration);
+    }
+
+    [Fact]
+    public async Task GetEvent_AdminCancelledOwnRegistrationAfterRegisteringGuest_MyRegistrationIsNull()
+    {
+        // Regression: guest registrations are stored under the admin's UserId.
+        // After the admin cancels their own (non-guest) registration, GetEvent was finding
+        // the still-confirmed guest row under the same UserId and returning "confirmed".
+        using var db = TestDbContextFactory.Create();
+        var (owner, member, group) = SeedGroup(db);
+        var ev = AddEvent(db, group.Id, owner.Id);
+
+        // Admin's own confirmed registration
+        var ownerReg = new EventRegistration(ev.Id, owner.Id);
+        db.EventRegistrations.Add(ownerReg);
+
+        // Guest registration also under owner's UserId (as the admin who created it)
+        var guest = new Guest(owner.Id, group.Id, "Guest Person", null);
+        db.Guests.Add(guest);
+        await db.SaveChangesAsync();
+        var guestReg = new EventRegistration(ev.Id, owner.Id, isGuestRegistration: true, guestId: guest.Id);
+        db.EventRegistrations.Add(guestReg);
+        await db.SaveChangesAsync();
+
+        // Admin cancels their own registration
+        ownerReg.Cancel(owner.Id);
+        await db.SaveChangesAsync();
+
+        var result = await DetailHandler(db).Handle(
+            new GetEventQuery(owner.Id, group.Id, ev.Id), default);
+
+        Assert.Null(result.MyRegistration); // guest row must not bleed into myRegistration
     }
 }

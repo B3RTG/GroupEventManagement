@@ -14,8 +14,9 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { DashboardStackParamList } from '../navigation/types';
 import { colors, fonts, radius, shadow } from '../theme';
 import { useGetEventQuery, useGetTracksQuery, useGetRegistrationsQuery } from '../store/api/eventsApi';
-import { useRegisterMutation, useCancelRegistrationMutation } from '../store/api/eventsApi';
+import { useRegisterMutation, useCancelRegistrationMutation, useCancelRegistrationByIdMutation } from '../store/api/eventsApi';
 import { useJoinWaitlistMutation, useLeaveWaitlistMutation } from '../store/api/eventsApi';
+import { useGetGroupQuery } from '../store/api/groupsApi';
 import { formatShortDate, formatTime, getInitials } from '@gem/utils';
 import TopAppBar from '../components/TopAppBar';
 import CapacityBar from '../components/CapacityBar';
@@ -31,13 +32,17 @@ export default function EventDetailScreen({ navigation, route }: Props) {
   const { data: event,         isLoading: eventLoading   } = useGetEventQuery({ groupId, id: eventId });
   const { data: tracks  = [],  isLoading: tracksLoading  } = useGetTracksQuery({ groupId, eventId });
   const { data: registrations = [] }                        = useGetRegistrationsQuery({ groupId, eventId });
+  const { data: group }                                     = useGetGroupQuery(groupId);
 
-  const [register,        { isLoading: registering   }] = useRegisterMutation();
-  const [cancelReg,       { isLoading: cancelling    }] = useCancelRegistrationMutation();
-  const [joinWaitlist,    { isLoading: joiningWait   }] = useJoinWaitlistMutation();
-  const [leaveWaitlist,   { isLoading: leavingWait   }] = useLeaveWaitlistMutation();
+  const [register,               { isLoading: registering    }] = useRegisterMutation();
+  const [cancelReg,              { isLoading: cancelling     }] = useCancelRegistrationMutation();
+  const [cancelRegistrationById, { isLoading: cancellingById }] = useCancelRegistrationByIdMutation();
+  const [joinWaitlist,           { isLoading: joiningWait    }] = useJoinWaitlistMutation();
+  const [leaveWaitlist,          { isLoading: leavingWait    }] = useLeaveWaitlistMutation();
 
-  const ctaLoading = registering || cancelling || joiningWait || leavingWait;
+  const isAdmin = group?.role === 'owner' || group?.role === 'co_admin';
+
+  const ctaLoading = registering || cancelling || joiningWait || leavingWait || cancellingById;
 
   const handleCTA = async () => {
     if (!event) return;
@@ -93,10 +98,9 @@ export default function EventDetailScreen({ navigation, route }: Props) {
     );
   }
 
-  const spotsLeft = event.totalCapacity - event.confirmedCount;
-  const confirmedNames = registrations
-    .filter(r => r.status === 'confirmed')
-    .map(r => r.displayName);
+  const spotsLeft    = event.totalCapacity - event.confirmedCount;
+  const confirmedRegs = registrations.filter(r => r.status === 'confirmed');
+  const confirmedNames = confirmedRegs.map(r => r.displayName);
 
   return (
     <View style={styles.root}>
@@ -202,15 +206,44 @@ export default function EventDetailScreen({ navigation, route }: Props) {
           ) : null}
 
           {/* ── Registered Players ───────────────────────── */}
-          {confirmedNames.length > 0 && (
+          {confirmedRegs.length > 0 && (
             <View style={styles.section}>
               <View style={styles.sectionHeader}>
                 <Text style={styles.sectionTitle}>Jugadores inscritos</Text>
-                <Text style={styles.sectionCount}>{confirmedNames.length} confirmados</Text>
+                <Text style={styles.sectionCount}>{confirmedRegs.length} confirmados</Text>
               </View>
-              <View style={styles.playersCard}>
-                <AvatarStack names={confirmedNames} max={8} size={40} />
-              </View>
+              {isAdmin && event.status === 'published' ? (
+                <View style={styles.playersList}>
+                  {confirmedRegs.map(reg => (
+                    <View key={reg.id} style={styles.playerRow}>
+                      <View style={styles.playerAvatar}>
+                        <Text style={styles.playerAvatarText}>{getInitials(reg.displayName)}</Text>
+                      </View>
+                      <View style={styles.playerInfo}>
+                        <Text style={styles.playerName} numberOfLines={1}>{reg.displayName}</Text>
+                        {reg.isGuestRegistration && (
+                          <Text style={styles.playerTag}>Invitado</Text>
+                        )}
+                        {reg.promotedFromWaitlist && (
+                          <Text style={[styles.playerTag, styles.playerTagPromoted]}>De lista de espera</Text>
+                        )}
+                      </View>
+                      <TouchableOpacity
+                        onPress={() => cancelRegistrationById({ groupId, eventId, registrationId: reg.id })}
+                        disabled={cancellingById}
+                        style={styles.playerCancelBtn}
+                        hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+                      >
+                        <MaterialIcons name="person-remove" size={18} color={colors.error} />
+                      </TouchableOpacity>
+                    </View>
+                  ))}
+                </View>
+              ) : (
+                <View style={styles.playersCard}>
+                  <AvatarStack names={confirmedNames} max={8} size={40} />
+                </View>
+              )}
             </View>
           )}
 
@@ -458,6 +491,57 @@ const styles = StyleSheet.create({
     borderRadius:    radius.xl,
     padding:         20,
     ...shadow.soft,
+  },
+  playersList: {
+    gap: 8,
+  },
+  playerRow: {
+    flexDirection:   'row',
+    alignItems:      'center',
+    gap:             12,
+    backgroundColor: colors.surfaceContainerLowest,
+    borderRadius:    radius.lg,
+    padding:         12,
+    ...shadow.soft,
+  },
+  playerAvatar: {
+    width:           40,
+    height:          40,
+    borderRadius:    20,
+    backgroundColor: colors.primaryContainer,
+    alignItems:      'center',
+    justifyContent:  'center',
+    flexShrink:      0,
+  },
+  playerAvatarText: {
+    fontFamily: fonts.headline.bold,
+    fontSize:   13,
+    color:      colors.onPrimaryContainer,
+  },
+  playerInfo: {
+    flex: 1,
+  },
+  playerName: {
+    fontFamily: fonts.body.semiBold,
+    fontSize:   14,
+    color:      colors.onSurface,
+  },
+  playerTag: {
+    fontFamily:    fonts.body.semiBold,
+    fontSize:      10,
+    color:         colors.onSurfaceVariant,
+    textTransform: 'uppercase',
+    letterSpacing: 0.8,
+    marginTop:     2,
+  },
+  playerTagPromoted: {
+    color: colors.secondary,
+  },
+  playerCancelBtn: {
+    padding:         6,
+    borderRadius:    radius.md,
+    backgroundColor: colors.errorContainer,
+    flexShrink:      0,
   },
 
   // ── Tracks

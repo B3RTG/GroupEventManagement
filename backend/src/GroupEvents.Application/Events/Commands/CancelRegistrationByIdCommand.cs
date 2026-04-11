@@ -5,40 +5,42 @@ using GroupEvents.Domain.Entities;
 using GroupEvents.Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
 
 namespace GroupEvents.Application.Events.Commands;
 
-public record CancelRegistrationCommand(Guid UserId, Guid GroupId, Guid EventId) : IRequest;
+public record CancelRegistrationByIdCommand(
+    Guid CallerId, Guid GroupId, Guid EventId, Guid RegistrationId) : IRequest;
 
-public class CancelRegistrationCommandHandler : IRequestHandler<CancelRegistrationCommand>
+public class CancelRegistrationByIdCommandHandler : IRequestHandler<CancelRegistrationByIdCommand>
 {
     private readonly IAppDbContext _db;
     private readonly INotificationService _notifications;
 
-    public CancelRegistrationCommandHandler(IAppDbContext db, INotificationService notifications)
+    public CancelRegistrationByIdCommandHandler(IAppDbContext db, INotificationService notifications)
     {
         _db = db;
         _notifications = notifications;
     }
 
-    public async Task Handle(CancelRegistrationCommand request, CancellationToken ct)
+    public async Task Handle(CancelRegistrationByIdCommand request, CancellationToken ct)
     {
-        var isMember = await _db.GroupMemberships.AnyAsync(
-            m => m.GroupId == request.GroupId && m.UserId == request.UserId, ct);
-        if (!isMember) throw new ForbiddenException("Not a member of this group.");
+        var membership = await _db.GroupMemberships.FirstOrDefaultAsync(
+            m => m.GroupId == request.GroupId && m.UserId == request.CallerId, ct);
+
+        if (membership is null || membership.Role == MemberRole.Member)
+            throw new ForbiddenException("Only owner or co-admin can cancel registrations on behalf of others.");
 
         var tx = await _db.BeginSerializableTransactionAsync(ct);
 
         try
         {
             var registration = await _db.EventRegistrations.FirstOrDefaultAsync(
-                r => r.EventId == request.EventId && r.UserId == request.UserId
-                     && r.Status == RegistrationStatus.Confirmed
-                     && !r.IsGuestRegistration, ct)
-                ?? throw new NotFoundException(nameof(EventRegistration), request.UserId);
+                r => r.Id == request.RegistrationId
+                     && r.EventId == request.EventId
+                     && r.Status == RegistrationStatus.Confirmed, ct)
+                ?? throw new NotFoundException(nameof(EventRegistration), request.RegistrationId);
 
-            registration.Cancel(request.UserId);
+            registration.Cancel(request.CallerId);
 
             // Promote oldest waiting entry (FIFO)
             var nextInLine = await _db.WaitlistEntries
@@ -51,7 +53,7 @@ public class CancelRegistrationCommandHandler : IRequestHandler<CancelRegistrati
                 var promoted = EventRegistration.FromWaitlist(request.EventId, nextInLine.UserId,
                     nextInLine.IsGuestRegistration, nextInLine.GuestId);
                 _db.EventRegistrations.Add(promoted);
-                await _db.SaveChangesAsync(ct); // persist to get promoted.Id
+                await _db.SaveChangesAsync(ct);
                 nextInLine.Promote(promoted.Id);
             }
 

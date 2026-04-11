@@ -40,6 +40,11 @@ public class CreateTrackCommandHandler : IRequestHandler<CreateTrackCommand, Tra
         var capacity = request.Capacity ?? ev.CapacityPerTrack;
         var track = new Track(ev.Id, request.Name, capacity, request.SortOrder);
         _db.Tracks.Add(track);
+
+        var confirmedCount = await _db.EventRegistrations.CountAsync(
+            r => r.EventId == ev.Id && r.Status == RegistrationStatus.Confirmed, cancellationToken);
+        ev.UpdateCapacity(ev.TrackCount + 1, ev.CapacityPerTrack, confirmedCount);
+
         await _db.SaveChangesAsync(cancellationToken);
 
         return new TrackResponse(track.Id, track.EventId, track.Name, track.Capacity, track.SortOrder);

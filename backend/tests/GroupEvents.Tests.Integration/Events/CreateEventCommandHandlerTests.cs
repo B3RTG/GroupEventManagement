@@ -36,7 +36,7 @@ public class CreateEventCommandHandlerTests
 
         var result = await CreateHandler(db).Handle(BuildCommand(owner.Id, group.Id), default);
 
-        Assert.Equal("Draft", result.Status);
+        Assert.Equal("draft", result.Status);
         Assert.Equal("Test Race", result.Title);
         Assert.Equal(0, result.ConfirmedCount);
         Assert.Equal(20, result.TotalCapacity);

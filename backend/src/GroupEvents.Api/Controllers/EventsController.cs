@@ -156,6 +156,15 @@ public class EventsController : ControllerBase
         return NoContent();
     }
 
+    /// <summary>Cancel a specific registration by ID. Owner/co-admin only.</summary>
+    [HttpDelete("{id:guid}/registrations/{registrationId:guid}")]
+    public async Task<IActionResult> CancelRegistrationById(
+        Guid groupId, Guid id, Guid registrationId, CancellationToken ct)
+    {
+        await _mediator.Send(new CancelRegistrationByIdCommand(CurrentUserId, groupId, id, registrationId), ct);
+        return NoContent();
+    }
+
     /// <summary>Register an external guest. Owner/co-admin only.</summary>
     [HttpPost("{id:guid}/registrations/guest")]
     public async Task<IActionResult> RegisterGuest(

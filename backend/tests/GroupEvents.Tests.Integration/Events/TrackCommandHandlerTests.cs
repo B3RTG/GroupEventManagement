@@ -13,7 +13,8 @@ public class TrackCommandHandlerTests
     private static UpdateTrackCommandHandler UpdateHandler(AppDbContext db) => new(db);
     private static DeleteTrackCommandHandler DeleteHandler(AppDbContext db) => new(db);
 
-    private static (User owner, User member, Group group, Event ev) Seed(AppDbContext db)
+    private static (User owner, User member, Group group, Event ev) Seed(
+        AppDbContext db, int trackCount = 2, int capacityPerTrack = 10)
     {
         var owner  = new User("ext-1", AuthProvider.Google, "owner@test.com", "Owner", null);
         var member = new User("ext-2", AuthProvider.Google, "member@test.com", "Member", null);
@@ -23,7 +24,7 @@ public class TrackCommandHandlerTests
         db.GroupMemberships.Add(new GroupMembership(group.Id, owner.Id,  MemberRole.Owner));
         db.GroupMemberships.Add(new GroupMembership(group.Id, member.Id, MemberRole.Member));
         var ev = new Event(group.Id, owner.Id, "Race", "race", null, "UTC",
-            DateTime.UtcNow.AddDays(7), 60, trackCount: 2, capacityPerTrack: 10);
+            DateTime.UtcNow.AddDays(7), 60, trackCount, capacityPerTrack);
         db.Events.Add(ev);
         db.SaveChanges();
         return (owner, member, group, ev);
@@ -42,6 +43,20 @@ public class TrackCommandHandlerTests
 
         Assert.Equal("Track A", result.Name);
         Assert.Single(db.Tracks);
+    }
+
+    [Fact]
+    public async Task CreateTrack_UpdatesEventTrackCountAndTotalCapacity()
+    {
+        using var db = TestDbContextFactory.Create();
+        var (owner, _, group, ev) = Seed(db); // trackCount=2, capacityPerTrack=10 → total=20
+
+        await CreateHandler(db).Handle(
+            new CreateTrackCommand(owner.Id, group.Id, ev.Id, "Track C", SortOrder: 3), default);
+
+        var updated = db.Events.Single();
+        Assert.Equal(3, updated.TrackCount);
+        Assert.Equal(30, updated.TotalCapacity);
     }
 
     [Fact]
@@ -134,6 +149,40 @@ public class TrackCommandHandlerTests
             new DeleteTrackCommand(owner.Id, group.Id, ev.Id, track.Id), default);
 
         Assert.Empty(db.Tracks);
+    }
+
+    [Fact]
+    public async Task DeleteTrack_UpdatesEventTrackCountAndTotalCapacity()
+    {
+        // Regression: deleting a track was not decrementing TrackCount on the Event,
+        // so TotalCapacity stayed stale after deletion.
+        using var db = TestDbContextFactory.Create();
+        var (owner, _, group, ev) = Seed(db); // trackCount=2, capacityPerTrack=10 → total=20
+        var track = new Track(ev.Id, "Track A", 10, 1);
+        db.Tracks.Add(track);
+        await db.SaveChangesAsync();
+
+        await DeleteHandler(db).Handle(
+            new DeleteTrackCommand(owner.Id, group.Id, ev.Id, track.Id), default);
+
+        var updated = db.Events.Single();
+        Assert.Equal(1, updated.TrackCount);
+        Assert.Equal(10, updated.TotalCapacity);
+    }
+
+    [Fact]
+    public async Task DeleteTrack_WouldDropBelowConfirmedCount_ThrowsInvalidOperationException()
+    {
+        using var db = TestDbContextFactory.Create();
+        var (owner, member, group, ev) = Seed(db, trackCount: 1, capacityPerTrack: 1);
+        db.EventRegistrations.Add(new EventRegistration(ev.Id, member.Id)); // 1 confirmed = full
+        var track = new Track(ev.Id, "Track A", 1, 1);
+        db.Tracks.Add(track);
+        await db.SaveChangesAsync();
+
+        await Assert.ThrowsAsync<InvalidOperationException>(() =>
+            DeleteHandler(db).Handle(
+                new DeleteTrackCommand(owner.Id, group.Id, ev.Id, track.Id), default));
     }
 
     [Fact]
