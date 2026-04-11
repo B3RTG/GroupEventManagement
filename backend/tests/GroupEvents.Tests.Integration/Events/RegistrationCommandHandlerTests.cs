@@ -206,6 +206,33 @@ public class RegistrationCommandHandlerTests
     }
 
     [Fact]
+    public async Task JoinWaitlist_AdminCancelledOwnRegistrationWithGuestStillConfirmed_Succeeds()
+    {
+        // Regression: guest registrations under the admin's UserId were blocking
+        // the admin from joining the waitlist after cancelling their own registration.
+        using var db = TestDbContextFactory.Create();
+        var (owner, _, group, ev) = Seed(db, trackCount: 1, capacityPerTrack: 1);
+
+        // Admin's own registration — then cancelled
+        var ownerReg = new EventRegistration(ev.Id, owner.Id);
+        ownerReg.Cancel(owner.Id);
+        db.EventRegistrations.Add(ownerReg);
+
+        // Guest registration still confirmed under admin's UserId
+        var guest = new Guest(owner.Id, group.Id, "Guest Person", null);
+        db.Guests.Add(guest);
+        db.SaveChanges();
+        db.EventRegistrations.Add(new EventRegistration(ev.Id, owner.Id, isGuestRegistration: true, guestId: guest.Id));
+        db.SaveChanges();
+
+        // Admin should be able to join the waitlist
+        var result = await WaitlistHandler(db).Handle(
+            new JoinWaitlistCommand(owner.Id, group.Id, ev.Id), default);
+
+        Assert.Equal(1, result.Position);
+    }
+
+    [Fact]
     public async Task JoinWaitlist_AlreadyOnWaitlist_ThrowsConflictException()
     {
         using var db = TestDbContextFactory.Create();

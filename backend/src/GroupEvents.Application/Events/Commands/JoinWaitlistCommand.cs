@@ -31,7 +31,8 @@ public class JoinWaitlistCommandHandler : IRequestHandler<JoinWaitlistCommand, J
 
         var alreadyRegistered = await _db.EventRegistrations.AnyAsync(
             r => r.EventId == request.EventId && r.UserId == request.UserId
-                 && r.Status == RegistrationStatus.Confirmed, ct);
+                 && r.Status == RegistrationStatus.Confirmed
+                 && !r.IsGuestRegistration, ct);
         if (alreadyRegistered) throw new ConflictException("Already registered for this event.");
 
         var alreadyWaiting = await _db.WaitlistEntries.AnyAsync(
