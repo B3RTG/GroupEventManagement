@@ -5,14 +5,16 @@ on:
     branches: [main]
     paths:
       - 'backend/**'
+      - '.github/workflows/api.yml'
   pull_request:
     branches: [main]
     paths:
       - 'backend/**'
+      - '.github/workflows/api.yml'
 
 jobs:
   build-and-test:
-    name: Build & Unit Tests
+    name: Build & Test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -31,6 +33,14 @@ jobs:
         run: >
           dotnet test
           backend/tests/GroupEvents.Tests.Unit/GroupEvents.Tests.Unit.csproj
+          --no-build
+          --configuration Release
+          --verbosity normal
+
+      - name: Integration tests
+        run: >
+          dotnet test
+          backend/tests/GroupEvents.Tests.Integration/GroupEvents.Tests.Integration.csproj
           --no-build
           --configuration Release
           --verbosity normal
