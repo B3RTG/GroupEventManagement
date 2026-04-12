@@ -109,31 +109,36 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-// Register recurring Hangfire jobs
-RecurringJob.AddOrUpdate<NotificationDispatchJob>(
-    "notification-dispatch",
-    job => job.ExecuteAsync(CancellationToken.None),
-    "* * * * *"); // every minute
+// Register recurring Hangfire jobs via DI (avoid static API which requires JobStorage.Current)
+using (var scope = app.Services.CreateScope())
+{
+    var jobs = scope.ServiceProvider.GetRequiredService<IRecurringJobManager>();
 
-RecurringJob.AddOrUpdate<WaitlistSafetyNetJob>(
-    "waitlist-safety-net",
-    job => job.ExecuteAsync(CancellationToken.None),
-    "*/5 * * * *"); // every 5 minutes
+    jobs.AddOrUpdate<NotificationDispatchJob>(
+        "notification-dispatch",
+        job => job.ExecuteAsync(CancellationToken.None),
+        "* * * * *"); // every minute
 
-RecurringJob.AddOrUpdate<CompletedEventsJob>(
-    "completed-events",
-    job => job.ExecuteAsync(CancellationToken.None),
-    "0 2 * * *"); // daily at 02:00 UTC
+    jobs.AddOrUpdate<WaitlistSafetyNetJob>(
+        "waitlist-safety-net",
+        job => job.ExecuteAsync(CancellationToken.None),
+        "*/5 * * * *"); // every 5 minutes
 
-RecurringJob.AddOrUpdate<PushTokenCleanupJob>(
-    "push-token-cleanup",
-    job => job.ExecuteAsync(CancellationToken.None),
-    "0 3 * * *"); // daily at 03:00 UTC
+    jobs.AddOrUpdate<CompletedEventsJob>(
+        "completed-events",
+        job => job.ExecuteAsync(CancellationToken.None),
+        "0 2 * * *"); // daily at 02:00 UTC
 
-RecurringJob.AddOrUpdate<EventReminderJob>(
-    "event-reminder",
-    job => job.ExecuteAsync(CancellationToken.None),
-    "0 * * * *"); // every hour
+    jobs.AddOrUpdate<PushTokenCleanupJob>(
+        "push-token-cleanup",
+        job => job.ExecuteAsync(CancellationToken.None),
+        "0 3 * * *"); // daily at 03:00 UTC
+
+    jobs.AddOrUpdate<EventReminderJob>(
+        "event-reminder",
+        job => job.ExecuteAsync(CancellationToken.None),
+        "0 * * * *"); // every hour
+}
 
 app.UseHttpsRedirection();
 app.UseAuthentication();
