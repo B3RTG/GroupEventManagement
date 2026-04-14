@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "612138843168",
+    "project_id": "group-event-manager-7d5a0",
+    "storage_bucket": "group-event-manager-7d5a0.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:612138843168:android:7c2b000767978ca6b45045",
+        "android_client_info": {
+          "package_name": "com.al6ertk.groupeventmanagement"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDj91pVJPZGKuDIfLkdsxubAZqmqx37h_g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
