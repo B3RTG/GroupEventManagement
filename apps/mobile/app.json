@@ -10,6 +10,7 @@
       "android"
     ],
     "scheme": "gem",
+    "icon": "./assets/icon.png",
     "splash": {
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
@@ -20,9 +21,10 @@
     },
     "android": {
       "adaptiveIcon": {
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./assets/icon.png",
+        "backgroundColor": "#1E3A5F"
       },
-      "package": "com.groupeventmanagement.app"
+      "package": "com.al6ertk.groupeventmanagement"
     },
     "plugins": [
       "expo-dev-client",

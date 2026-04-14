@@ -1,0 +1,12 @@
+{
+  "expo": {
+    "extra": {
+      "eas": {
+        "projectId": "c6583365-9d1e-46a1-aa62-d59ae5f14be6"
+      }
+    },
+    "android": {
+      "package": "com.al6ertk.groupeventmanagement"
+    }
+  }
+}
