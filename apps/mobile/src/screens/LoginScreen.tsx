@@ -47,12 +47,18 @@ export default function LoginScreen() {
       await GoogleSignin.hasPlayServices();
       const { data } = await GoogleSignin.signIn();
       if (data?.idToken) {
-        loginWithGoogle({ idToken: data.idToken });
+        try {
+          await loginWithGoogle({ idToken: data.idToken }).unwrap();
+        } catch (apiErr) {
+          console.warn("Login API error", apiErr);
+          Alert.alert("Error", "No se pudo iniciar sesión. Inténtalo de nuevo.");
+        }
       }
     } catch (e: unknown) {
       const err = e as { code?: string };
       if (err?.code !== statusCodes.SIGN_IN_CANCELLED) {
         console.warn("Google Sign In error", e);
+        Alert.alert("Error", `Google Sign In error: ${JSON.stringify(e)}`);
       }
     }
   };
