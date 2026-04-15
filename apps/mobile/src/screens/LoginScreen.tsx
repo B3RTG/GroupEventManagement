@@ -36,6 +36,7 @@ const HERO_HEIGHT = SCREEN_WIDTH * (5 / 4); // aspect 4:5
 
 
 export default function LoginScreen() {
+  const [debugMsg, setDebugMsg] = React.useState("");
   const [loginWithGoogle, { isLoading: googleLoading, error: googleError }] =
     useLoginWithGoogleMutation();
   const [loginWithApple, { isLoading: appleLoading, error: appleError }] =
@@ -44,21 +45,28 @@ export default function LoginScreen() {
   // ── Google OAuth ────────────────────────────────────────
   const handleGoogleLogin = async () => {
     try {
+      setDebugMsg("Checking Play Services...");
       await GoogleSignin.hasPlayServices();
+      setDebugMsg("Signing in with Google...");
       const { data } = await GoogleSignin.signIn();
+      setDebugMsg(`Got token: ${data?.idToken ? "YES" : "NO"}`);
       if (data?.idToken) {
+        setDebugMsg("Calling API...");
         try {
           await loginWithGoogle({ idToken: data.idToken }).unwrap();
+          setDebugMsg("Login OK");
         } catch (apiErr) {
-          console.warn("Login API error", apiErr);
-          Alert.alert("Error", "No se pudo iniciar sesión. Inténtalo de nuevo.");
+          const msg = JSON.stringify(apiErr);
+          setDebugMsg(`API error: ${msg}`);
+          Alert.alert("API Error", msg);
         }
       }
     } catch (e: unknown) {
       const err = e as { code?: string };
+      const msg = JSON.stringify(e);
+      setDebugMsg(`Google error: ${msg}`);
       if (err?.code !== statusCodes.SIGN_IN_CANCELLED) {
-        console.warn("Google Sign In error", e);
-        Alert.alert("Error", `Google Sign In error: ${JSON.stringify(e)}`);
+        Alert.alert("Google Error", msg);
       }
     }
   };
@@ -135,6 +143,11 @@ export default function LoginScreen() {
 
         {/* ── Auth buttons ─────────────────────────────────── */}
         <View style={styles.authSection}>
+          {!!debugMsg && (
+            <Text style={{ color: "orange", fontSize: 11, marginBottom: 8, textAlign: "center" }}>
+              {debugMsg}
+            </Text>
+          )}
           {error && (
             <Text style={styles.errorText}>
               Error al iniciar sesión. Inténtalo de nuevo.
